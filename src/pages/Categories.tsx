@@ -2,39 +2,18 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import CategorySelector from '../components/CategorySelector';
-import { categories } from '../data/mockData';
+import { categories, featuredCategories } from '../data/mockData';
+import { useNavigate } from 'react-router-dom';
 
 const Categories: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('women');
+  const navigate = useNavigate();
 
-  const subcategories = {
-    women: [
-      { name: 'Topwear', icon: '👚', items: ['T-Shirts', 'Shirts', 'Blouses', 'Cardigans', 'Jackets', 'Blazers'] },
-      { name: 'Bottomwear', icon: '👖', items: ['Jeans', 'Trousers', 'Skirts', 'Shorts', 'Leggings'] },
-      { name: 'Dresses', icon: '👗', items: ['Casual Dresses', 'Party Dresses', 'Maxi Dresses', 'Mini Dresses'] },
-      { name: 'Innerwear', icon: '🩱', items: ['Bras', 'Panties', 'Shapewear', 'Sleepwear'] }
-    ],
-    men: [
-      { name: 'Topwear', icon: '👔', items: ['T-Shirts', 'Shirts', 'Polo', 'Hoodies', 'Jackets'] },
-      { name: 'Bottomwear', icon: '👖', items: ['Jeans', 'Trousers', 'Chinos', 'Shorts', 'Track Pants'] },
-      { name: 'Innerwear', icon: '🩲', items: ['Briefs', 'Boxers', 'Vests', 'Sleepwear'] },
-      { name: 'Formal', icon: '🤵', items: ['Suits', 'Blazers', 'Formal Shirts', 'Ties'] }
-    ],
-    footwear: [
-      { name: 'Casual', icon: '👟', items: ['Sneakers', 'Canvas Shoes', 'Loafers', 'Slip-ons'] },
-      { name: 'Formal', icon: '👞', items: ['Oxfords', 'Brogues', 'Derby', 'Monk Straps'] },
-      { name: 'Sports', icon: '⚽', items: ['Running Shoes', 'Training Shoes', 'Basketball', 'Football'] },
-      { name: 'Boots', icon: '🥾', items: ['Ankle Boots', 'Chelsea Boots', 'Combat Boots', 'Hiking Boots'] }
-    ],
-    accessories: [
-      { name: 'Bags', icon: '👜', items: ['Handbags', 'Backpacks', 'Wallets', 'Clutches'] },
-      { name: 'Jewelry', icon: '💍', items: ['Rings', 'Necklaces', 'Earrings', 'Bracelets'] },
-      { name: 'Watches', icon: '⌚', items: ['Smart Watches', 'Analog', 'Digital', 'Luxury'] },
-      { name: 'Eyewear', icon: '🕶️', items: ['Sunglasses', 'Prescription', 'Blue Light', 'Reading'] }
-    ]
+  const currentFeaturedCategories = featuredCategories[selectedCategory as keyof typeof featuredCategories];
+
+  const handleCategoryClick = (categoryId: string) => {
+    navigate(`/products/${selectedCategory}/${categoryId}`);
   };
-
-  const currentSubcategories = subcategories[selectedCategory as keyof typeof subcategories];
 
   return (
     <Layout>
@@ -45,58 +24,123 @@ const Categories: React.FC = () => {
           onCategoryChange={setSelectedCategory}
         />
         
-        {/* Category Banner */}
-        <div className="relative mx-4 mb-6 rounded-2xl overflow-hidden h-32 bg-gradient-to-r from-orange-500 to-orange-600">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center text-white">
-              <h2 className="text-2xl font-bold mb-1">
-                {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Collection
-              </h2>
-              <p className="text-sm opacity-90">Delivered in 30 minutes</p>
+        {/* Ethnic Collection Banner */}
+        <div className="relative mx-4 mb-6 rounded-2xl overflow-hidden h-64 bg-gradient-to-r from-orange-100 to-orange-200">
+          <img
+            src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=400&fit=crop"
+            alt="Ethnic Collection Banner"
+            className="w-full h-full object-cover opacity-90"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+          
+          {/* Banner Content */}
+          <div className="absolute top-8 left-8">
+            <div className="bg-black text-white px-4 py-2 rounded-full text-sm font-bold mb-4">
+              UPTO 70% OFF
             </div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">Ethnic Collection</h1>
+            <button className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+              SHOP NOW
+            </button>
           </div>
         </div>
         
-        <div className="bg-white rounded-t-3xl min-h-screen">
-          <div className="flex">
-            {/* Left Sidebar */}
-            <div className="w-1/3 border-r border-gray-200 p-4">
-              <h3 className="font-semibold text-gray-900 mb-4">Categories</h3>
-              <div className="space-y-2">
-                {currentSubcategories.map((subcategory) => (
-                  <button
-                    key={subcategory.name}
-                    className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors text-left"
-                  >
-                    <span className="text-xl">{subcategory.icon}</span>
-                    <span className="font-medium text-gray-700">{subcategory.name}</span>
-                  </button>
-                ))}
+        <div className="bg-white rounded-t-3xl min-h-screen pt-8">
+          {/* Brand Categories */}
+          <div className="px-4 mb-8">
+            <div className="grid grid-cols-3 gap-4 mb-8">
+              {/* Brand Cards */}
+              <div className="relative rounded-2xl overflow-hidden aspect-[3/4] bg-gradient-to-br from-orange-200 to-orange-300">
+                <img
+                  src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300&h=400&fit=crop"
+                  alt="Sadhana Villa"
+                  className="w-full h-full object-cover opacity-80"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                <div className="absolute bottom-6 left-6">
+                  <div className="bg-white text-black px-3 py-1 rounded text-sm font-bold">
+                    Sadhana
+                  </div>
+                  <div className="text-white text-xs mt-1">VILLA</div>
+                </div>
+              </div>
+
+              <div className="relative rounded-2xl overflow-hidden aspect-[3/4] bg-gradient-to-br from-purple-200 to-purple-300">
+                <img
+                  src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300&h=400&fit=crop"
+                  alt="Ethnic Elements"
+                  className="w-full h-full object-cover opacity-80"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                <div className="absolute bottom-6 left-6">
+                  <div className="text-white text-lg font-bold">Ethnic Elements</div>
+                </div>
+              </div>
+
+              <div className="relative rounded-2xl overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-200 to-pink-300">
+                <img
+                  src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300&h=400&fit=crop"
+                  alt="Shree"
+                  className="w-full h-full object-cover opacity-80"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                <div className="absolute bottom-6 left-6">
+                  <div className="text-white text-lg font-bold">श्री | SHREE</div>
+                </div>
               </div>
             </div>
+          </div>
+
+          {/* Category Grid */}
+          <div className="px-4">
+            <h2 className="text-xl font-bold text-gray-900 text-center mb-6 tracking-wide">
+              SHOP BY CATEGORY
+            </h2>
             
-            {/* Right Content */}
-            <div className="flex-1 p-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {currentSubcategories.map((subcategory) => (
-                  <div key={subcategory.name} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-2xl">{subcategory.icon}</span>
-                      <h4 className="font-semibold text-gray-900">{subcategory.name}</h4>
-                    </div>
-                    <div className="space-y-2">
-                      {subcategory.items.map((item) => (
-                        <button
-                          key={item}
-                          className="block w-full text-left text-sm text-gray-600 hover:text-orange-500 transition-colors"
-                        >
-                          {item}
-                        </button>
-                      ))}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {currentFeaturedCategories.map((category) => (
+                <div
+                  key={category.id}
+                  onClick={() => handleCategoryClick(category.id)}
+                  className="relative overflow-hidden rounded-lg aspect-[3/4] cursor-pointer group"
+                >
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  
+                  <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all duration-300"></div>
+                  
+                  <div className="absolute bottom-0 left-0 right-0 p-3">
+                    {category.isDeal && (
+                      <div className="mb-2">
+                        <div className="inline-block bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                          SNITCH DEAL OF THE DAY
+                        </div>
+                      </div>
+                    )}
+                    
+                    <div className="text-white">
+                      <h3 className="font-bold text-sm mb-1">
+                        {category.name}
+                      </h3>
+                      
+                      {category.subtitle && (
+                        <p className={`text-sm font-bold ${
+                          category.isPriceCategory 
+                            ? 'text-yellow-400 text-lg' 
+                            : category.isDeal 
+                              ? 'text-white text-xs' 
+                              : 'text-gray-200'
+                        }`}>
+                          {category.subtitle}
+                        </p>
+                      )}
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
