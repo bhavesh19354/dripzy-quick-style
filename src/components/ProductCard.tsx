@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div 
-      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow group cursor-pointer"
+      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow group cursor-pointer flex flex-col"
       onClick={handleCardClick}
     >
       <div className="relative overflow-hidden rounded-t-lg">
@@ -47,7 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           src={product.image}
           alt={product.name}
           className={`w-full object-cover group-hover:scale-105 transition-transform duration-300 ${
-            showHeartIcon ? 'h-32 md:h-48' : 'h-48'
+            showHeartIcon ? 'h-24 md:h-32' : 'h-32 md:h-48'
           }`}
         />
         
@@ -63,7 +63,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         
         {/* Item Number - Bottom Left */}
         {itemNumber && (
-          <div className="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold">
+          <div className="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
             {itemNumber}
           </div>
         )}
@@ -84,10 +84,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </button>
       </div>
       
-      <div className="p-2">
-        <p className="text-xs text-gray-500 mb-1">{product.brand}</p>
-        <h3 className="font-medium text-gray-900 text-xs mb-1 line-clamp-2">{product.name}</h3>
-        <div className="flex items-center gap-1">
+      <div className="p-2 flex-1 flex flex-col justify-between min-h-[60px]">
+        <div>
+          <p className="text-xs text-gray-500 mb-1 truncate">{product.brand}</p>
+          <h3 className="font-medium text-gray-900 text-xs mb-1 line-clamp-2 leading-tight h-8 overflow-hidden">{product.name}</h3>
+        </div>
+        <div className="flex items-center gap-1 mt-auto">
           <span className="font-bold text-gray-900 text-xs">₹{product.price}</span>
           {product.originalPrice && (
             <span className="text-xs text-gray-500 line-through">₹{product.originalPrice}</span>
