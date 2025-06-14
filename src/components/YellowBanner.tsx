@@ -19,7 +19,7 @@ const YellowBanner: React.FC = () => {
         </div>
         
         {/* On the spot Returns */}
-        <div className="flex items-center gap-1 flex-1 justify-end pr-1">
+        <div className="flex items-center gap-1 flex-1 justify-end">
           <RotateCcw className="w-4 h-4 text-black flex-shrink-0" strokeWidth={2.5} />
           <span className="text-black text-xs font-bold">On the spot Returns</span>
         </div>
