@@ -8,7 +8,7 @@ import MovingBanner from '../components/MovingBanner';
 import FeaturedCategories from '../components/FeaturedCategories';
 import EthnicCollection from '../components/EthnicCollection';
 import ProductGrid from '../components/ProductGrid';
-import { MapPin, ChevronDown, User, Bell } from 'lucide-react';
+import { MapPin, ChevronDown, User, ShoppingCart } from 'lucide-react';
 import { categories, banners, products, quickPicks, trendingProducts, justInProducts, featuredCategories } from '../data/mockData';
 
 interface Product {
@@ -83,12 +83,14 @@ const Index: React.FC = () => {
       onRemoveCartItem={handleRemoveCartItem}
     >
       <div className="bg-white min-h-screen">
-        {/* Hero Section - Pink background matching the reference */}
+        {/* Hero Section - Background image with overlay content */}
         <div 
-          className="relative bg-pink-300"
+          className="relative"
           style={{ 
             height: '55vh',
-            backgroundColor: '#F8BBD9'
+            backgroundImage: 'url(/lovable-uploads/3d5567e9-bee1-49b1-846c-a831ff5e4325.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
           }}
         >
           {/* Top Bar Content Over Background */}
@@ -107,7 +109,7 @@ const Index: React.FC = () => {
               
               <div className="flex items-center gap-4">
                 <div className="relative">
-                  <Bell className="w-5 h-5 text-white" />
+                  <ShoppingCart className="w-5 h-5 text-white" />
                   <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
                 </div>
                 <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
