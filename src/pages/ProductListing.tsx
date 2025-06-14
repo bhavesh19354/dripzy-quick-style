@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -7,7 +6,7 @@ import { Filter, SortAsc, ArrowLeft, X } from 'lucide-react';
 import { mockProducts, type Product } from '../data/productData';
 
 interface CartItem {
-  id: number;
+  id: string;
   name: string;
   price: number;
   image: string;
@@ -76,12 +75,12 @@ const ProductListing: React.FC = () => {
 
   const handleUpdateCartQuantity = (id: string, newQuantity: number) => {
     setCartItems(cartItems.map(item => 
-      item.id === parseInt(id) ? { ...item, quantity: newQuantity } : item
+      item.id === id ? { ...item, quantity: newQuantity } : item
     ));
   };
 
   const handleRemoveCartItem = (id: string) => {
-    setCartItems(cartItems.filter(item => item.id !== parseInt(id)));
+    setCartItems(cartItems.filter(item => item.id !== id));
   };
 
   const handleBrandFilter = (brand: string) => {
