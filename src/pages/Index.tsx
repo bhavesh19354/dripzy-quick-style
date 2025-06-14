@@ -155,7 +155,7 @@ const Index: React.FC = () => {
               products={trendingProducts} 
               onAddToCart={handleAddToCart} 
               heroLayout={true}
-              heroImage="/lovable-uploads/6badb6a2-054f-4768-98fa-f52c72ade820.png"
+              heroImage="/lovable-uploads/b9498ccd-9028-4892-bae0-7c96b44ea829.png"
               heroTitle="Products you can't miss"
             />
           </div>
