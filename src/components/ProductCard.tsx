@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, Heart } from 'lucide-react';
 
 interface Product {
   id: string;
@@ -15,9 +15,17 @@ interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product) => void;
   onClick?: (productId: string) => void;
+  showHeartIcon?: boolean;
+  itemNumber?: number;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onClick }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ 
+  product, 
+  onAddToCart, 
+  onClick, 
+  showHeartIcon = false,
+  itemNumber
+}) => {
   const handleCardClick = () => {
     if (onClick) {
       onClick(product.id);
@@ -40,9 +48,32 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onClick
           alt={product.name}
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        <div className="absolute top-2 right-2 bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium">
-          30 min
-        </div>
+        
+        {/* Heart Icon - Top Right */}
+        {showHeartIcon && (
+          <button
+            onClick={(e) => e.stopPropagation()}
+            className="absolute top-2 right-2 bg-white bg-opacity-80 rounded-full p-2 shadow-sm hover:bg-opacity-100 transition-all"
+          >
+            <Heart className="w-4 h-4 text-gray-600 hover:text-red-500" />
+          </button>
+        )}
+        
+        {/* Item Number - Bottom Left */}
+        {itemNumber && (
+          <div className="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+            {itemNumber}
+          </div>
+        )}
+
+        {/* Delivery Time Badge - Top Left (only for non-hero layout) */}
+        {!showHeartIcon && (
+          <div className="absolute top-2 right-2 bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+            30 min
+          </div>
+        )}
+        
+        {/* Add to Cart Button */}
         <button
           onClick={handleAddToCart}
           className="absolute bottom-2 right-2 bg-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-orange-50"

@@ -142,7 +142,14 @@ const Index: React.FC = () => {
             
             <EthnicCollection />
             
-            <ProductGrid title="Quick Picks" products={quickPicks} onAddToCart={handleAddToCart} />
+            <ProductGrid 
+              title="Quick Picks" 
+              products={quickPicks} 
+              onAddToCart={handleAddToCart} 
+              heroLayout={true}
+              heroImage="/lovable-uploads/b861fbc2-bbd1-4d72-bd4d-73a8d7a58106.png"
+              heroTitle="SEASON'S STANDOUT"
+            />
             
             <ProductGrid title="Trending Now" products={trendingProducts} onAddToCart={handleAddToCart} />
             
