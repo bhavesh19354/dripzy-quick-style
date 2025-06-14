@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
@@ -156,17 +155,8 @@ const Index: React.FC = () => {
               products={trendingProducts} 
               onAddToCart={handleAddToCart} 
               heroLayout={true}
-              heroImage="/lovable-uploads/66c2b67b-2949-41db-a05e-9c12ebf23ddb.png"
-              heroTitle="TRENDING NOW"
-            />
-
-            <ProductGrid 
-              title="Products You Can't Miss" 
-              products={justInProducts} 
-              onAddToCart={handleAddToCart} 
-              heroLayout={true}
-              heroImage="/lovable-uploads/246f14f4-74b7-411d-b4ac-768990da7c85.png"
-              heroTitle="EXCLUSIVE MUST-HAVES"
+              heroImage="/lovable-uploads/6badb6a2-054f-4768-98fa-f52c72ade820.png"
+              heroTitle="Products you can't miss"
             />
           </div>
         </div>
