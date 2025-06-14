@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MapPin, ShoppingCart, User, Grid3X3 } from 'lucide-react';
+import { MapPin, ShoppingCart, User, Grid3X3, House } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface CartItem {
@@ -81,7 +81,9 @@ const Layout: React.FC<LayoutProps> = ({
               isActive('/') ? 'text-orange-500' : 'text-white hover:text-orange-300'
             }`}
           >
-            <div className="w-5 h-5 flex items-center justify-center text-lg">🏠</div>
+            <div className="w-5 h-5 flex items-center justify-center">
+              <House className="w-4 h-4" />
+            </div>
             <span className="text-xs font-medium">Home</span>
           </button>
           
