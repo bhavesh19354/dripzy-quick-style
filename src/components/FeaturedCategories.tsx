@@ -23,14 +23,15 @@ const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({ categories }) =
     navigate(`/products/men/${category.id}`);
   };
 
+  // Limit to 9 categories
+  const displayCategories = categories.slice(0, 9);
+
   return (
     <div className="px-4 mb-8">
-      <h2 className="text-xl font-bold text-gray-900 text-center mb-6 tracking-wide">
-        FEATURED CATEGORIES
-      </h2>
+      <h2 className="text-lg font-bold text-gray-900 mb-4">Featured Categories</h2>
       
       <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
-        {categories.map((category) => (
+        {displayCategories.map((category) => (
           <div
             key={category.id}
             onClick={() => handleCategoryClick(category)}
