@@ -29,7 +29,7 @@ const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({ categories }) =
         FEATURED CATEGORIES
       </h2>
       
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
         {categories.map((category) => (
           <div
             key={category.id}
@@ -46,24 +46,24 @@ const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({ categories }) =
             <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all duration-300"></div>
             
             {/* Category content */}
-            <div className="absolute bottom-0 left-0 right-0 p-3">
+            <div className="absolute bottom-0 left-0 right-0 p-2 md:p-3">
               {category.isDeal && (
-                <div className="mb-2">
-                  <div className="inline-block bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                <div className="mb-1 md:mb-2">
+                  <div className="inline-block bg-red-600 text-white text-xs font-bold px-1 md:px-2 py-0.5 md:py-1 rounded">
                     SNITCH DEAL OF THE DAY
                   </div>
                 </div>
               )}
               
               <div className="text-white">
-                <h3 className="font-bold text-sm mb-1 text-shadow-sm">
+                <h3 className="font-bold text-xs md:text-sm mb-0.5 md:mb-1 text-shadow-sm">
                   {category.name}
                 </h3>
                 
                 {category.subtitle && (
-                  <p className={`text-sm font-bold ${
+                  <p className={`text-xs md:text-sm font-bold ${
                     category.isPriceCategory 
-                      ? 'text-yellow-400 text-lg' 
+                      ? 'text-yellow-400 text-sm md:text-lg' 
                       : category.isDeal 
                         ? 'text-white text-xs' 
                         : 'text-gray-200'
