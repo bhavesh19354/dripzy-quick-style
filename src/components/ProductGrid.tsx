@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
@@ -41,7 +40,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
         {/* Extended Hero Section with double height */}
         <div className="relative h-[32rem] md:h-[40rem] mb-6 rounded-2xl overflow-hidden">
           <img
-            src={heroImage || '/lovable-uploads/b861fbc2-bbd1-4d72-bd4d-73a8d7a58106.png'}
+            src="/lovable-uploads/a13d003d-2389-42d3-a990-f5897b703179.png"
             alt={heroTitle || title}
             className="w-full h-full object-cover"
           />
