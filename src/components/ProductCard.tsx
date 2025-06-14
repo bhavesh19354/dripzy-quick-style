@@ -9,9 +9,10 @@ import type { Product } from '../data/productData';
 interface ProductCardProps {
   product: Product;
   className?: string;
+  onAddToCart?: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, className = "" }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, className = "", onAddToCart }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
