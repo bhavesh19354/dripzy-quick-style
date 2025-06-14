@@ -83,39 +83,42 @@ const Index: React.FC = () => {
       onRemoveCartItem={handleRemoveCartItem}
     >
       <div className="bg-white min-h-screen">
-        {/* Hero Section - Full Height with Overlay Content */}
+        {/* Hero Section - Pink background matching the reference */}
         <div 
-          className="relative"
+          className="relative bg-pink-300"
           style={{ 
             height: '55vh',
-            backgroundImage: 'url(/lovable-uploads/3d5567e9-bee1-49b1-846c-a831ff5e4325.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
+            backgroundColor: '#F8BBD9'
           }}
         >
           {/* Top Bar Content Over Background */}
           <div className="absolute top-0 left-0 right-0 z-10 px-4 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-black mt-0.5" />
+                <MapPin className="w-4 h-4 text-white mt-0.5" />
                 <div className="flex flex-col">
-                  <span className="text-xs text-black">Delivery in</span>
-                  <span className="text-sm font-medium text-black">288, sector 38...</span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-lg font-medium text-white">Home</span>
+                    <ChevronDown className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-sm text-white opacity-90">Flat 103, house 288, Medicity, Islam...</span>
                 </div>
               </div>
               
               <div className="flex items-center gap-4">
                 <div className="relative">
-                  <Bell className="w-5 h-5 text-black" />
+                  <Bell className="w-5 h-5 text-white" />
                   <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
                 </div>
-                <User className="w-5 h-5 text-black" />
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-semibold text-sm">B</span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Search Bar - Moved up slightly */}
-          <div className={`absolute top-12 left-0 right-0 z-10 ${isSearchSticky ? 'invisible' : 'visible'}`}>
+          <div className={`absolute top-16 left-0 right-0 z-10 ${isSearchSticky ? 'invisible' : 'visible'}`}>
             <SearchBar />
           </div>
         </div>
