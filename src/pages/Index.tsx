@@ -79,7 +79,7 @@ const Index: React.FC = () => {
                 <MapPin className="w-4 h-4 text-white mt-0.5" />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-1">
-                    <span className="text-lg font-medium text-white">Home</span>
+                    <span className="text-lg font-medium text-zinc-950">Home</span>
                     <ChevronDown className="w-4 h-4 text-white" />
                   </div>
                   <span className="text-sm opacity-90 text-zinc-950">Flat 103, house 288, Medicity, Islam...</span>
