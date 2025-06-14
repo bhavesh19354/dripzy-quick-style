@@ -4,8 +4,9 @@ import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
 import CategorySelector from '../components/CategorySelector';
 import BannerCarousel from '../components/BannerCarousel';
+import FeaturedCategories from '../components/FeaturedCategories';
 import ProductGrid from '../components/ProductGrid';
-import { categories, banners, products, quickPicks, trendingProducts, justInProducts } from '../data/mockData';
+import { categories, banners, products, quickPicks, trendingProducts, justInProducts, featuredCategories } from '../data/mockData';
 
 interface Product {
   id: string;
@@ -27,6 +28,7 @@ const Index: React.FC = () => {
 
   const currentBanner = banners[selectedCategory as keyof typeof banners];
   const currentProducts = products[selectedCategory as keyof typeof products];
+  const currentFeaturedCategories = featuredCategories[selectedCategory as keyof typeof featuredCategories];
 
   return (
     <Layout cartItemCount={cartItems.length}>
@@ -47,6 +49,8 @@ const Index: React.FC = () => {
         />
         
         <div className="bg-white">
+          <FeaturedCategories categories={currentFeaturedCategories} />
+          
           <ProductGrid
             title="Quick Picks"
             products={quickPicks}
