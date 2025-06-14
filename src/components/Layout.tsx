@@ -35,21 +35,15 @@ const Layout: React.FC<LayoutProps> = ({
       {/* Fixed Top Header */}
       <header className="fixed top-0 left-0 right-0 bg-slate-800 text-white z-40 px-4 py-3">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <div className="flex items-center gap-1">
-            <MapPin className="w-3 h-3 text-orange-400" />
-            <span className="text-xs">Delivering in Gurugram</span>
+          <div className="flex flex-col items-start">
+            <span className="text-xs">Delivering in</span>
+            <div className="flex items-center gap-1">
+              <MapPin className="w-3 h-3 text-orange-400" />
+              <span className="text-xs">Gurugram</span>
+            </div>
           </div>
           
-          <div 
-            onClick={() => navigate('/')}
-            className="cursor-pointer flex items-center"
-          >
-            <img 
-              src="/lovable-uploads/c15dd2d0-3e5a-401b-8a50-4a9bce1a648d.png" 
-              alt="Dripzy Logo" 
-              className="h-8 w-auto"
-            />
-          </div>
+          <div className="flex-1"></div>
           
           <div className="flex items-center gap-3">
             <button 
