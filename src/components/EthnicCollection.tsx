@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -60,8 +59,8 @@ const EthnicCollection: React.FC = () => {
                 {/* Featured model image on the right */}
                 <div className="w-16 h-20 md:w-20 md:h-24 flex-shrink-0 ml-4">
                   <img 
-                    src="https://images.unsplash.com/photo-1594736797933-d0bdb6a43e68?w=100&h=120&fit=crop&crop=face" 
-                    alt="Featured Model" 
+                    src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=120&h=120&fit=crop" 
+                    alt="Featured Models" 
                     className="w-full h-full object-cover rounded-lg" 
                   />
                 </div>
