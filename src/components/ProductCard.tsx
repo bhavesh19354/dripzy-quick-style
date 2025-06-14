@@ -46,7 +46,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+          className={`w-full object-cover group-hover:scale-105 transition-transform duration-300 ${
+            showHeartIcon ? 'h-32 md:h-48' : 'h-48'
+          }`}
         />
         
         {/* Heart Icon - Top Right */}
