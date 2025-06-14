@@ -47,10 +47,12 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           
           {/* Overlay Text - Upper Half */}
-          <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <h2 className="text-white text-4xl md:text-5xl font-bold text-center tracking-wide">
-              Quick picks
-            </h2>
+          <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+            <div className="text-white font-bold tracking-wider leading-tight">
+              <div className="text-3xl md:text-4xl mb-1 font-serif italic">Top</div>
+              <div className="text-4xl md:text-5xl mb-1 font-sans font-extrabold">Selling</div>
+              <div className="text-3xl md:text-4xl font-serif italic">Products</div>
+            </div>
           </div>
           
           {/* Product Cards Overlay - Better mobile positioning */}
