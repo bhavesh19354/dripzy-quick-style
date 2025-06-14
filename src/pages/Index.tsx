@@ -128,10 +128,10 @@ const Index: React.FC = () => {
 
         {/* Scrollable Content - No gap, attached to background */}
         <div className="bg-gray-50">
-          <CategorySelector categories={categories} selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
-          
           {/* Yellow Banner */}
           <YellowBanner />
+          
+          <CategorySelector categories={categories} selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
           
           <div className="pt-3">
             <AutoSlidingBanner banners={currentBanners} />
