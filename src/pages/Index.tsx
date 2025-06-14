@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
@@ -10,21 +11,114 @@ import EthnicCollection from '../components/EthnicCollection';
 import ProductGrid from '../components/ProductGrid';
 import { MapPin, ChevronDown, User, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { categories, banners, products, quickPicks, trendingProducts, justInProducts, featuredCategories, heroImages } from '../data/mockData';
+import { categories, banners, products, featuredCategories, heroImages } from '../data/mockData';
+import type { Product } from '../data/productData';
 
-interface Product {
+interface CartItem {
   id: string;
   name: string;
   price: number;
   image: string;
   brand: string;
   originalPrice?: number;
-}
-
-interface CartItem extends Product {
   selectedSize?: string;
   quantity: number;
 }
+
+// Convert mock data products to match Product interface
+const convertToProduct = (mockProduct: any, index: number): Product => ({
+  id: index + 1,
+  images: [mockProduct.image],
+  colorVariants: [
+    {
+      color: "Default",
+      image: mockProduct.image
+    }
+  ],
+  brandName: mockProduct.brand,
+  productName: mockProduct.name,
+  mrp: mockProduct.originalPrice || mockProduct.price,
+  discountedPrice: mockProduct.price
+});
+
+// Convert mock data for quick picks and trending
+const quickPicks: Product[] = [
+  {
+    id: 101,
+    images: ['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&h=400&fit=crop'],
+    colorVariants: [{ color: "White", image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&h=400&fit=crop' }],
+    brandName: 'H&M',
+    productName: 'Basic White Tee',
+    mrp: 899,
+    discountedPrice: 599
+  },
+  {
+    id: 102,
+    images: ['https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=300&h=400&fit=crop'],
+    colorVariants: [{ color: "Blue", image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=300&h=400&fit=crop' }],
+    brandName: 'Zara',
+    productName: 'Blue Denim Jacket',
+    mrp: 2999,
+    discountedPrice: 1999
+  },
+  {
+    id: 103,
+    images: ['https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&h=400&fit=crop'],
+    colorVariants: [{ color: "Black", image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&h=400&fit=crop' }],
+    brandName: 'Jockey',
+    productName: 'Black Casual Shoes',
+    mrp: 3499,
+    discountedPrice: 2499
+  },
+  {
+    id: 104,
+    images: ['https://images.unsplash.com/photo-1618886614638-80e3c103d31a?w=300&h=400&fit=crop'],
+    colorVariants: [{ color: "Navy", image: 'https://images.unsplash.com/photo-1618886614638-80e3c103d31a?w=300&h=400&fit=crop' }],
+    brandName: 'H&M',
+    productName: 'Cotton Polo Shirt',
+    mrp: 1799,
+    discountedPrice: 1299
+  }
+];
+
+const trendingProducts: Product[] = [
+  {
+    id: 201,
+    images: ['https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300&h=400&fit=crop'],
+    colorVariants: [{ color: "Gray", image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300&h=400&fit=crop' }],
+    brandName: 'Zara',
+    productName: 'Oversized Hoodie',
+    mrp: 2599,
+    discountedPrice: 1799
+  },
+  {
+    id: 202,
+    images: ['https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=300&h=400&fit=crop'],
+    colorVariants: [{ color: "Blue", image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=300&h=400&fit=crop' }],
+    brandName: 'H&M',
+    productName: 'High-Waist Jeans',
+    mrp: 2999,
+    discountedPrice: 2199
+  },
+  {
+    id: 203,
+    images: ['https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=400&fit=crop'],
+    colorVariants: [{ color: "White", image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=400&fit=crop' }],
+    brandName: 'Jockey',
+    productName: 'Sneaker Collection',
+    mrp: 4999,
+    discountedPrice: 3499
+  },
+  {
+    id: 204,
+    images: ['https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&h=400&fit=crop'],
+    colorVariants: [{ color: "Floral", image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&h=400&fit=crop' }],
+    brandName: 'Zara',
+    productName: 'Floral Summer Dress',
+    mrp: 2299,
+    discountedPrice: 1599
+  }
+];
 
 const Index: React.FC = () => {
   const navigate = useNavigate();
@@ -42,16 +136,21 @@ const Index: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleAddToCart = (product: Product) => {
-    const existingItem = cartItems.find(item => item.id === product.id);
+  const handleAddToCart = (product: any) => {
+    const existingItem = cartItems.find(item => item.id === product.id.toString());
     if (existingItem) {
-      setCartItems(cartItems.map(item => item.id === product.id ? {
+      setCartItems(cartItems.map(item => item.id === product.id.toString() ? {
         ...item,
         quantity: item.quantity + 1
       } : item));
     } else {
       const newCartItem: CartItem = {
-        ...product,
+        id: product.id.toString(),
+        name: product.productName,
+        price: product.discountedPrice,
+        image: product.images[0],
+        brand: product.brandName,
+        originalPrice: product.mrp,
         selectedSize: 'M',
         quantity: 1
       };

@@ -8,6 +8,11 @@ import { mockProducts, type Product } from '../data/productData';
 
 interface CartItem {
   id: string;
+  name: string;
+  price: number;
+  image: string;
+  brand: string;
+  originalPrice?: number;
   selectedSize?: string;
   quantity: number;
 }
