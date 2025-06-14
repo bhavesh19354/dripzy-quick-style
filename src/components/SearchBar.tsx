@@ -1,7 +1,7 @@
 import React from 'react';
 import { Search, Mic } from 'lucide-react';
 const SearchBar: React.FC = () => {
-  return <div className="bg-transparent px-4 py-px">
+  return <div className="bg-transparent px-[15px] mx-0 my-0 py-[5px]">
       <div className="flex items-center gap-3">
         {/* Search Bar - Full Width */}
         <div className="relative flex-1">
