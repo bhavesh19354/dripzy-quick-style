@@ -2,13 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, CreditCard, Truck, Shield } from 'lucide-react';
+import { MapPin, Truck, Shield } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/dialog';
+import { Button } from '../components/ui/button';
+import AddressForm from '../components/AddressForm';
 
 const Checkout: React.FC = () => {
   const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState('cod');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
 
   // Check authentication on mount
   useEffect(() => {
@@ -122,66 +125,43 @@ const Checkout: React.FC = () => {
                   </div>
                 ))}
                 
-                <button className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-gray-400 transition-colors">
-                  + Add New Address
-                </button>
+                <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
+                  <DialogTrigger asChild>
+                    <button className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-gray-400 transition-colors">
+                      + Add New Address
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Add New Address</DialogTitle>
+                    </DialogHeader>
+                    <AddressForm onClose={() => setIsAddressDialogOpen(false)} />
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
 
             {/* Payment Method */}
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
-                <CreditCard className="w-5 h-5 text-orange-500" />
+                <Truck className="w-5 h-5 text-orange-500" />
                 <h2 className="text-lg font-bold text-gray-900">Payment Method</h2>
               </div>
               
-              <div className="space-y-3">
-                <div
-                  onClick={() => setPaymentMethod('cod')}
-                  className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-                    paymentMethod === 'cod'
-                      ? 'border-orange-500 bg-orange-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Truck className="w-5 h-5 text-gray-600" />
-                      <div>
-                        <span className="font-medium">Cash on Delivery</span>
-                        <p className="text-sm text-gray-600">Pay when you receive</p>
-                      </div>
+              <div className="p-4 border border-orange-500 bg-orange-50 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Truck className="w-5 h-5 text-gray-600" />
+                    <div>
+                      <span className="font-medium">Cash on Delivery</span>
+                      <p className="text-sm text-gray-600">Pay when you receive</p>
                     </div>
-                    <input
-                      type="radio"
-                      checked={paymentMethod === 'cod'}
-                      onChange={() => setPaymentMethod('cod')}
-                    />
                   </div>
-                </div>
-                
-                <div
-                  onClick={() => setPaymentMethod('card')}
-                  className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-                    paymentMethod === 'card'
-                      ? 'border-orange-500 bg-orange-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <CreditCard className="w-5 h-5 text-gray-600" />
-                      <div>
-                        <span className="font-medium">Credit/Debit Card</span>
-                        <p className="text-sm text-gray-600">Visa, Mastercard, RuPay</p>
-                      </div>
-                    </div>
-                    <input
-                      type="radio"
-                      checked={paymentMethod === 'card'}
-                      onChange={() => setPaymentMethod('card')}
-                    />
-                  </div>
+                  <input
+                    type="radio"
+                    checked={true}
+                    readOnly
+                  />
                 </div>
               </div>
             </div>
