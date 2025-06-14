@@ -82,7 +82,7 @@ const Index: React.FC = () => {
                     <span className="text-lg font-medium text-zinc-950">Home</span>
                     <ChevronDown className="w-4 h-4 text-black" />
                   </div>
-                  <span className="text-sm opacity-90 text-zinc-950 font-semibold">Flat 103, house 288, Medicity, Islam...</span>
+                  <span className="opacity-90 text-zinc-950 font-semibold text-xs">Flat 103, house 288, Medicity, Islam...</span>
                 </div>
               </div>
               
