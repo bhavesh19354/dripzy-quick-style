@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
@@ -155,7 +156,7 @@ const Index: React.FC = () => {
               products={trendingProducts} 
               onAddToCart={handleAddToCart} 
               heroLayout={true}
-              heroImage="/lovable-uploads/b9498ccd-9028-4892-bae0-7c96b44ea829.png"
+              heroImage="/lovable-uploads/ed93d5d3-7dfc-435d-b618-f1ec8b6380b5.png"
               heroTitle="Products you can't miss"
             />
           </div>
