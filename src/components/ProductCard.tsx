@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { Plus, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 interface Product {
   id: string;
@@ -26,6 +28,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   showHeartIcon = false,
   itemNumber
 }) => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
   const handleCardClick = () => {
     if (onClick) {
       onClick(product.id);
@@ -34,6 +39,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click when clicking add to cart
+    
+    if (!isAuthenticated) {
+      navigate('/auth', { state: { from: window.location.pathname } });
+      return;
+    }
+    
     onAddToCart(product);
   };
 

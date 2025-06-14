@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import Auth from './Auth';
 
 interface CartItem {
   id: string;
@@ -16,6 +18,7 @@ interface CartItem {
 
 const Cart: React.FC = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   
   // Mock cart items - in real app this would come from context/state management
   const [cartItems, setCartItems] = useState<CartItem[]>([
@@ -38,6 +41,11 @@ const Cart: React.FC = () => {
       quantity: 2
     }
   ]);
+
+  // Show login screen if user is not authenticated
+  if (!isAuthenticated) {
+    return <Auth />;
+  }
 
   const handleUpdateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity <= 0) {

@@ -1,15 +1,21 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { useAuth } from '../contexts/AuthContext';
 
 const Auth: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
   const [step, setStep] = useState<'phone' | 'otp'>('phone');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Get the redirect path from location state, default to home
+  const from = location.state?.from || '/';
 
   const handleSendOTP = async () => {
     if (phoneNumber.length !== 10) {
@@ -35,10 +41,9 @@ const Auth: React.FC = () => {
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      // Set authentication state
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('userPhone', phoneNumber);
-      navigate('/checkout');
+      // Set authentication state using context
+      login(phoneNumber);
+      navigate(from, { replace: true });
     }, 2000);
   };
 

@@ -2,8 +2,24 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import { User, MapPin, Phone, Mail, Package, LogOut } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import Auth from './Auth';
 
 const Profile: React.FC = () => {
+  const { isAuthenticated, userPhone, logout } = useAuth();
+  const navigate = useNavigate();
+
+  // Show login screen if user is not authenticated
+  if (!isAuthenticated) {
+    return <Auth />;
+  }
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   const mockOrders = [
     {
       id: 'ORD001',
@@ -38,7 +54,7 @@ const Profile: React.FC = () => {
               <User className="w-8 h-8 text-orange-500" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-gray-900">Rahul Sharma</h2>
+              <h2 className="text-xl font-bold text-gray-900">Welcome!</h2>
               <p className="text-gray-600">Premium Member</p>
             </div>
           </div>
@@ -49,12 +65,12 @@ const Profile: React.FC = () => {
           <h3 className="font-semibold text-gray-900 mb-4">Personal Information</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-3">
-              <Mail className="w-5 h-5 text-gray-400" />
-              <span className="text-gray-700">rahul.sharma@email.com</span>
+              <Phone className="w-5 h-5 text-gray-400" />
+              <span className="text-gray-700">+91 {userPhone}</span>
             </div>
             <div className="flex items-center gap-3">
-              <Phone className="w-5 h-5 text-gray-400" />
-              <span className="text-gray-700">+91 98765 43210</span>
+              <Mail className="w-5 h-5 text-gray-400" />
+              <span className="text-gray-700">user@email.com</span>
             </div>
             <div className="flex items-center gap-3">
               <MapPin className="w-5 h-5 text-gray-400" />
@@ -92,7 +108,10 @@ const Profile: React.FC = () => {
 
         {/* Logout Button */}
         <div className="mx-4 mb-8">
-          <button className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+          <button 
+            onClick={handleLogout}
+            className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+          >
             <LogOut className="w-5 h-5" />
             Logout
           </button>
