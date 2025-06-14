@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -34,15 +33,14 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
           onClick={handlePromoClick}
           className="flex flex-col items-center gap-1 group cursor-pointer"
         >
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-300 via-orange-400 to-red-500 flex items-center justify-center relative overflow-hidden shadow-lg">
-            <div className="relative z-10 text-black text-[8px] font-black text-center leading-[0.9] transform -rotate-12">
-              <div className="text-yellow-900">FLAT</div>
-              <div className="text-2xl font-black text-red-700">50%</div>
-              <div className="text-yellow-900">OFF</div>
+          <div className="w-12 h-12 flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-white text-xs font-bold leading-tight">Explore</div>
+              <div className="text-white text-xs font-bold leading-tight">Trending</div>
+              <div className="text-white text-xs font-bold leading-tight">Styles</div>
             </div>
           </div>
           <div className="flex items-center gap-1">
-            <span className="text-xs font-medium text-white">Explore</span>
             <ArrowRight className="w-3 h-3 text-white" />
           </div>
         </div>

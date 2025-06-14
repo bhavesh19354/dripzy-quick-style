@@ -58,17 +58,17 @@ const Categories: React.FC = () => {
   return (
     <Layout>
       <div className="bg-gray-50 min-h-screen">
-        {/* Top Bar - Same as Home Page */}
-        <div className="bg-white px-4 py-3">
+        {/* Top Bar - Matching Home Page Style */}
+        <div className="px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-black" />
               <div className="flex flex-col">
-                <div className="flex items-center gap-1">
-                  <span className="text-lg font-medium text-zinc-950">Home</span>
+                <div className="flex items-center gap-1 py-0">
+                  <span className="text-zinc-950 text-lg font-bold">Home</span>
                   <ChevronDown className="w-4 h-4 text-black" />
                 </div>
-                <span className="text-sm opacity-90 text-zinc-950">Flat 103, house 288, Medicity, Islam...</span>
+                <span className="opacity-90 text-zinc-950 font-semibold text-xs">Flat 103, house 288, Medicity, Islam...</span>
               </div>
             </div>
             
@@ -85,10 +85,16 @@ const Categories: React.FC = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="bg-white px-4 pb-3">
-          <div className="bg-gray-100 rounded-full px-4 py-2 flex items-center gap-2">
-            <Search className="w-4 h-4 text-gray-500" />
-            <span className="text-gray-500 text-sm">Search for products...</span>
+        <div className="bg-transparent px-[15px] mx-0 my-0 py-[5px]">
+          <div className="flex items-center gap-3">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input 
+                type="text" 
+                placeholder="Search 'chicken'" 
+                className="w-full pl-10 pr-12 py-3 bg-gray-800 text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent" 
+              />
+            </div>
           </div>
         </div>
 
