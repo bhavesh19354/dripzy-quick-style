@@ -9,6 +9,7 @@ import EthnicCollection from '../components/EthnicCollection';
 import ProductGrid from '../components/ProductGrid';
 import { MapPin, ChevronDown, User, ShoppingCart } from 'lucide-react';
 import { categories, banners, products, quickPicks, trendingProducts, justInProducts, featuredCategories } from '../data/mockData';
+
 interface Product {
   id: string;
   name: string;
@@ -17,23 +18,28 @@ interface Product {
   brand: string;
   originalPrice?: number;
 }
+
 interface CartItem extends Product {
   selectedSize?: string;
   quantity: number;
 }
+
 const Index: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('women');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isSearchSticky, setIsSearchSticky] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       // Get the delivery bar height (approximately 72px based on the padding and content)
       const deliveryBarHeight = 72;
       setIsSearchSticky(window.scrollY >= deliveryBarHeight);
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   const handleAddToCart = (product: Product) => {
     const existingItem = cartItems.find(item => item.id === product.id);
     if (existingItem) {
@@ -51,36 +57,41 @@ const Index: React.FC = () => {
     }
     console.log('Added to cart:', product);
   };
+
   const handleUpdateCartQuantity = (id: string, quantity: number) => {
     setCartItems(cartItems.map(item => item.id === id ? {
       ...item,
       quantity
     } : item));
   };
+
   const handleRemoveCartItem = (id: string) => {
     setCartItems(cartItems.filter(item => item.id !== id));
   };
+
   const currentBanners = banners[selectedCategory as keyof typeof banners];
   const currentProducts = products[selectedCategory as keyof typeof products];
   const currentFeaturedCategories = featuredCategories[selectedCategory as keyof typeof featuredCategories];
-  return <Layout cartItems={cartItems} onUpdateCartQuantity={handleUpdateCartQuantity} onRemoveCartItem={handleRemoveCartItem}>
+
+  return (
+    <Layout cartItems={cartItems} onUpdateCartQuantity={handleUpdateCartQuantity} onRemoveCartItem={handleRemoveCartItem}>
       <div className="bg-white min-h-screen">
         {/* Hero Section - Background image with overlay content */}
         <div className="relative" style={{
-        height: '55vh',
-        backgroundImage: 'url(/lovable-uploads/3d5567e9-bee1-49b1-846c-a831ff5e4325.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}>
+          height: '55vh',
+          backgroundImage: 'url(/lovable-uploads/3d5567e9-bee1-49b1-846c-a831ff5e4325.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}>
           {/* Top Bar Content Over Background */}
           <div className="absolute top-0 left-0 right-0 z-10 px-4 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-white mt-0.5" />
+                <MapPin className="w-4 h-4 text-black mt-0.5" />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-1">
                     <span className="text-lg font-medium text-zinc-950">Home</span>
-                    <ChevronDown className="w-4 h-4 text-white bg-zinc-950" />
+                    <ChevronDown className="w-4 h-4 text-black" />
                   </div>
                   <span className="text-sm opacity-90 text-zinc-950">Flat 103, house 288, Medicity, Islam...</span>
                 </div>
@@ -88,7 +99,7 @@ const Index: React.FC = () => {
               
               <div className="flex items-center gap-4">
                 <div className="relative">
-                  <ShoppingCart className="w-5 h-5 text-white bg-zinc-950" />
+                  <ShoppingCart className="w-5 h-5 text-black" />
                   <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
                 </div>
                 <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
@@ -136,6 +147,8 @@ const Index: React.FC = () => {
           </div>
         </div>
       </div>
-    </Layout>;
+    </Layout>
+  );
 };
+
 export default Index;
