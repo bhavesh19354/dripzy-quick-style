@@ -19,7 +19,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
   onCategoryChange,
 }) => {
   return (
-    <div className="px-4 py-6">
+    <div className="bg-black px-4 py-6">
       <div className="flex justify-between items-center gap-4">
         {categories.map((category) => (
           <button
@@ -38,7 +38,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
               )}
             </div>
             <span className={`text-sm font-medium transition-colors ${
-              selectedCategory === category.id ? 'text-orange-500' : 'text-gray-700'
+              selectedCategory === category.id ? 'text-orange-500' : 'text-white'
             }`}>
               {category.name}
             </span>

@@ -33,7 +33,7 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <div className="min-h-screen bg-white">
       {/* Fixed Top Header */}
-      <header className="fixed top-0 left-0 right-0 bg-slate-800 text-white z-40 px-4 py-3">
+      <header className="fixed top-0 left-0 right-0 bg-black text-white z-40 px-4 py-3">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex flex-col items-start">
             <span className="text-xs">Delivering in</span>
@@ -48,7 +48,7 @@ const Layout: React.FC<LayoutProps> = ({
           <div className="flex items-center gap-3">
             <button 
               onClick={() => navigate('/cart')}
-              className="relative p-2 hover:bg-slate-700 rounded-full transition-colors"
+              className="relative p-2 hover:bg-gray-800 rounded-full transition-colors"
             >
               <ShoppingCart className="w-4 h-4" />
               {cartItemCount > 0 && (
@@ -59,7 +59,7 @@ const Layout: React.FC<LayoutProps> = ({
             </button>
             <button 
               onClick={() => navigate('/profile')}
-              className="p-2 hover:bg-slate-700 rounded-full transition-colors"
+              className="p-2 hover:bg-gray-800 rounded-full transition-colors"
             >
               <User className="w-4 h-4" />
             </button>
