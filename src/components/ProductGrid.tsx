@@ -41,7 +41,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
         {/* Extended Hero Section with increased mobile height */}
         <div className="relative h-[40rem] md:h-[40rem] mb-6 rounded-2xl overflow-hidden">
           <img
-            src="/lovable-uploads/a13d003d-2389-42d3-a990-f5897b703179.png"
+            src="/lovable-uploads/ba5d1c8a-c3c3-4e35-a13f-d8e948818dbf.png"
             alt={heroTitle || title}
             className="w-full h-full object-cover"
           />
