@@ -58,18 +58,6 @@ const Categories: React.FC = () => {
   return (
     <Layout>
       <div className="bg-gray-50 min-h-screen">
-        {/* Top Status Bar */}
-        <div className="bg-white px-4 py-2 flex justify-between items-center text-sm">
-          <span className="font-medium">7:29</span>
-          <div className="flex items-center gap-2">
-            <span className="text-xs">4G</span>
-            <div className="flex items-center gap-1">
-              <div className="w-4 h-2 bg-green-500 rounded-sm"></div>
-              <span className="bg-yellow-400 text-black text-xs px-1 rounded">27</span>
-            </div>
-          </div>
-        </div>
-
         {/* Search Bar */}
         <div className="bg-white px-4 pb-3">
           <div className="bg-gray-100 rounded-full px-4 py-2 flex items-center gap-2">
