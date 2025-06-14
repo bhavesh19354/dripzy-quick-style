@@ -54,17 +54,7 @@ const EthnicCollection: React.FC = () => {
           <div className="flex-1">
             <div className="mb-4">
               <div className="inline-block bg-black text-white px-3 py-1 rounded-full text-xs font-bold mb-3">UPTO 50% OFF</div>
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Featured Brands</h2>
-                {/* Featured model image on the right */}
-                <div className="w-16 h-20 md:w-20 md:h-24 flex-shrink-0 ml-4">
-                  <img 
-                    src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=120&h=120&fit=crop" 
-                    alt="Featured Models" 
-                    className="w-full h-full object-cover rounded-lg" 
-                  />
-                </div>
-              </div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Featured Brands</h2>
             </div>
             
             <button
