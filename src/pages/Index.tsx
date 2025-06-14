@@ -151,11 +151,14 @@ const Index: React.FC = () => {
               heroTitle="SEASON'S STANDOUT"
             />
             
-            <ProductGrid title="Trending Now" products={trendingProducts} onAddToCart={handleAddToCart} />
-            
-            <ProductGrid title="Just In" products={justInProducts} onAddToCart={handleAddToCart} />
-            
-            <ProductGrid title={`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Collection`} products={currentProducts} onAddToCart={handleAddToCart} />
+            <ProductGrid 
+              title="Trending Now" 
+              products={trendingProducts} 
+              onAddToCart={handleAddToCart} 
+              heroLayout={true}
+              heroImage="/lovable-uploads/66c2b67b-2949-41db-a05e-9c12ebf23ddb.png"
+              heroTitle="TRENDING NOW"
+            />
           </div>
         </div>
       </div>
