@@ -79,7 +79,8 @@ const Index: React.FC = () => {
                 <MapPin className="w-4 h-4 text-black" />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-1 py-0">
-                    <span className="text-zinc-950 text-lg font-bold">Deliver at</span>
+                    <span className="text-zinc-950 text-lg font-bold">Home
+                  </span>
                     <ChevronDown className="w-4 h-4 text-black" />
                   </div>
                   <span className="opacity-90 text-zinc-950 font-semibold text-xs">Flat 103, house 288, Medicity, Islam...</span>
