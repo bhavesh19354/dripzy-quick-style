@@ -44,42 +44,44 @@ const AutoSlidingBanner: React.FC<AutoSlidingBannerProps> = ({
   const currentBanner = banners[currentIndex];
 
   return (
-    <div className="relative mx-4 mb-2 rounded-2xl overflow-hidden h-80 bg-gradient-to-r from-gray-900 to-gray-700">
-      <img
-        src={currentBanner.image}
-        alt="Banner"
-        className="w-full h-full object-cover opacity-80"
-      />
-      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-      
-      {/* Navigation arrows */}
-      {banners.length > 1 && (
-        <>
-          <button
-            onClick={goToPrevious}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={goToNext}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </>
-      )}
+    <div className="relative">
+      <div className="relative mx-4 mb-2 rounded-2xl overflow-hidden h-80 bg-gradient-to-r from-gray-900 to-gray-700">
+        <img
+          src={currentBanner.image}
+          alt="Banner"
+          className="w-full h-full object-cover opacity-80"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        {/* Navigation arrows */}
+        {banners.length > 1 && (
+          <>
+            <button
+              onClick={goToPrevious}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={goToNext}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </>
+        )}
 
-      {/* Content */}
-      <div className="absolute bottom-12 left-0 p-6 text-white">
-        <p className="text-orange-400 text-sm font-medium mb-1">SHOP ABOVE ₹500 TO UNLOCK A FREE PASS!</p>
-        <h2 className="text-2xl font-bold mb-1">{currentBanner.title}</h2>
-        <p className="text-sm opacity-90">{currentBanner.subtitle}</p>
+        {/* Content */}
+        <div className="absolute bottom-12 left-0 p-6 text-white">
+          <p className="text-orange-400 text-sm font-medium mb-1">SHOP ABOVE ₹500 TO UNLOCK A FREE PASS!</p>
+          <h2 className="text-2xl font-bold mb-1">{currentBanner.title}</h2>
+          <p className="text-sm opacity-90">{currentBanner.subtitle}</p>
+        </div>
       </div>
 
-      {/* Dots indicator - positioned at the bottom center outside the banner */}
+      {/* Dots indicator - positioned below the banner */}
       {banners.length > 1 && (
-        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+        <div className="flex justify-center gap-2 mb-4">
           {banners.map((_, index) => (
             <button
               key={index}

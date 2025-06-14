@@ -77,11 +77,13 @@ const Index: React.FC = () => {
           onCategoryChange={setSelectedCategory}
         />
         
-        <div className="pt-3 pb-6">
+        <div className="pt-3">
           <AutoSlidingBanner banners={currentBanners} />
         </div>
         
-        <MovingBanner text="FLAT 10% OFF ON YOUR FIRST ORDER" />
+        <div className="my-4">
+          <MovingBanner text="FLAT 10% OFF ON YOUR FIRST ORDER" />
+        </div>
         
         <div className="bg-white">
           <FeaturedCategories categories={currentFeaturedCategories} />
