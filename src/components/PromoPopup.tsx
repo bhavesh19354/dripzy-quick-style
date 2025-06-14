@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 const PromoPopup: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,8 +16,12 @@ const PromoPopup: React.FC = () => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-md p-0 bg-transparent border-0 shadow-none">
+    <Dialog open={isOpen} onOpenChange={() => {}}>
+      <DialogContent className="max-w-sm sm:max-w-md p-0 bg-transparent border-0 shadow-none w-[90vw] sm:w-full">
+        <DialogTitle className="sr-only">Dripzy Promo</DialogTitle>
+        <DialogDescription className="sr-only">
+          Try fashion at home for ₹0 - Special promotional offer
+        </DialogDescription>
         <div className="relative">
           <button
             onClick={handleClose}
