@@ -102,6 +102,12 @@ const Index: React.FC = () => {
               
               <div className="flex items-center gap-4">
                 <button 
+                  onClick={() => navigate('/products')}
+                  className="text-black hover:text-gray-700 font-medium text-sm"
+                >
+                  Shop All
+                </button>
+                <button 
                   onClick={() => navigate('/cart')}
                   className="relative"
                 >
