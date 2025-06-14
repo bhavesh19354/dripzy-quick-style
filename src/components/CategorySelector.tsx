@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface Category {
   id: string;
@@ -18,21 +20,31 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
   selectedCategory,
   onCategoryChange
 }) => {
+  const navigate = useNavigate();
+
+  const handlePromoClick = () => {
+    navigate('/products/women/all');
+  };
+
   return (
     <div className="bg-black px-4 py-2 my-0">
       <div className="flex justify-between items-center gap-4 my-[3px] mx-[4px]">
-        {/* Explore Trending Styles Item */}
-        <div className="flex flex-col items-center gap-1 group cursor-pointer">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 to-purple-600 flex items-center justify-center relative overflow-hidden">
-            <div className="relative z-10 text-white text-[10px] font-bold text-center leading-tight">
-              <div>EXPLORE</div>
-              <div>TRENDING</div>
-              <div>STYLES</div>
+        {/* Promotional Button */}
+        <div 
+          onClick={handlePromoClick}
+          className="flex flex-col items-center gap-1 group cursor-pointer"
+        >
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-300 via-orange-400 to-red-500 flex items-center justify-center relative overflow-hidden shadow-lg">
+            <div className="relative z-10 text-black text-[8px] font-black text-center leading-[0.9] transform -rotate-12">
+              <div className="text-yellow-900">FLAT</div>
+              <div className="text-2xl font-black text-red-700">50%</div>
+              <div className="text-yellow-900">OFF</div>
             </div>
           </div>
-          <span className="text-xs font-medium text-white text-center leading-tight">
-            Explore<br />Trending
-          </span>
+          <div className="flex items-center gap-1">
+            <span className="text-xs font-medium text-white">Explore</span>
+            <ArrowRight className="w-3 h-3 text-white" />
+          </div>
         </div>
 
         {/* Existing Categories */}
