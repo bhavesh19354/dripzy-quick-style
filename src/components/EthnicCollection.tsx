@@ -60,9 +60,9 @@ const EthnicCollection: React.FC = () => {
                 {/* Featured model image on the right */}
                 <div className="w-16 h-20 md:w-20 md:h-24 flex-shrink-0 ml-4">
                   <img 
-                    src="/lovable-uploads/81c15fc4-f6d5-4359-8025-f2c3a0a77a8a.png" 
+                    src="https://images.unsplash.com/photo-1594736797933-d0bdb6a43e68?w=100&h=120&fit=crop&crop=face" 
                     alt="Featured Model" 
-                    className="w-full h-full object-cover" 
+                    className="w-full h-full object-cover rounded-lg" 
                   />
                 </div>
               </div>
