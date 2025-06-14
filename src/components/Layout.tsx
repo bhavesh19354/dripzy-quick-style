@@ -35,26 +35,30 @@ const Layout: React.FC<LayoutProps> = ({
       {/* Fixed Top Header */}
       <header className="fixed top-0 left-0 right-0 bg-slate-800 text-white z-40 px-4 py-3">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-orange-400" />
-            <span className="text-sm">Delivering in Gurugram</span>
+          <div className="flex items-center gap-1">
+            <MapPin className="w-3 h-3 text-orange-400" />
+            <span className="text-xs">Delivering in Gurugram</span>
           </div>
           
-          <h1 
+          <div 
             onClick={() => navigate('/')}
-            className="text-xl font-bold tracking-wide cursor-pointer"
+            className="cursor-pointer flex items-center"
           >
-            Dripzy
-          </h1>
+            <img 
+              src="/lovable-uploads/c15dd2d0-3e5a-401b-8a50-4a9bce1a648d.png" 
+              alt="Dripzy Logo" 
+              className="h-8 w-auto"
+            />
+          </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <button 
               onClick={() => navigate('/cart')}
               className="relative p-2 hover:bg-slate-700 rounded-full transition-colors"
             >
-              <ShoppingCart className="w-5 h-5" />
+              <ShoppingCart className="w-4 h-4" />
               {cartItemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                   {cartItemCount}
                 </span>
               )}
@@ -63,7 +67,7 @@ const Layout: React.FC<LayoutProps> = ({
               onClick={() => navigate('/profile')}
               className="p-2 hover:bg-slate-700 rounded-full transition-colors"
             >
-              <User className="w-5 h-5" />
+              <User className="w-4 h-4" />
             </button>
           </div>
         </div>
