@@ -37,12 +37,12 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   if (heroLayout) {
     return (
       <div className="mb-8">
-        {/* Extended Hero Section with increased mobile height */}
-        <div className="relative h-[40rem] md:h-[40rem] mb-6 rounded-2xl overflow-hidden">
+        {/* Extended Hero Section with reduced mobile height */}
+        <div className="relative h-[32rem] md:h-[40rem] mb-6 rounded-2xl overflow-hidden">
           <img
             src="/lovable-uploads/66c2b67b-2949-41db-a05e-9c12ebf23ddb.png"
             alt={heroTitle || title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           
@@ -55,8 +55,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             </div>
           </div>
           
-          {/* Product Cards Overlay - Better mobile positioning */}
-          <div className="absolute bottom-0 left-0 right-0 h-1/2 flex items-center px-4">
+          {/* Product Cards Overlay - Higher positioning on mobile */}
+          <div className="absolute bottom-0 left-0 right-0 h-1/2 md:h-1/2 flex items-start md:items-center pt-8 md:pt-0 px-4">
             <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide w-full">
               {products.map((product, index) => (
                 <div key={product.id} className="flex-shrink-0 w-40 md:w-48">
