@@ -14,10 +14,15 @@ interface Product {
   originalPrice?: number;
 }
 
+interface CartItem extends Product {
+  selectedSize?: string;
+  quantity: number;
+}
+
 const ProductDetail: React.FC = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [selectedSize, setSelectedSize] = useState('M');
   const [quantity, setQuantity] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -32,9 +37,46 @@ const ProductDetail: React.FC = () => {
   
   const product = allProducts.find(p => p.id === productId);
 
+  const handleAddToCart = () => {
+    if (!product) return;
+    
+    const existingItem = cartItems.find(item => item.id === product.id);
+    
+    if (existingItem) {
+      setCartItems(cartItems.map(item => 
+        item.id === product.id 
+          ? { ...item, quantity: item.quantity + quantity }
+          : item
+      ));
+    } else {
+      const newCartItem: CartItem = {
+        ...product,
+        selectedSize,
+        quantity
+      };
+      setCartItems([...cartItems, newCartItem]);
+    }
+    
+    console.log('Added to cart:', { ...product, selectedSize, quantity });
+  };
+
+  const handleUpdateCartQuantity = (id: string, newQuantity: number) => {
+    setCartItems(cartItems.map(item => 
+      item.id === id ? { ...item, quantity: newQuantity } : item
+    ));
+  };
+
+  const handleRemoveCartItem = (id: string) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
+  };
+
   if (!product) {
     return (
-      <Layout cartItemCount={cartItems.length}>
+      <Layout 
+        cartItems={cartItems}
+        onUpdateCartQuantity={handleUpdateCartQuantity}
+        onRemoveCartItem={handleRemoveCartItem}
+      >
         <div className="flex items-center justify-center min-h-screen">
           <p className="text-gray-500">Product not found</p>
         </div>
@@ -42,17 +84,15 @@ const ProductDetail: React.FC = () => {
     );
   }
 
-  const handleAddToCart = () => {
-    const cartItem = { ...product, selectedSize, quantity };
-    setCartItems([...cartItems, cartItem]);
-    console.log('Added to cart:', cartItem);
-  };
-
   const images = [product.image, product.image, product.image]; // Mock multiple images
   const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 
   return (
-    <Layout cartItemCount={cartItems.length}>
+    <Layout 
+      cartItems={cartItems}
+      onUpdateCartQuantity={handleUpdateCartQuantity}
+      onRemoveCartItem={handleRemoveCartItem}
+    >
       <div className="bg-white min-h-screen">
         {/* Header */}
         <div className="sticky top-16 bg-white border-b border-gray-200 px-4 py-3 z-10">

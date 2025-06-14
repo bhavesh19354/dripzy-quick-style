@@ -15,10 +15,15 @@ interface Product {
   originalPrice?: number;
 }
 
+interface CartItem extends Product {
+  selectedSize?: string;
+  quantity: number;
+}
+
 const ProductListing: React.FC = () => {
   const { category, subcategory } = useParams();
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [sortBy, setSortBy] = useState('featured');
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 5000 });
@@ -48,8 +53,34 @@ const ProductListing: React.FC = () => {
   });
 
   const handleAddToCart = (product: Product) => {
-    setCartItems([...cartItems, product]);
+    const existingItem = cartItems.find(item => item.id === product.id);
+    
+    if (existingItem) {
+      setCartItems(cartItems.map(item => 
+        item.id === product.id 
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      ));
+    } else {
+      const newCartItem: CartItem = {
+        ...product,
+        selectedSize: 'M',
+        quantity: 1
+      };
+      setCartItems([...cartItems, newCartItem]);
+    }
+    
     console.log('Added to cart:', product);
+  };
+
+  const handleUpdateCartQuantity = (id: string, newQuantity: number) => {
+    setCartItems(cartItems.map(item => 
+      item.id === id ? { ...item, quantity: newQuantity } : item
+    ));
+  };
+
+  const handleRemoveCartItem = (id: string) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
   };
 
   const handleProductClick = (productId: string) => {
@@ -59,7 +90,11 @@ const ProductListing: React.FC = () => {
   const brands = ['Zara', 'H&M', 'Jockey', 'Nike', 'Adidas'];
 
   return (
-    <Layout cartItemCount={cartItems.length}>
+    <Layout 
+      cartItems={cartItems}
+      onUpdateCartQuantity={handleUpdateCartQuantity}
+      onRemoveCartItem={handleRemoveCartItem}
+    >
       <div className="bg-gray-50 min-h-screen">
         {/* Header */}
         <div className="bg-white px-4 py-4 border-b">
