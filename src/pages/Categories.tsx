@@ -16,11 +16,11 @@ const Categories: React.FC = () => {
   // Vertical sidebar categories
   const sidebarCategories = [
     { id: 'women', name: "Women's\nWear", icon: '👗', bgColor: 'bg-pink-100', textColor: 'text-pink-600', borderColor: 'border-pink-200' },
-    { id: 'men', name: "Men's\nWear", icon: '👔', bgColor: 'bg-gray-100', textColor: 'text-gray-600', borderColor: 'border-gray-200' },
-    { id: 'footwear', name: 'Footwear', icon: '👠', bgColor: 'bg-gray-100', textColor: 'text-gray-600', borderColor: 'border-gray-200' },
-    { id: 'accessories', name: 'Beauty &\nGrooming', icon: '💄', bgColor: 'bg-gray-100', textColor: 'text-gray-600', borderColor: 'border-gray-200' },
-    { id: 'kids', name: 'Kids\nWear', icon: '👶', bgColor: 'bg-gray-100', textColor: 'text-gray-600', borderColor: 'border-gray-200' },
-    { id: 'home', name: 'Home &\nLiving', icon: '🏠', bgColor: 'bg-gray-100', textColor: 'text-gray-600', borderColor: 'border-gray-200' }
+    { id: 'men', name: "Men's\nWear", icon: '👔', bgColor: 'bg-blue-100', textColor: 'text-blue-600', borderColor: 'border-blue-200' },
+    { id: 'footwear', name: 'Footwear', icon: '👠', bgColor: 'bg-purple-100', textColor: 'text-purple-600', borderColor: 'border-purple-200' },
+    { id: 'accessories', name: 'Beauty &\nGrooming', icon: '💄', bgColor: 'bg-rose-100', textColor: 'text-rose-600', borderColor: 'border-rose-200' },
+    { id: 'kids', name: 'Kids\nWear', icon: '👶', bgColor: 'bg-yellow-100', textColor: 'text-yellow-600', borderColor: 'border-yellow-200' },
+    { id: 'home', name: 'Home &\nLiving', icon: '🏠', bgColor: 'bg-green-100', textColor: 'text-green-600', borderColor: 'border-green-200' }
   ];
 
   // Category content data
@@ -46,6 +46,93 @@ const Categories: React.FC = () => {
         { id: 'kurtas', name: 'Kurtas', image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=150&h=150&fit=crop' },
         { id: 'ethnic-alley', name: 'Ethnic Alley', image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=150&h=150&fit=crop' }
       ]
+    },
+    men: {
+      banner: {
+        title: "Men's Fashion Store",
+        image: 'https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=300&h=200&fit=crop'
+      },
+      casualWear: [
+        { id: 'tshirts', name: 'T-Shirts', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=150&h=150&fit=crop' },
+        { id: 'shirts', name: 'Shirts', image: 'https://images.unsplash.com/photo-1602810316498-ab67cf68c8e1?w=150&h=150&fit=crop' },
+        { id: 'jeans', name: 'Jeans', image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=150&h=150&fit=crop' },
+        { id: 'trousers', name: 'Trousers', image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=150&h=150&fit=crop' },
+        { id: 'shorts', name: 'Shorts', image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=150&h=150&fit=crop' },
+        { id: 'hoodies', name: 'Hoodies', image: 'https://images.unsplash.com/photo-1556821840-3a9fbc86ecd0?w=150&h=150&fit=crop' }
+      ],
+      formalWear: [
+        { id: 'suits', name: 'Suits', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop' },
+        { id: 'blazers', name: 'Blazers', image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=150&h=150&fit=crop' },
+        { id: 'formal-shirts', name: 'Formal Shirts', image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=150&h=150&fit=crop' }
+      ]
+    },
+    footwear: {
+      banner: {
+        title: "Footwear Collection",
+        image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&h=200&fit=crop'
+      },
+      womensFootwear: [
+        { id: 'heels', name: 'Heels', image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=150&h=150&fit=crop' },
+        { id: 'flats', name: 'Flats', image: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=150&h=150&fit=crop' },
+        { id: 'sneakers', name: 'Sneakers', image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=150&h=150&fit=crop' },
+        { id: 'boots', name: 'Boots', image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=150&h=150&fit=crop' }
+      ],
+      mensFootwear: [
+        { id: 'formal-shoes', name: 'Formal Shoes', image: 'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=150&h=150&fit=crop' },
+        { id: 'casual-shoes', name: 'Casual Shoes', image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=150&h=150&fit=crop' },
+        { id: 'sports-shoes', name: 'Sports Shoes', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=150&h=150&fit=crop' }
+      ]
+    },
+    accessories: {
+      banner: {
+        title: "Beauty & Grooming",
+        image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=300&h=200&fit=crop'
+      },
+      makeup: [
+        { id: 'lipstick', name: 'Lipstick', image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=150&h=150&fit=crop' },
+        { id: 'foundation', name: 'Foundation', image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=150&h=150&fit=crop' },
+        { id: 'eyeshadow', name: 'Eyeshadow', image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=150&h=150&fit=crop' },
+        { id: 'mascara', name: 'Mascara', image: 'https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=150&h=150&fit=crop' }
+      ],
+      skincare: [
+        { id: 'moisturizer', name: 'Moisturizer', image: 'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=150&h=150&fit=crop' },
+        { id: 'cleanser', name: 'Cleanser', image: 'https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=150&h=150&fit=crop' },
+        { id: 'serum', name: 'Serum', image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=150&h=150&fit=crop' }
+      ]
+    },
+    kids: {
+      banner: {
+        title: "Kids Fashion",
+        image: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=300&h=200&fit=crop'
+      },
+      boysWear: [
+        { id: 'boys-tshirts', name: 'T-Shirts', image: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=150&h=150&fit=crop' },
+        { id: 'boys-shirts', name: 'Shirts', image: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=150&h=150&fit=crop' },
+        { id: 'boys-jeans', name: 'Jeans', image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=150&h=150&fit=crop' },
+        { id: 'boys-shorts', name: 'Shorts', image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=150&h=150&fit=crop' }
+      ],
+      girlsWear: [
+        { id: 'girls-dresses', name: 'Dresses', image: 'https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=150&h=150&fit=crop' },
+        { id: 'girls-tops', name: 'Tops', image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=150&h=150&fit=crop' },
+        { id: 'girls-skirts', name: 'Skirts', image: 'https://images.unsplash.com/photo-1583496661160-fb5886a13d14?w=150&h=150&fit=crop' }
+      ]
+    },
+    home: {
+      banner: {
+        title: "Home & Living",
+        image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=200&fit=crop'
+      },
+      decor: [
+        { id: 'cushions', name: 'Cushions', image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=150&h=150&fit=crop' },
+        { id: 'wall-art', name: 'Wall Art', image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=150&h=150&fit=crop' },
+        { id: 'candles', name: 'Candles', image: 'https://images.unsplash.com/photo-1602874801006-98cc0c840850?w=150&h=150&fit=crop' },
+        { id: 'plants', name: 'Plants', image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=150&h=150&fit=crop' }
+      ],
+      bedding: [
+        { id: 'bed-sheets', name: 'Bed Sheets', image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=150&h=150&fit=crop' },
+        { id: 'pillows', name: 'Pillows', image: 'https://images.unsplash.com/photo-1582628502337-d16c554bda95?w=150&h=150&fit=crop' },
+        { id: 'blankets', name: 'Blankets', image: 'https://images.unsplash.com/photo-1541123356219-284ebe98ae3b?w=150&h=150&fit=crop' }
+      ]
     }
   };
 
@@ -53,6 +140,302 @@ const Categories: React.FC = () => {
 
   const handleSidebarCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId);
+  };
+
+  const renderContent = () => {
+    const selectedSidebarCategory = sidebarCategories.find(cat => cat.id === selectedCategory);
+    
+    if (selectedCategory === 'women') {
+      return (
+        <>
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Western Wear</h3>
+            <div className="grid grid-cols-3 gap-4">
+              {currentContent.westernWear.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Ethnic Wear</h3>
+            <div className="flex gap-6 overflow-x-auto pb-2">
+              {currentContent.ethnicWear.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer flex-shrink-0"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      );
+    } else if (selectedCategory === 'men') {
+      return (
+        <>
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Casual Wear</h3>
+            <div className="grid grid-cols-3 gap-4">
+              {currentContent.casualWear.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Formal Wear</h3>
+            <div className="flex gap-6 overflow-x-auto pb-2">
+              {currentContent.formalWear.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer flex-shrink-0"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      );
+    } else if (selectedCategory === 'footwear') {
+      return (
+        <>
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Women's Footwear</h3>
+            <div className="grid grid-cols-3 gap-4">
+              {currentContent.womensFootwear.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Men's Footwear</h3>
+            <div className="flex gap-6 overflow-x-auto pb-2">
+              {currentContent.mensFootwear.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer flex-shrink-0"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      );
+    } else if (selectedCategory === 'accessories') {
+      return (
+        <>
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Makeup</h3>
+            <div className="grid grid-cols-3 gap-4">
+              {currentContent.makeup.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Skincare</h3>
+            <div className="flex gap-6 overflow-x-auto pb-2">
+              {currentContent.skincare.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer flex-shrink-0"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      );
+    } else if (selectedCategory === 'kids') {
+      return (
+        <>
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Boys Wear</h3>
+            <div className="grid grid-cols-3 gap-4">
+              {currentContent.boysWear.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Girls Wear</h3>
+            <div className="flex gap-6 overflow-x-auto pb-2">
+              {currentContent.girlsWear.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer flex-shrink-0"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      );
+    } else if (selectedCategory === 'home') {
+      return (
+        <>
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Home Decor</h3>
+            <div className="grid grid-cols-3 gap-4">
+              {currentContent.decor.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="px-4 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Bedding</h3>
+            <div className="flex gap-6 overflow-x-auto pb-2">
+              {currentContent.bedding.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className="flex flex-col items-center cursor-pointer flex-shrink-0"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      );
+    }
+    
+    return null;
   };
 
   return (
@@ -148,51 +531,8 @@ const Categories: React.FC = () => {
               </div>
             </div>
 
-            {/* Western Wear Section */}
-            <div className="px-4 mb-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Western Wear</h3>
-              <div className="grid grid-cols-3 gap-4">
-                {currentContent.westernWear.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => handleCategoryClick(item.id)}
-                    className="flex flex-col items-center cursor-pointer"
-                  >
-                    <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Ethnic Wear Section */}
-            <div className="px-4 mb-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Ethnic Wear</h3>
-              <div className="flex gap-6 overflow-x-auto pb-2">
-                {currentContent.ethnicWear.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => handleCategoryClick(item.id)}
-                    className="flex flex-col items-center cursor-pointer flex-shrink-0"
-                  >
-                    <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-gray-100">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-gray-700 text-center">{item.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            {/* Dynamic Content Based on Selected Category */}
+            {renderContent()}
           </div>
         </div>
       </div>
