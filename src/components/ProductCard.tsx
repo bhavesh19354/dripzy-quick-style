@@ -63,7 +63,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         
         {/* Item Number - Bottom Left */}
         {itemNumber && (
-          <div className="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+          <div className="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold">
             {itemNumber}
           </div>
         )}
@@ -84,11 +84,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </button>
       </div>
       
-      <div className="p-3">
+      <div className="p-2">
         <p className="text-xs text-gray-500 mb-1">{product.brand}</p>
-        <h3 className="font-medium text-gray-900 text-sm mb-2 line-clamp-2">{product.name}</h3>
-        <div className="flex items-center gap-2">
-          <span className="font-bold text-gray-900">₹{product.price}</span>
+        <h3 className="font-medium text-gray-900 text-xs mb-1 line-clamp-2">{product.name}</h3>
+        <div className="flex items-center gap-1">
+          <span className="font-bold text-gray-900 text-xs">₹{product.price}</span>
           {product.originalPrice && (
             <span className="text-xs text-gray-500 line-through">₹{product.originalPrice}</span>
           )}
