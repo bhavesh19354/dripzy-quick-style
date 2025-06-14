@@ -47,14 +47,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           />
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           
-          {/* First Half - Heading Poster */}
-          <div className="absolute top-0 left-0 right-0 h-1/2 flex items-center justify-center">
-            <h1 className="text-white text-3xl md:text-5xl font-bold text-center leading-tight">
-              {heroTitle || "SEASON'S\nSTANDOUT"}
-            </h1>
-          </div>
-          
-          {/* Second Half - Product Cards Overlay */}
+          {/* Product Cards Overlay - Positioned to work on all screen sizes */}
           <div className="absolute bottom-0 left-0 right-0 h-1/2 flex items-center px-4">
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide w-full">
               {products.map((product, index) => (

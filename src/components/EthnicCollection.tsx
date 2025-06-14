@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -79,16 +80,8 @@ const EthnicCollection: React.FC = () => {
 
       {/* Brands Section */}
       <div>
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4">
           <h3 className="text-lg font-bold text-gray-900">Shop by Brand</h3>
-          {/* Mobile view image on the right */}
-          <div className="md:hidden w-16 h-20 flex-shrink-0">
-            <img 
-              src="/lovable-uploads/e204bf5e-2f40-4add-997c-b990388920e6.png" 
-              alt="Featured Model" 
-              className="w-full h-full object-cover rounded-lg" 
-            />
-          </div>
         </div>
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
           {ethnicBrands.map((brand) => (
