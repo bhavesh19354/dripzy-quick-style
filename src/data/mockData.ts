@@ -94,11 +94,6 @@ export const featuredCategories = {
       image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&h=400&fit=crop'
     },
     {
-      id: 'sarees',
-      name: 'SAREES',
-      image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300&h=400&fit=crop'
-    },
-    {
       id: 'kurtis',
       name: 'KURTIS',
       image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300&h=400&fit=crop'
@@ -207,44 +202,44 @@ export const featuredCategories = {
       isPriceCategory: true
     }
   ],
-  footwear: [
+  kids: [
     {
-      id: 'deal-footwear',
-      name: 'SNITCH DEAL OF THE DAY',
+      id: 'deal-kids',
+      name: 'KIDS DEAL OF THE DAY',
       subtitle: 'UP TO 40% OFF*',
-      image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=300&h=400&fit=crop',
       isDeal: true
     },
     {
-      id: 'sneakers',
-      name: 'SNEAKERS',
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=400&fit=crop'
+      id: 'boys-collection',
+      name: 'BOYS COLLECTION',
+      image: 'https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=300&h=400&fit=crop'
     },
     {
-      id: 'formal-shoes',
-      name: 'FORMAL SHOES',
-      image: 'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=300&h=400&fit=crop'
+      id: 'girls-collection',
+      name: 'GIRLS COLLECTION',
+      image: 'https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=300&h=400&fit=crop'
     },
     {
-      id: 'boots',
-      name: 'BOOTS',
-      image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?w=300&h=400&fit=crop'
+      id: 'baby-collection',
+      name: 'BABY COLLECTION',
+      image: 'https://images.unsplash.com/photo-1522771930-78848d9293e8?w=300&h=400&fit=crop'
     },
     {
-      id: 'sandals',
-      name: 'SANDALS',
-      image: 'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=300&h=400&fit=crop'
+      id: 'toys-games',
+      name: 'TOYS & GAMES',
+      image: 'https://images.unsplash.com/photo-1558060370-d644479cb6f7?w=300&h=400&fit=crop'
     },
     {
-      id: 'sports-shoes',
-      name: 'SPORTS SHOES',
-      image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=400&fit=crop'
+      id: 'school-wear',
+      name: 'SCHOOL WEAR',
+      image: 'https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=300&h=400&fit=crop'
     }
   ],
   accessories: [
     {
       id: 'deal-accessories',
-      name: 'SNITCH DEAL OF THE DAY',
+      name: 'ACCESSORIES DEAL',
       subtitle: 'UP TO 40% OFF*',
       image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=400&fit=crop',
       isDeal: true
@@ -267,7 +262,7 @@ export const featuredCategories = {
     {
       id: 'sunglasses',
       name: 'SUNGLASSES',
-      image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=300&h=400&fit=crop'
+      image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=200&h=300&fit=crop'
     },
     {
       id: 'wallets',
