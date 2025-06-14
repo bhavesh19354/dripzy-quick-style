@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
@@ -10,7 +9,6 @@ import EthnicCollection from '../components/EthnicCollection';
 import ProductGrid from '../components/ProductGrid';
 import { MapPin, ChevronDown, User, ShoppingCart } from 'lucide-react';
 import { categories, banners, products, quickPicks, trendingProducts, justInProducts, featuredCategories } from '../data/mockData';
-
 interface Product {
   id: string;
   name: string;
@@ -19,37 +17,30 @@ interface Product {
   brand: string;
   originalPrice?: number;
 }
-
 interface CartItem extends Product {
   selectedSize?: string;
   quantity: number;
 }
-
 const Index: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('women');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isSearchSticky, setIsSearchSticky] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       // Get the delivery bar height (approximately 72px based on the padding and content)
       const deliveryBarHeight = 72;
       setIsSearchSticky(window.scrollY >= deliveryBarHeight);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
   const handleAddToCart = (product: Product) => {
     const existingItem = cartItems.find(item => item.id === product.id);
-    
     if (existingItem) {
-      setCartItems(cartItems.map(item => 
-        item.id === product.id 
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ));
+      setCartItems(cartItems.map(item => item.id === product.id ? {
+        ...item,
+        quantity: item.quantity + 1
+      } : item));
     } else {
       const newCartItem: CartItem = {
         ...product,
@@ -58,41 +49,29 @@ const Index: React.FC = () => {
       };
       setCartItems([...cartItems, newCartItem]);
     }
-    
     console.log('Added to cart:', product);
   };
-
   const handleUpdateCartQuantity = (id: string, quantity: number) => {
-    setCartItems(cartItems.map(item => 
-      item.id === id ? { ...item, quantity } : item
-    ));
+    setCartItems(cartItems.map(item => item.id === id ? {
+      ...item,
+      quantity
+    } : item));
   };
-
   const handleRemoveCartItem = (id: string) => {
     setCartItems(cartItems.filter(item => item.id !== id));
   };
-
   const currentBanners = banners[selectedCategory as keyof typeof banners];
   const currentProducts = products[selectedCategory as keyof typeof products];
   const currentFeaturedCategories = featuredCategories[selectedCategory as keyof typeof featuredCategories];
-
-  return (
-    <Layout 
-      cartItems={cartItems}
-      onUpdateCartQuantity={handleUpdateCartQuantity}
-      onRemoveCartItem={handleRemoveCartItem}
-    >
+  return <Layout cartItems={cartItems} onUpdateCartQuantity={handleUpdateCartQuantity} onRemoveCartItem={handleRemoveCartItem}>
       <div className="bg-white min-h-screen">
         {/* Hero Section - Background image with overlay content */}
-        <div 
-          className="relative"
-          style={{ 
-            height: '55vh',
-            backgroundImage: 'url(/lovable-uploads/3d5567e9-bee1-49b1-846c-a831ff5e4325.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}
-        >
+        <div className="relative" style={{
+        height: '55vh',
+        backgroundImage: 'url(/lovable-uploads/3d5567e9-bee1-49b1-846c-a831ff5e4325.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}>
           {/* Top Bar Content Over Background */}
           <div className="absolute top-0 left-0 right-0 z-10 px-4 py-3">
             <div className="flex items-center justify-between">
@@ -103,7 +82,7 @@ const Index: React.FC = () => {
                     <span className="text-lg font-medium text-white">Home</span>
                     <ChevronDown className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-sm text-white opacity-90">Flat 103, house 288, Medicity, Islam...</span>
+                  <span className="text-sm opacity-90 text-zinc-950">Flat 103, house 288, Medicity, Islam...</span>
                 </div>
               </div>
               
@@ -126,19 +105,13 @@ const Index: React.FC = () => {
         </div>
 
         {/* Sticky Search Bar */}
-        <div className={`fixed top-0 left-0 right-0 z-50 bg-black shadow-md transition-transform duration-300 ${
-          isSearchSticky ? 'translate-y-0' : '-translate-y-full'
-        }`}>
+        <div className={`fixed top-0 left-0 right-0 z-50 bg-black shadow-md transition-transform duration-300 ${isSearchSticky ? 'translate-y-0' : '-translate-y-full'}`}>
           <SearchBar />
         </div>
 
         {/* Scrollable Content - No gap, attached to background */}
         <div className="bg-gray-50">
-          <CategorySelector
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-          />
+          <CategorySelector categories={categories} selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
           
           <div className="pt-3">
             <AutoSlidingBanner banners={currentBanners} />
@@ -153,34 +126,16 @@ const Index: React.FC = () => {
             
             <EthnicCollection />
             
-            <ProductGrid
-              title="Quick Picks"
-              products={quickPicks}
-              onAddToCart={handleAddToCart}
-            />
+            <ProductGrid title="Quick Picks" products={quickPicks} onAddToCart={handleAddToCart} />
             
-            <ProductGrid
-              title="Trending Now"
-              products={trendingProducts}
-              onAddToCart={handleAddToCart}
-            />
+            <ProductGrid title="Trending Now" products={trendingProducts} onAddToCart={handleAddToCart} />
             
-            <ProductGrid
-              title="Just In"
-              products={justInProducts}
-              onAddToCart={handleAddToCart}
-            />
+            <ProductGrid title="Just In" products={justInProducts} onAddToCart={handleAddToCart} />
             
-            <ProductGrid
-              title={`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Collection`}
-              products={currentProducts}
-              onAddToCart={handleAddToCart}
-            />
+            <ProductGrid title={`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Collection`} products={currentProducts} onAddToCart={handleAddToCart} />
           </div>
         </div>
       </div>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Index;
