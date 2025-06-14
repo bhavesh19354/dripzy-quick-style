@@ -1,8 +1,7 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { MapPin, ShoppingCart, User } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import CartSidebar from './CartSidebar';
 
 interface CartItem {
   id: string;
@@ -23,13 +22,10 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ 
   children, 
-  cartItems = [], 
-  onUpdateCartQuantity = () => {}, 
-  onRemoveCartItem = () => {} 
+  cartItems = []
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -44,11 +40,16 @@ const Layout: React.FC<LayoutProps> = ({
             <span className="text-sm">Delivering in Gurugram</span>
           </div>
           
-          <h1 className="text-xl font-bold tracking-wide">Dripzy</h1>
+          <h1 
+            onClick={() => navigate('/')}
+            className="text-xl font-bold tracking-wide cursor-pointer"
+          >
+            Dripzy
+          </h1>
           
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => setIsCartOpen(true)}
+              onClick={() => navigate('/cart')}
               className="relative p-2 hover:bg-slate-700 rounded-full transition-colors"
             >
               <ShoppingCart className="w-5 h-5" />
@@ -97,6 +98,23 @@ const Layout: React.FC<LayoutProps> = ({
           </button>
           
           <button
+            onClick={() => navigate('/cart')}
+            className={`flex flex-col items-center gap-1 py-2 px-4 rounded-lg transition-colors relative ${
+              isActive('/cart') ? 'text-orange-500 bg-orange-50' : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <div className="w-6 h-6 flex items-center justify-center relative">
+              🛒
+              {cartItemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  {cartItemCount}
+                </span>
+              )}
+            </div>
+            <span className="text-xs font-medium">Cart</span>
+          </button>
+          
+          <button
             onClick={() => navigate('/profile')}
             className={`flex flex-col items-center gap-1 py-2 px-4 rounded-lg transition-colors ${
               isActive('/profile') ? 'text-orange-500 bg-orange-50' : 'text-gray-600 hover:text-gray-900'
@@ -107,15 +125,6 @@ const Layout: React.FC<LayoutProps> = ({
           </button>
         </div>
       </nav>
-
-      {/* Cart Sidebar */}
-      <CartSidebar
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cartItems={cartItems}
-        onUpdateQuantity={onUpdateCartQuantity}
-        onRemoveItem={onRemoveCartItem}
-      />
     </div>
   );
 };

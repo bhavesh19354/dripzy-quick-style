@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import CategorySelector from '../components/CategorySelector';
 import { categories, featuredCategories } from '../data/mockData';
 import { useNavigate } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 
 const Categories: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('women');
@@ -15,129 +15,133 @@ const Categories: React.FC = () => {
     navigate(`/products/${selectedCategory}/${categoryId}`);
   };
 
+  const categoryImages = {
+    'Top Wear': 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=200&h=300&fit=crop',
+    'Bottom Wear': 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=200&h=300&fit=crop',
+    'Dresses': 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=200&h=300&fit=crop',
+    'Nightwear': 'https://images.unsplash.com/photo-1571513722275-4b41940f54b8?w=200&h=300&fit=crop'
+  };
+
+  const mainCategories = [
+    { id: 'topwear', name: 'Top Wear', image: categoryImages['Top Wear'] },
+    { id: 'bottomwear', name: 'Bottom Wear', image: categoryImages['Bottom Wear'] },
+    { id: 'dresses', name: 'Dresses', image: categoryImages['Dresses'] },
+    { id: 'nightwear', name: 'Nightwear', image: categoryImages['Nightwear'] }
+  ];
+
+  const [selectedMainCategory, setSelectedMainCategory] = useState('topwear');
+
+  const subCategories = {
+    topwear: [
+      { id: 'tshirts', name: 'T-Shirts', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200&h=200&fit=crop' },
+      { id: 'cardigans', name: 'Cardigans & Shrugs', image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=200&h=200&fit=crop' },
+      { id: 'bustiers', name: 'Bustiers & Corsets', image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=200&h=200&fit=crop' },
+      { id: 'tops', name: 'Tops', image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=200&h=200&fit=crop' },
+      { id: 'bodysuits', name: 'Bodysuits', image: 'https://images.unsplash.com/photo-1583396313515-14ba15d9abdc?w=200&h=200&fit=crop' },
+      { id: 'jackets', name: 'Jackets', image: 'https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=200&h=200&fit=crop' },
+      { id: 'shirts', name: 'Shirts', image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=200&h=200&fit=crop' },
+      { id: 'polos', name: 'Polos', image: 'https://images.unsplash.com/photo-1503341960582-b45751874cf0?w=200&h=200&fit=crop' },
+      { id: 'hoodies', name: 'Hoodies & Sweatshirts', image: 'https://images.unsplash.com/photo-1556821840-3a9c6ee35cde?w=200&h=200&fit=crop' }
+    ],
+    bottomwear: [
+      { id: 'jeans', name: 'Jeans', image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=200&h=200&fit=crop' },
+      { id: 'trousers', name: 'Trousers', image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=200&h=200&fit=crop' },
+      { id: 'skirts', name: 'Skirts', image: 'https://images.unsplash.com/photo-1583496661160-fb5886a13d14?w=200&h=200&fit=crop' },
+      { id: 'shorts', name: 'Shorts', image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=200&h=200&fit=crop' }
+    ],
+    dresses: [
+      { id: 'casual-dresses', name: 'Casual Dresses', image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=200&h=200&fit=crop' },
+      { id: 'party-dresses', name: 'Party Dresses', image: 'https://images.unsplash.com/photo-1566479179817-c8d63ebdd193?w=200&h=200&fit=crop' },
+      { id: 'maxi-dresses', name: 'Maxi Dresses', image: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=200&h=200&fit=crop' }
+    ],
+    nightwear: [
+      { id: 'pajamas', name: 'Pajamas', image: 'https://images.unsplash.com/photo-1571513722275-4b41940f54b8?w=200&h=200&fit=crop' },
+      { id: 'nightgowns', name: 'Nightgowns', image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=200&h=200&fit=crop' },
+      { id: 'robes', name: 'Robes', image: 'https://images.unsplash.com/photo-1571513722275-4b41940f54b8?w=200&h=200&fit=crop' }
+    ]
+  };
+
+  const currentSubCategories = subCategories[selectedMainCategory as keyof typeof subCategories] || [];
+
   return (
     <Layout>
-      <div className="bg-gray-50 min-h-screen">
-        <CategorySelector
-          categories={categories}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-        />
-        
-        {/* Ethnic Collection Banner */}
-        <div className="relative mx-4 mb-6 rounded-2xl overflow-hidden h-64 bg-gradient-to-r from-orange-100 to-orange-200">
-          <img
-            src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=400&fit=crop"
-            alt="Ethnic Collection Banner"
-            className="w-full h-full object-cover opacity-90"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-          
-          {/* Banner Content */}
-          <div className="absolute top-8 left-8">
-            <div className="bg-black text-white px-4 py-2 rounded-full text-sm font-bold mb-4">
-              UPTO 70% OFF
-            </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Ethnic Collection</h1>
-            <button className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              SHOP NOW
-            </button>
-          </div>
-        </div>
-        
-        <div className="bg-white rounded-t-3xl min-h-screen pt-8">
-          {/* Brand Categories */}
-          <div className="px-4 mb-8">
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              {/* Brand Cards */}
-              <div className="relative rounded-2xl overflow-hidden aspect-[3/4] bg-gradient-to-br from-orange-200 to-orange-300">
-                <img
-                  src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300&h=400&fit=crop"
-                  alt="Sadhana Villa"
-                  className="w-full h-full object-cover opacity-80"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                <div className="absolute bottom-6 left-6">
-                  <div className="bg-white text-black px-3 py-1 rounded text-sm font-bold">
-                    Sadhana
-                  </div>
-                  <div className="text-white text-xs mt-1">VILLA</div>
-                </div>
-              </div>
-
-              <div className="relative rounded-2xl overflow-hidden aspect-[3/4] bg-gradient-to-br from-purple-200 to-purple-300">
-                <img
-                  src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300&h=400&fit=crop"
-                  alt="Ethnic Elements"
-                  className="w-full h-full object-cover opacity-80"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                <div className="absolute bottom-6 left-6">
-                  <div className="text-white text-lg font-bold">Ethnic Elements</div>
-                </div>
-              </div>
-
-              <div className="relative rounded-2xl overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-200 to-pink-300">
-                <img
-                  src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300&h=400&fit=crop"
-                  alt="Shree"
-                  className="w-full h-full object-cover opacity-80"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                <div className="absolute bottom-6 left-6">
-                  <div className="text-white text-lg font-bold">श्री | SHREE</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Category Grid */}
-          <div className="px-4">
-            <h2 className="text-xl font-bold text-gray-900 text-center mb-6 tracking-wide">
-              SHOP BY CATEGORY
-            </h2>
+      <div className="bg-gray-50 min-h-screen flex">
+        {/* Left Sidebar */}
+        <div className="w-1/4 bg-white border-r border-gray-200 sticky top-16 h-screen overflow-y-auto">
+          <div className="p-4">
+            <h2 className="text-lg font-bold text-gray-900 mb-6">Categories</h2>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {currentFeaturedCategories.map((category) => (
-                <div
-                  key={category.id}
-                  onClick={() => handleCategoryClick(category.id)}
-                  className="relative overflow-hidden rounded-lg aspect-[3/4] cursor-pointer group"
-                >
+            {mainCategories.map((category) => (
+              <div
+                key={category.id}
+                onClick={() => setSelectedMainCategory(category.id)}
+                className={`mb-4 cursor-pointer p-3 rounded-lg transition-all ${
+                  selectedMainCategory === category.id 
+                    ? 'bg-orange-50 border-2 border-orange-200 shadow-md' 
+                    : 'hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex flex-col items-center">
                   <img
                     src={category.image}
                     alt={category.name}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="w-full h-32 object-cover rounded-lg mb-2"
                   />
-                  
-                  <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all duration-300"></div>
-                  
-                  <div className="absolute bottom-0 left-0 right-0 p-3">
-                    {category.isDeal && (
-                      <div className="mb-2">
-                        <div className="inline-block bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                          SNITCH DEAL OF THE DAY
-                        </div>
-                      </div>
-                    )}
-                    
-                    <div className="text-white">
-                      <h3 className="font-bold text-sm mb-1">
-                        {category.name}
-                      </h3>
-                      
-                      {category.subtitle && (
-                        <p className={`text-sm font-bold ${
-                          category.isPriceCategory 
-                            ? 'text-yellow-400 text-lg' 
-                            : category.isDeal 
-                              ? 'text-white text-xs' 
-                              : 'text-gray-200'
-                        }`}>
-                          {category.subtitle}
-                        </p>
-                      )}
+                  <span className={`font-medium text-center ${
+                    selectedMainCategory === category.id 
+                      ? 'text-orange-600 text-lg' 
+                      : 'text-gray-700'
+                  }`}>
+                    {category.name}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Content */}
+        <div className="flex-1">
+          {/* Banner Section */}
+          <div className="relative h-64 bg-gradient-to-r from-orange-100 via-pink-100 to-purple-100 mx-4 mt-4 rounded-2xl overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800&h=400&fit=crop"
+              alt="Women's Fashion Banner"
+              className="absolute right-0 top-0 h-full w-1/2 object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-white/80 to-transparent"></div>
+            
+            <div className="absolute top-8 left-8">
+              <h1 className="text-4xl font-serif font-bold text-gray-900 mb-4">
+                {selectedCategory === 'women' ? "Women's" : "Men's"} {mainCategories.find(c => c.id === selectedMainCategory)?.name}
+              </h1>
+              <button className="bg-orange-500 text-white px-6 py-3 rounded-full font-medium hover:bg-orange-600 transition-colors flex items-center gap-2">
+                Shop Now
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Sub-Categories Grid */}
+          <div className="p-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+              {currentSubCategories.map((subCategory) => (
+                <div
+                  key={subCategory.id}
+                  onClick={() => handleCategoryClick(subCategory.id)}
+                  className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer group"
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="w-full h-40 mb-4 rounded-lg overflow-hidden bg-gray-50">
+                      <img
+                        src={subCategory.image}
+                        alt={subCategory.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
+                    <h3 className="font-medium text-gray-900 text-center">
+                      {subCategory.name}
+                    </h3>
                   </div>
                 </div>
               ))}
