@@ -97,19 +97,19 @@ const Index: React.FC = () => {
           <div className="absolute top-0 left-0 right-0 z-10 px-4 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-pink-500 mt-0.5" />
+                <MapPin className="w-4 h-4 text-black mt-0.5" />
                 <div className="flex flex-col">
-                  <span className="text-xs text-gray-300">Delivery in</span>
-                  <span className="text-sm font-medium text-white">Gurgaon</span>
+                  <span className="text-xs text-black">Delivery in</span>
+                  <span className="text-sm font-medium text-black">Gurgaon</span>
                 </div>
               </div>
               
               <div className="flex items-center gap-4">
                 <div className="relative">
-                  <Bell className="w-5 h-5 text-white" />
+                  <Bell className="w-5 h-5 text-black" />
                   <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
                 </div>
-                <User className="w-5 h-5 text-white" />
+                <User className="w-5 h-5 text-black" />
               </div>
             </div>
           </div>
@@ -121,59 +121,56 @@ const Index: React.FC = () => {
         </div>
 
         {/* Sticky Search Bar */}
-        <div className={`fixed top-0 left-0 right-0 z-50 bg-white shadow-md transition-transform duration-300 ${
+        <div className={`fixed top-0 left-0 right-0 z-50 bg-black shadow-md transition-transform duration-300 ${
           isSearchSticky ? 'translate-y-0' : '-translate-y-full'
         }`}>
           <SearchBar />
         </div>
 
-        {/* Add padding when search is sticky to prevent content jump */}
-        <div className={`transition-all duration-300 ${isSearchSticky ? 'pt-20' : 'pt-0'}`}>
-          {/* Scrollable Content */}
-          <div className="bg-gray-50 pt-4">
-            <CategorySelector
-              categories={categories}
-              selectedCategory={selectedCategory}
-              onCategoryChange={setSelectedCategory}
+        {/* Scrollable Content - No gap, attached to background */}
+        <div className="-mt-2 bg-gray-50">
+          <CategorySelector
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+          />
+          
+          <div className="pt-3">
+            <AutoSlidingBanner banners={currentBanners} />
+          </div>
+          
+          <div className="my-4">
+            <MovingBanner text="FLAT 10% OFF ON YOUR FIRST ORDER" />
+          </div>
+          
+          <div className="bg-white">
+            <FeaturedCategories categories={currentFeaturedCategories} />
+            
+            <EthnicCollection />
+            
+            <ProductGrid
+              title="Quick Picks"
+              products={quickPicks}
+              onAddToCart={handleAddToCart}
             />
             
-            <div className="pt-3">
-              <AutoSlidingBanner banners={currentBanners} />
-            </div>
+            <ProductGrid
+              title="Trending Now"
+              products={trendingProducts}
+              onAddToCart={handleAddToCart}
+            />
             
-            <div className="my-4">
-              <MovingBanner text="FLAT 10% OFF ON YOUR FIRST ORDER" />
-            </div>
+            <ProductGrid
+              title="Just In"
+              products={justInProducts}
+              onAddToCart={handleAddToCart}
+            />
             
-            <div className="bg-white">
-              <FeaturedCategories categories={currentFeaturedCategories} />
-              
-              <EthnicCollection />
-              
-              <ProductGrid
-                title="Quick Picks"
-                products={quickPicks}
-                onAddToCart={handleAddToCart}
-              />
-              
-              <ProductGrid
-                title="Trending Now"
-                products={trendingProducts}
-                onAddToCart={handleAddToCart}
-              />
-              
-              <ProductGrid
-                title="Just In"
-                products={justInProducts}
-                onAddToCart={handleAddToCart}
-              />
-              
-              <ProductGrid
-                title={`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Collection`}
-                products={currentProducts}
-                onAddToCart={handleAddToCart}
-              />
-            </div>
+            <ProductGrid
+              title={`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Collection`}
+              products={currentProducts}
+              onAddToCart={handleAddToCart}
+            />
           </div>
         </div>
       </div>
