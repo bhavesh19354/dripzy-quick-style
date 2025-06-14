@@ -27,9 +27,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 }) => {
   if (loading) {
     return (
-      <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${className}`}>
-        {Array.from({ length: 6 }).map((_, index) => (
-          <div key={index} className="bg-white rounded-lg overflow-hidden">
+      <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${className}`}>
+        {Array.from({ length: 8 }).map((_, index) => (
+          <div key={index} className="bg-white rounded-lg overflow-hidden shadow-sm">
             <Skeleton className="aspect-[3/4] w-full" />
             <div className="p-3 space-y-2">
               <Skeleton className="h-3 w-16" />
@@ -57,7 +57,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   }
 
   return (
-    <div className="py-6">
+    <div className="w-full">
       {title && (
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
@@ -79,12 +79,13 @@ const ProductGrid: React.FC<ProductGridProps> = ({
         </div>
       )}
       
-      <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${className}`}>
+      <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${className}`}>
         {products.map((product) => (
           <ProductCard 
             key={product.id} 
             product={product} 
             onAddToCart={onAddToCart}
+            className="w-full"
           />
         ))}
       </div>

@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import ProductGrid from '../components/ProductGrid';
-import { Filter, SortAsc, ArrowLeft } from 'lucide-react';
+import { Filter, SortAsc, ArrowLeft, X } from 'lucide-react';
 import { mockProducts, type Product } from '../data/productData';
 
 interface CartItem {
-  id: string;
+  id: number;
   name: string;
   price: number;
   image: string;
@@ -31,11 +31,19 @@ const ProductListing: React.FC = () => {
   // Available brands from products
   const availableBrands = Array.from(new Set(mockProducts.map(p => p.brandName)));
 
+  // Filter chips data
+  const filterChips = [
+    { id: 'tops', label: 'Tops', active: subcategory === 'tops' },
+    { id: 'dresses', label: 'Dresses', active: subcategory === 'dresses' },
+    { id: 'new', label: 'New In', active: false },
+    { id: 'sale', label: 'Sale', active: false },
+  ];
+
   // Simulate loading
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -68,12 +76,12 @@ const ProductListing: React.FC = () => {
 
   const handleUpdateCartQuantity = (id: string, newQuantity: number) => {
     setCartItems(cartItems.map(item => 
-      item.id === id ? { ...item, quantity: newQuantity } : item
+      item.id === parseInt(id) ? { ...item, quantity: newQuantity } : item
     ));
   };
 
   const handleRemoveCartItem = (id: string) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
+    setCartItems(cartItems.filter(item => item.id !== parseInt(id)));
   };
 
   const handleBrandFilter = (brand: string) => {
@@ -99,7 +107,7 @@ const ProductListing: React.FC = () => {
       <div className="bg-gray-50 min-h-screen">
         {/* Header */}
         <div className="bg-white px-4 py-4 border-b sticky top-16 z-10">
-          <div className="flex items-center justify-between max-w-6xl mx-auto">
+          <div className="flex items-center justify-between max-w-7xl mx-auto">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => navigate(-1)}
@@ -126,7 +134,7 @@ const ProductListing: React.FC = () => {
                 }`}
               >
                 <Filter className="w-4 h-4" />
-                Filter
+                Filters
               </button>
               
               <select
@@ -142,20 +150,44 @@ const ProductListing: React.FC = () => {
               </select>
             </div>
           </div>
+
+          {/* Filter Chips */}
+          <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+            {filterChips.map(chip => (
+              <button
+                key={chip.id}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap border transition-colors ${
+                  chip.active 
+                    ? 'bg-gray-900 text-white border-gray-900' 
+                    : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'
+                }`}
+              >
+                {chip.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="max-w-6xl mx-auto flex">
+        <div className="max-w-7xl mx-auto flex">
           {/* Filters Sidebar */}
           {showFilters && (
-            <div className="w-64 bg-white border-r border-gray-200 p-6 min-h-screen">
+            <div className="w-80 bg-white border-r border-gray-200 p-6 min-h-screen">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-semibold text-gray-900">Filters</h3>
-                <button
-                  onClick={clearFilters}
-                  className="text-sm text-blue-600 hover:text-blue-800"
-                >
-                  Clear All
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={clearFilters}
+                    className="text-sm text-blue-600 hover:text-blue-800"
+                  >
+                    Clear All
+                  </button>
+                  <button
+                    onClick={() => setShowFilters(false)}
+                    className="p-1 hover:bg-gray-100 rounded"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
               
               {/* Price Range */}
@@ -168,7 +200,7 @@ const ProductListing: React.FC = () => {
                       placeholder="Min"
                       value={priceRange.min}
                       onChange={(e) => setPriceRange({...priceRange, min: Number(e.target.value)})}
-                      className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
+                      className="w-24 px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                     <span className="text-gray-500">-</span>
                     <input
@@ -176,7 +208,7 @@ const ProductListing: React.FC = () => {
                       placeholder="Max"
                       value={priceRange.max}
                       onChange={(e) => setPriceRange({...priceRange, max: Number(e.target.value)})}
-                      className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
+                      className="w-24 px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
                   <input
@@ -185,7 +217,7 @@ const ProductListing: React.FC = () => {
                     max="20000"
                     value={priceRange.max}
                     onChange={(e) => setPriceRange({...priceRange, max: Number(e.target.value)})}
-                    className="w-full"
+                    className="w-full accent-blue-600"
                   />
                   <div className="flex justify-between text-xs text-gray-500">
                     <span>₹0</span>
@@ -199,7 +231,7 @@ const ProductListing: React.FC = () => {
                 <h4 className="font-medium text-gray-700 mb-3">Brands</h4>
                 <div className="space-y-2 max-h-48 overflow-y-auto">
                   {availableBrands.map(brand => (
-                    <label key={brand} className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                    <label key={brand} className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-2 rounded transition-colors">
                       <input
                         type="checkbox"
                         checked={selectedBrands.includes(brand)}
@@ -215,10 +247,11 @@ const ProductListing: React.FC = () => {
           )}
 
           {/* Products Grid */}
-          <div className="flex-1 p-6">
+          <div className="flex-1 p-4 md:p-6">
             <ProductGrid 
               products={filteredProducts} 
               loading={loading}
+              className="w-full"
             />
           </div>
         </div>

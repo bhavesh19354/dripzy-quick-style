@@ -22,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = "", onAd
   return (
     <div
       onClick={handleCardClick}
-      className={`bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer group ${className}`}
+      className={`bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer group overflow-hidden ${className}`}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
@@ -39,6 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = "", onAd
           images={product.images}
           colorVariants={product.colorVariants}
           productName={product.productName}
+          className="rounded-t-lg"
         />
         <WishlistButton productId={product.id} />
       </div>
@@ -49,6 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = "", onAd
         productName={product.productName}
         mrp={product.mrp}
         discountedPrice={product.discountedPrice}
+        className="p-3"
       />
     </div>
   );
