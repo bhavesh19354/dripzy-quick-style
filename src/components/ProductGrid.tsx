@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
@@ -38,7 +39,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     return (
       <div className="mb-8">
         {/* Extended Hero Section with reduced mobile height */}
-        <div className="relative h-[32rem] md:h-[40rem] mb-6 rounded-2xl overflow-hidden">
+        <div className="relative h-[28rem] md:h-[40rem] mb-6 rounded-2xl overflow-hidden">
           <img
             src="/lovable-uploads/66c2b67b-2949-41db-a05e-9c12ebf23ddb.png"
             alt={heroTitle || title}
@@ -55,11 +56,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             </div>
           </div>
           
-          {/* Product Cards Overlay - Higher positioning on mobile */}
-          <div className="absolute bottom-0 left-0 right-0 h-1/2 md:h-1/2 flex items-start md:items-center pt-8 md:pt-0 px-4">
-            <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide w-full">
+          {/* Product Cards Overlay - Higher positioning and smaller cards on mobile */}
+          <div className="absolute bottom-4 md:bottom-0 left-0 right-0 h-1/3 md:h-1/2 flex items-start md:items-center pt-4 md:pt-0 px-4">
+            <div className="flex gap-2 md:gap-3 overflow-x-auto pb-4 scrollbar-hide w-full">
               {products.map((product, index) => (
-                <div key={product.id} className="flex-shrink-0 w-40 md:w-48">
+                <div key={product.id} className="flex-shrink-0 w-32 md:w-48">
                   <ProductCard
                     product={product}
                     onAddToCart={onAddToCart}
