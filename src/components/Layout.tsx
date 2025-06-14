@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MapPin, ShoppingCart, User, Grid3X3, House, Clock, Sparkles, Heart, Bell } from 'lucide-react';
+import { MapPin, ShoppingCart, User, Grid3X3, House, Clock, Sparkles, Bell } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface CartItem {
@@ -33,25 +33,22 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <div className="min-h-screen bg-white">
       {/* Top Bar */}
-      <div className="bg-white px-4 py-2 border-b border-gray-100">
+      <div className="bg-black px-4 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-pink-500" />
-            <div>
-              <span className="text-sm font-medium text-gray-900">Delivery in</span>
-              <span className="text-sm font-bold text-gray-900 ml-1">Gurgaon</span>
+          <div className="flex items-start gap-2">
+            <MapPin className="w-4 h-4 text-pink-500 mt-0.5" />
+            <div className="flex flex-col">
+              <span className="text-xs text-gray-300">Delivery in</span>
+              <span className="text-sm font-medium text-white">Gurgaon</span>
             </div>
           </div>
           
           <div className="flex items-center gap-4">
             <div className="relative">
-              <Heart className="w-5 h-5 text-gray-600" />
-            </div>
-            <div className="relative">
-              <Bell className="w-5 h-5 text-gray-600" />
+              <Bell className="w-5 h-5 text-white" />
               <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
             </div>
-            <User className="w-5 h-5 text-gray-600" />
+            <User className="w-5 h-5 text-white" />
           </div>
         </div>
       </div>
