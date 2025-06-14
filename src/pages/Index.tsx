@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
@@ -88,37 +87,11 @@ const Index: React.FC = () => {
           className="relative bg-gradient-to-b from-pink-200 to-pink-300"
           style={{ 
             height: '55vh',
-            backgroundImage: 'url(/lovable-uploads/5760c5aa-e1a9-4964-9b6f-8d7fa5bbfa03.png)',
+            backgroundImage: 'url(/lovable-uploads/e741bfa9-a41f-4e72-8805-08ff897f359f.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
         >
-          {/* Top Address Bar */}
-          <div className="px-4 py-3 bg-white/90 backdrop-blur-sm">
-            <div className="flex items-center justify-between">
-              <div className="flex items-start gap-2">
-                <MapPin className="w-5 h-5 text-gray-700 mt-1" />
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-1">
-                    <span className="text-lg font-bold text-gray-900">Home</span>
-                    <ChevronDown className="w-4 h-4 text-gray-600" />
-                  </div>
-                  <span className="text-sm text-gray-600">288, Sector 38, Medicity...</span>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <Bell className="w-6 h-6 text-gray-700" />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
-                </div>
-                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">B</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Search Bar - Normal Position */}
           <div className={isSearchSticky ? 'invisible' : 'visible'}>
             <SearchBar />
