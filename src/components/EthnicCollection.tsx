@@ -54,7 +54,7 @@ const EthnicCollection: React.FC = () => {
         {/* Models - Hidden on mobile for cleaner look */}
         <div className="hidden md:block absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-l from-transparent to-orange-100 opacity-30"></div>
-          <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600&h=400&fit=crop" alt="Ethnic Wear Models" className="w-full h-full object-cover opacity-60" />
+          <img src="/lovable-uploads/1b68c23f-a105-429f-9612-6354761b88dc.png" alt="Ethnic Wear Models" className="w-full h-full object-cover opacity-60" />
         </div>
       </div>
 
