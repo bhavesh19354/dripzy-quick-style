@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 interface EthnicBrand {
@@ -9,30 +10,20 @@ interface EthnicBrand {
 const EthnicCollection: React.FC = () => {
   const navigate = useNavigate();
   const ethnicBrands: EthnicBrand[] = [{
-    id: 'libas',
-    name: 'LIBAS',
-    image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=400&h=500&fit=crop',
-    backgroundColor: 'from-orange-400 to-orange-600'
+    id: 'hm',
+    name: 'H&M',
+    image: '/lovable-uploads/0cfc2f94-4aca-4dd4-b34a-6af96f00f0dc.png',
+    backgroundColor: 'from-pink-400 to-pink-600'
   }, {
-    id: 'imara',
-    name: 'IMARA',
-    image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop',
-    backgroundColor: 'from-amber-700 to-amber-900'
+    id: 'jockey',
+    name: 'JOCKEY',
+    image: '/lovable-uploads/0c28e3f9-0e1e-4129-a491-f0751e26c9f2.png',
+    backgroundColor: 'from-neutral-400 to-neutral-600'
   }, {
-    id: 'binks',
-    name: 'Binks',
-    image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=500&fit=crop',
-    backgroundColor: 'from-amber-500 to-amber-700'
-  }, {
-    id: 'kalini',
-    name: 'KALINI',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=500&fit=crop',
-    backgroundColor: 'from-stone-400 to-stone-600'
-  }, {
-    id: 'here-now',
-    name: 'HERE&NOW',
-    image: 'https://images.unsplash.com/photo-1583391733981-24c9c66cbad7?w=400&h=500&fit=crop',
-    backgroundColor: 'from-green-600 to-green-800'
+    id: 'zara',
+    name: 'ZARA',
+    image: '/lovable-uploads/55cac01f-1f21-487e-ab2c-5d1f516f5871.png',
+    backgroundColor: 'from-blue-400 to-blue-600'
   }];
   const handleShopNow = () => {
     navigate('/products/women/ethnic-wear');
