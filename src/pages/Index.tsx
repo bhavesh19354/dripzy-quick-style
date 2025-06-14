@@ -6,6 +6,7 @@ import CategorySelector from '../components/CategorySelector';
 import AutoSlidingBanner from '../components/AutoSlidingBanner';
 import MovingBanner from '../components/MovingBanner';
 import FeaturedCategories from '../components/FeaturedCategories';
+import EthnicCollection from '../components/EthnicCollection';
 import ProductGrid from '../components/ProductGrid';
 import { categories, banners, products, quickPicks, trendingProducts, justInProducts, featuredCategories } from '../data/mockData';
 
@@ -87,6 +88,8 @@ const Index: React.FC = () => {
         
         <div className="bg-white">
           <FeaturedCategories categories={currentFeaturedCategories} />
+          
+          <EthnicCollection />
           
           <ProductGrid
             title="Quick Picks"

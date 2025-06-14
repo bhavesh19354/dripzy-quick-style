@@ -81,7 +81,7 @@ const Layout: React.FC<LayoutProps> = ({
               isActive('/') ? 'text-orange-500' : 'text-white hover:text-orange-300'
             }`}
           >
-            <div className="w-5 h-5 flex items-center justify-center">🏠</div>
+            <div className="w-5 h-5 flex items-center justify-center text-lg">🏠</div>
             <span className="text-xs font-medium">Home</span>
           </button>
           
