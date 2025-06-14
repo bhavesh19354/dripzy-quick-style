@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MapPin, ShoppingCart, User, Grid3X3, House, Bell } from 'lucide-react';
+import { ShoppingCart, User, Grid3X3, House } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface CartItem {
@@ -32,33 +32,12 @@ const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Top Bar */}
-      <div className="bg-black px-4 py-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-start gap-2">
-            <MapPin className="w-4 h-4 text-pink-500 mt-0.5" />
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-300">Delivery in</span>
-              <span className="text-sm font-medium text-white">Gurgaon</span>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <Bell className="w-5 h-5 text-white" />
-              <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
-            </div>
-            <User className="w-5 h-5 text-white" />
-          </div>
-        </div>
-      </div>
-
       {/* Main Content */}
       <main className="pb-20">
         {children}
       </main>
 
-      {/* Fixed Bottom Navigation - Updated Style */}
+      {/* Fixed Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800 z-40">
         <div className="flex items-center justify-around py-2 max-w-7xl mx-auto">
           <button

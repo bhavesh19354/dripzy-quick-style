@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
@@ -31,9 +32,9 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Get the top bar height (approximately 72px based on the padding and content)
-      const topBarHeight = 72;
-      setIsSearchSticky(window.scrollY >= topBarHeight);
+      // Get the delivery bar height (approximately 72px based on the padding and content)
+      const deliveryBarHeight = 72;
+      setIsSearchSticky(window.scrollY >= deliveryBarHeight);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -82,9 +83,9 @@ const Index: React.FC = () => {
       onRemoveCartItem={handleRemoveCartItem}
     >
       <div className="bg-white min-h-screen">
-        {/* Hero Section - Top 55% */}
+        {/* Hero Section - Full Height with Overlay Content */}
         <div 
-          className="relative bg-gradient-to-b from-pink-200 to-pink-300"
+          className="relative"
           style={{ 
             height: '55vh',
             backgroundImage: 'url(/lovable-uploads/e741bfa9-a41f-4e72-8805-08ff897f359f.png)',
@@ -92,8 +93,29 @@ const Index: React.FC = () => {
             backgroundPosition: 'center'
           }}
         >
+          {/* Top Bar Content Over Background */}
+          <div className="absolute top-0 left-0 right-0 z-10 px-4 py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-pink-500 mt-0.5" />
+                <div className="flex flex-col">
+                  <span className="text-xs text-gray-300">Delivery in</span>
+                  <span className="text-sm font-medium text-white">Gurgaon</span>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <Bell className="w-5 h-5 text-white" />
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
+                </div>
+                <User className="w-5 h-5 text-white" />
+              </div>
+            </div>
+          </div>
+
           {/* Search Bar - Normal Position */}
-          <div className={isSearchSticky ? 'invisible' : 'visible'}>
+          <div className={`absolute top-16 left-0 right-0 z-10 ${isSearchSticky ? 'invisible' : 'visible'}`}>
             <SearchBar />
           </div>
         </div>
