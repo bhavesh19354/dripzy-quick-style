@@ -32,8 +32,9 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const heroHeight = window.innerHeight * 0.55;
-      setIsSearchSticky(window.scrollY > heroHeight - 100);
+      // Get the top bar height (approximately 72px based on the padding and content)
+      const topBarHeight = 72;
+      setIsSearchSticky(window.scrollY >= topBarHeight);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -161,50 +162,53 @@ const Index: React.FC = () => {
           <SearchBar />
         </div>
 
-        {/* Scrollable Content */}
-        <div className="bg-gray-50 pt-4">
-          <CategorySelector
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-          />
-          
-          <div className="pt-3">
-            <AutoSlidingBanner banners={currentBanners} />
-          </div>
-          
-          <div className="my-4">
-            <MovingBanner text="FLAT 10% OFF ON YOUR FIRST ORDER" />
-          </div>
-          
-          <div className="bg-white">
-            <FeaturedCategories categories={currentFeaturedCategories} />
-            
-            <EthnicCollection />
-            
-            <ProductGrid
-              title="Quick Picks"
-              products={quickPicks}
-              onAddToCart={handleAddToCart}
+        {/* Add padding when search is sticky to prevent content jump */}
+        <div className={`transition-all duration-300 ${isSearchSticky ? 'pt-20' : 'pt-0'}`}>
+          {/* Scrollable Content */}
+          <div className="bg-gray-50 pt-4">
+            <CategorySelector
+              categories={categories}
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
             />
             
-            <ProductGrid
-              title="Trending Now"
-              products={trendingProducts}
-              onAddToCart={handleAddToCart}
-            />
+            <div className="pt-3">
+              <AutoSlidingBanner banners={currentBanners} />
+            </div>
             
-            <ProductGrid
-              title="Just In"
-              products={justInProducts}
-              onAddToCart={handleAddToCart}
-            />
+            <div className="my-4">
+              <MovingBanner text="FLAT 10% OFF ON YOUR FIRST ORDER" />
+            </div>
             
-            <ProductGrid
-              title={`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Collection`}
-              products={currentProducts}
-              onAddToCart={handleAddToCart}
-            />
+            <div className="bg-white">
+              <FeaturedCategories categories={currentFeaturedCategories} />
+              
+              <EthnicCollection />
+              
+              <ProductGrid
+                title="Quick Picks"
+                products={quickPicks}
+                onAddToCart={handleAddToCart}
+              />
+              
+              <ProductGrid
+                title="Trending Now"
+                products={trendingProducts}
+                onAddToCart={handleAddToCart}
+              />
+              
+              <ProductGrid
+                title="Just In"
+                products={justInProducts}
+                onAddToCart={handleAddToCart}
+              />
+              
+              <ProductGrid
+                title={`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Collection`}
+                products={currentProducts}
+                onAddToCart={handleAddToCart}
+              />
+            </div>
           </div>
         </div>
       </div>
