@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
@@ -46,6 +45,13 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+          
+          {/* Overlay Text - Upper Half */}
+          <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <h2 className="text-white text-4xl md:text-5xl font-bold text-center tracking-wide">
+              Quick picks
+            </h2>
+          </div>
           
           {/* Product Cards Overlay - Better mobile positioning */}
           <div className="absolute bottom-0 left-0 right-0 h-1/2 flex items-center px-4">
