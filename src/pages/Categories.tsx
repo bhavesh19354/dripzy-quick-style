@@ -1,9 +1,10 @@
 
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
+import SearchBar from '../components/SearchBar';
 import { categories } from '../data/mockData';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, Search, MapPin, ChevronDown, ShoppingCart } from 'lucide-react';
+import { ChevronRight, MapPin, ChevronDown, ShoppingCart } from 'lucide-react';
 
 const Categories: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('women');
@@ -136,22 +137,19 @@ const Categories: React.FC = () => {
     }
   };
 
-  const currentContent = categoryContent[selectedCategory as keyof typeof categoryContent] || categoryContent.women;
-
   const handleSidebarCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId);
   };
 
   const renderContent = () => {
-    const selectedSidebarCategory = sidebarCategories.find(cat => cat.id === selectedCategory);
-    
     if (selectedCategory === 'women') {
+      const content = categoryContent.women;
       return (
         <>
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Western Wear</h3>
             <div className="grid grid-cols-3 gap-4">
-              {currentContent.westernWear.map((item) => (
+              {content.westernWear.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -173,7 +171,7 @@ const Categories: React.FC = () => {
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Ethnic Wear</h3>
             <div className="flex gap-6 overflow-x-auto pb-2">
-              {currentContent.ethnicWear.map((item) => (
+              {content.ethnicWear.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -194,12 +192,13 @@ const Categories: React.FC = () => {
         </>
       );
     } else if (selectedCategory === 'men') {
+      const content = categoryContent.men;
       return (
         <>
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Casual Wear</h3>
             <div className="grid grid-cols-3 gap-4">
-              {currentContent.casualWear.map((item) => (
+              {content.casualWear.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -221,7 +220,7 @@ const Categories: React.FC = () => {
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Formal Wear</h3>
             <div className="flex gap-6 overflow-x-auto pb-2">
-              {currentContent.formalWear.map((item) => (
+              {content.formalWear.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -242,12 +241,13 @@ const Categories: React.FC = () => {
         </>
       );
     } else if (selectedCategory === 'footwear') {
+      const content = categoryContent.footwear;
       return (
         <>
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Women's Footwear</h3>
             <div className="grid grid-cols-3 gap-4">
-              {currentContent.womensFootwear.map((item) => (
+              {content.womensFootwear.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -269,7 +269,7 @@ const Categories: React.FC = () => {
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Men's Footwear</h3>
             <div className="flex gap-6 overflow-x-auto pb-2">
-              {currentContent.mensFootwear.map((item) => (
+              {content.mensFootwear.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -290,12 +290,13 @@ const Categories: React.FC = () => {
         </>
       );
     } else if (selectedCategory === 'accessories') {
+      const content = categoryContent.accessories;
       return (
         <>
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Makeup</h3>
             <div className="grid grid-cols-3 gap-4">
-              {currentContent.makeup.map((item) => (
+              {content.makeup.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -317,7 +318,7 @@ const Categories: React.FC = () => {
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Skincare</h3>
             <div className="flex gap-6 overflow-x-auto pb-2">
-              {currentContent.skincare.map((item) => (
+              {content.skincare.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -338,12 +339,13 @@ const Categories: React.FC = () => {
         </>
       );
     } else if (selectedCategory === 'kids') {
+      const content = categoryContent.kids;
       return (
         <>
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Boys Wear</h3>
             <div className="grid grid-cols-3 gap-4">
-              {currentContent.boysWear.map((item) => (
+              {content.boysWear.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -365,7 +367,7 @@ const Categories: React.FC = () => {
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Girls Wear</h3>
             <div className="flex gap-6 overflow-x-auto pb-2">
-              {currentContent.girlsWear.map((item) => (
+              {content.girlsWear.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -386,12 +388,13 @@ const Categories: React.FC = () => {
         </>
       );
     } else if (selectedCategory === 'home') {
+      const content = categoryContent.home;
       return (
         <>
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Home Decor</h3>
             <div className="grid grid-cols-3 gap-4">
-              {currentContent.decor.map((item) => (
+              {content.decor.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -413,7 +416,7 @@ const Categories: React.FC = () => {
           <div className="px-4 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Bedding</h3>
             <div className="flex gap-6 overflow-x-auto pb-2">
-              {currentContent.bedding.map((item) => (
+              {content.bedding.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleCategoryClick(item.id)}
@@ -437,6 +440,8 @@ const Categories: React.FC = () => {
     
     return null;
   };
+
+  const currentContent = categoryContent[selectedCategory as keyof typeof categoryContent] || categoryContent.women;
 
   return (
     <Layout>
@@ -467,19 +472,8 @@ const Categories: React.FC = () => {
           </div>
         </div>
 
-        {/* Search Bar */}
-        <div className="bg-transparent px-[15px] mx-0 my-0 py-[5px]">
-          <div className="flex items-center gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input 
-                type="text" 
-                placeholder="Search 'chicken'" 
-                className="w-full pl-10 pr-12 py-3 bg-gray-800 text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent" 
-              />
-            </div>
-          </div>
-        </div>
+        {/* Search Bar - Using the same SearchBar component as homepage */}
+        <SearchBar />
 
         <div className="flex">
           {/* Vertical Sidebar */}
