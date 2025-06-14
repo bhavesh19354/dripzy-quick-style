@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { MapPin, ShoppingCart, User, Grid3X3, House, Bell } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -59,39 +60,39 @@ const Layout: React.FC<LayoutProps> = ({
 
       {/* Fixed Bottom Navigation - Updated Style */}
       <nav className="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800 z-40">
-        <div className="flex items-center justify-around py-3 max-w-7xl mx-auto">
+        <div className="flex items-center justify-around py-2 max-w-7xl mx-auto">
           <button
             onClick={() => navigate('/')}
-            className={`flex flex-col items-center gap-1 py-2 px-4 rounded-lg transition-colors ${
+            className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg transition-colors ${
               isActive('/') ? 'text-pink-500' : 'text-gray-300 hover:text-pink-300'
             }`}
           >
-            <div className="w-6 h-6 flex items-center justify-center">
-              <House className="w-6 h-6" />
+            <div className="w-5 h-5 flex items-center justify-center">
+              <House className="w-5 h-5" />
             </div>
             <span className="text-xs font-medium">Home</span>
           </button>
           
           <button
             onClick={() => navigate('/categories')}
-            className={`flex flex-col items-center gap-1 py-2 px-4 rounded-lg transition-colors ${
+            className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg transition-colors ${
               isActive('/categories') ? 'text-pink-500' : 'text-gray-300 hover:text-pink-300'
             }`}
           >
-            <div className="w-6 h-6 flex items-center justify-center">
-              <Grid3X3 className="w-6 h-6" />
+            <div className="w-5 h-5 flex items-center justify-center">
+              <Grid3X3 className="w-5 h-5" />
             </div>
             <span className="text-xs font-medium">Categories</span>
           </button>
           
           <button
             onClick={() => navigate('/cart')}
-            className={`flex flex-col items-center gap-1 py-2 px-4 rounded-lg transition-colors relative ${
+            className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg transition-colors relative ${
               isActive('/cart') ? 'text-pink-500' : 'text-gray-300 hover:text-pink-300'
             }`}
           >
-            <div className="w-6 h-6 flex items-center justify-center relative">
-              <ShoppingCart className="w-6 h-6" />
+            <div className="w-5 h-5 flex items-center justify-center relative">
+              <ShoppingCart className="w-5 h-5" />
               {cartItemCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                   {cartItemCount}
@@ -99,6 +100,18 @@ const Layout: React.FC<LayoutProps> = ({
               )}
             </div>
             <span className="text-xs font-medium">Bag</span>
+          </button>
+          
+          <button
+            onClick={() => navigate('/profile')}
+            className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg transition-colors ${
+              isActive('/profile') ? 'text-pink-500' : 'text-gray-300 hover:text-pink-300'
+            }`}
+          >
+            <div className="w-5 h-5 flex items-center justify-center">
+              <User className="w-5 h-5" />
+            </div>
+            <span className="text-xs font-medium">Profile</span>
           </button>
         </div>
       </nav>
