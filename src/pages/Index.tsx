@@ -86,8 +86,8 @@ const Index: React.FC = () => {
           {/* Top Bar Content Over Background */}
           <div className="absolute top-0 left-0 right-0 z-10 px-4 py-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-black mt-0.5" />
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-black" />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-1">
                     <span className="text-lg font-medium text-zinc-950">Home</span>

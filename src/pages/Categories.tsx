@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import { categories } from '../data/mockData';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, Search } from 'lucide-react';
+import { ChevronRight, Search, MapPin, ChevronDown, ShoppingCart } from 'lucide-react';
 
 const Categories: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('women');
@@ -58,6 +58,32 @@ const Categories: React.FC = () => {
   return (
     <Layout>
       <div className="bg-gray-50 min-h-screen">
+        {/* Top Bar - Same as Home Page */}
+        <div className="bg-white px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-black" />
+              <div className="flex flex-col">
+                <div className="flex items-center gap-1">
+                  <span className="text-lg font-medium text-zinc-950">Home</span>
+                  <ChevronDown className="w-4 h-4 text-black" />
+                </div>
+                <span className="text-sm opacity-90 text-zinc-950">Flat 103, house 288, Medicity, Islam...</span>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <ShoppingCart className="w-5 h-5 text-black" />
+                <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
+              </div>
+              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                <span className="text-white font-semibold text-sm">B</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Search Bar */}
         <div className="bg-white px-4 pb-3">
           <div className="bg-gray-100 rounded-full px-4 py-2 flex items-center gap-2">
