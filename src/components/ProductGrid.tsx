@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
@@ -56,8 +57,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             </div>
           </div>
           
-          {/* Product Cards Overlay - Higher positioning and smaller cards on mobile */}
-          <div className="absolute bottom-4 md:bottom-0 left-0 right-0 h-1/3 md:h-1/2 flex items-start md:items-center pt-4 md:pt-0 px-4">
+          {/* Product Cards Overlay - Much higher positioning on mobile */}
+          <div className="absolute bottom-8 md:bottom-0 left-0 right-0 h-1/4 md:h-1/2 flex items-center md:items-center px-4">
             <div className="flex gap-2 md:gap-3 overflow-x-auto pb-4 scrollbar-hide w-full">
               {products.map((product, index) => (
                 <div key={product.id} className="flex-shrink-0 w-32 md:w-48">
@@ -95,3 +96,4 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 };
 
 export default ProductGrid;
+
