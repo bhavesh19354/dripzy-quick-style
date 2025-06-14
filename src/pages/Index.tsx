@@ -96,36 +96,6 @@ const Index: React.FC = () => {
           <div className={isSearchSticky ? 'invisible' : 'visible'}>
             <SearchBar />
           </div>
-
-          {/* Father's Day Banner */}
-          <div className="px-4 mt-4">
-            <div className="relative bg-gradient-to-r from-orange-400 to-orange-500 rounded-2xl p-6 overflow-hidden">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h2 className="text-2xl font-bold text-white mb-2" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
-                    FATHER'S DAY
-                  </h2>
-                  <h3 className="text-3xl font-bold text-yellow-200" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
-                    SPECIALS
-                  </h3>
-                </div>
-                
-                {/* Collaboration Badge */}
-                <div className="absolute top-4 right-4 bg-white rounded-lg px-3 py-2">
-                  <span className="text-xs text-gray-600">in collaboration with</span>
-                  <div className="bg-black text-white px-2 py-1 rounded text-sm font-bold">
-                    CAKEZONE
-                  </div>
-                </div>
-              </div>
-              
-              {/* Illustration Area */}
-              <div className="absolute bottom-0 right-0 w-32 h-24 bg-gradient-to-t from-orange-600 to-transparent rounded-tl-full">
-                <div className="absolute bottom-2 right-8 text-4xl">🎵</div>
-                <div className="absolute bottom-4 right-16 text-2xl">👨‍👧</div>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Sticky Search Bar */}
