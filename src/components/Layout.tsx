@@ -33,7 +33,7 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <div className="min-h-screen bg-white">
       {/* Fixed Top Header */}
-      <header className="fixed top-0 left-0 right-0 bg-black text-white z-40 px-4 py-3">
+      <header className="fixed top-0 left-0 right-0 bg-black text-white z-40 px-4 py-2">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex flex-col items-start">
             <span className="text-xs">Delivering in</span>
@@ -68,7 +68,7 @@ const Layout: React.FC<LayoutProps> = ({
       </header>
 
       {/* Main Content */}
-      <main className="pt-16 pb-20">
+      <main className="pt-12 pb-20">
         {children}
       </main>
 
