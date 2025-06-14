@@ -51,18 +51,30 @@ const EthnicCollection: React.FC = () => {
           <div className="absolute bottom-4 right-8 w-24 h-24 bg-gradient-to-br from-amber-300 to-orange-300 rounded-full opacity-15"></div>
         </div>
         
-        <div className="relative z-10">
-          <div className="mb-4">
-            <div className="inline-block bg-black text-white px-3 py-1 rounded-full text-xs font-bold mb-3">UPTO 50% OFF</div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Featured Brands</h2>
+        <div className="relative z-10 flex items-start justify-between">
+          <div className="flex-1">
+            <div className="mb-4">
+              <div className="inline-block bg-black text-white px-3 py-1 rounded-full text-xs font-bold mb-3">UPTO 50% OFF</div>
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Featured Brands</h2>
+                {/* Featured model image on the right */}
+                <div className="w-16 h-20 md:w-20 md:h-24 flex-shrink-0 ml-4">
+                  <img 
+                    src="/lovable-uploads/81c15fc4-f6d5-4359-8025-f2c3a0a77a8a.png" 
+                    alt="Featured Model" 
+                    className="w-full h-full object-cover" 
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <button
+              onClick={handleShopNow}
+              className="bg-white text-black px-6 py-3 rounded-lg font-bold text-sm hover:bg-gray-100 transition-colors shadow-md"
+            >
+              SHOP NOW
+            </button>
           </div>
-          
-          <button
-            onClick={handleShopNow}
-            className="bg-white text-black px-6 py-3 rounded-lg font-bold text-sm hover:bg-gray-100 transition-colors shadow-md"
-          >
-            SHOP NOW
-          </button>
         </div>
 
         {/* Models - Hidden on mobile for cleaner look */}
