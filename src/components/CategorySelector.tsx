@@ -14,8 +14,8 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
   selectedCategory,
   onCategoryChange
 }) => {
-  return <div className="bg-black px-4 py-2">
-      <div className="flex justify-between items-center gap-4 mx-[14px] my-[6px]">
+  return <div className="bg-black px-4 py-2 my-0">
+      <div className="flex justify-between items-center gap-4 my-[3px] mx-[4px]">
         {categories.map(category => <button key={category.id} onClick={() => onCategoryChange(category.id)} className="flex flex-col items-center gap-1 group">
             <div className="relative">
               <img src={category.image} alt={category.name} className="w-12 h-12 rounded-full object-cover ring-2 ring-transparent group-hover:ring-orange-200 transition-all" />
