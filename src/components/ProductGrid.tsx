@@ -8,12 +8,22 @@ interface ProductGridProps {
   products: Product[];
   loading?: boolean;
   className?: string;
+  title?: string;
+  onAddToCart?: (product: Product) => void;
+  heroLayout?: boolean;
+  heroImage?: string;
+  heroTitle?: string;
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({ 
   products, 
   loading = false, 
-  className = "" 
+  className = "",
+  title,
+  onAddToCart,
+  heroLayout = false,
+  heroImage,
+  heroTitle
 }) => {
   if (loading) {
     return (
@@ -47,10 +57,37 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   }
 
   return (
-    <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${className}`}>
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+    <div className="py-6">
+      {title && (
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
+        </div>
+      )}
+      
+      {heroLayout && heroImage && (
+        <div className="mb-6 relative h-48 rounded-lg overflow-hidden">
+          <img 
+            src={heroImage} 
+            alt={heroTitle || title || "Hero"} 
+            className="w-full h-full object-cover"
+          />
+          {heroTitle && (
+            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <h3 className="text-white text-xl font-bold">{heroTitle}</h3>
+            </div>
+          )}
+        </div>
+      )}
+      
+      <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${className}`}>
+        {products.map((product) => (
+          <ProductCard 
+            key={product.id} 
+            product={product} 
+            onAddToCart={onAddToCart}
+          />
+        ))}
+      </div>
     </div>
   );
 };
