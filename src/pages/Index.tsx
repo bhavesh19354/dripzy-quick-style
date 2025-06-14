@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
@@ -147,7 +146,7 @@ const Index: React.FC = () => {
               products={quickPicks} 
               onAddToCart={handleAddToCart} 
               heroLayout={true}
-              heroImage="/lovable-uploads/b861fbc2-bbd1-4d72-bd4d-73a8d7a58106.png"
+              heroImage="/lovable-uploads/eb6f8f9f-0a8a-41d1-b1b4-36d352ee3bd0.png"
               heroTitle="SEASON'S STANDOUT"
             />
             
