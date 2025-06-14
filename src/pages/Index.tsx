@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
@@ -11,7 +10,7 @@ import EthnicCollection from '../components/EthnicCollection';
 import ProductGrid from '../components/ProductGrid';
 import { MapPin, ChevronDown, User, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { categories, banners, products, quickPicks, trendingProducts, justInProducts, featuredCategories } from '../data/mockData';
+import { categories, banners, products, quickPicks, trendingProducts, justInProducts, featuredCategories, heroImages } from '../data/mockData';
 
 interface Product {
   id: string;
@@ -75,6 +74,7 @@ const Index: React.FC = () => {
   const currentBanners = banners[selectedCategory as keyof typeof banners];
   const currentProducts = products[selectedCategory as keyof typeof products];
   const currentFeaturedCategories = featuredCategories[selectedCategory as keyof typeof featuredCategories];
+  const currentHeroImages = heroImages[selectedCategory as keyof typeof heroImages];
 
   return (
     <Layout cartItems={cartItems} onUpdateCartQuantity={handleUpdateCartQuantity} onRemoveCartItem={handleRemoveCartItem}>
@@ -151,8 +151,8 @@ const Index: React.FC = () => {
               products={quickPicks} 
               onAddToCart={handleAddToCart} 
               heroLayout={true}
-              heroImage="/lovable-uploads/ecaaf61b-2105-4c36-8464-0d14580e5913.png"
-              heroTitle="SEASON'S STANDOUT"
+              heroImage={currentHeroImages?.quickPicks?.image || "/lovable-uploads/ecaaf61b-2105-4c36-8464-0d14580e5913.png"}
+              heroTitle={currentHeroImages?.quickPicks?.title || "SEASON'S STANDOUT"}
             />
             
             <ProductGrid 
@@ -160,8 +160,8 @@ const Index: React.FC = () => {
               products={trendingProducts} 
               onAddToCart={handleAddToCart} 
               heroLayout={true}
-              heroImage="/lovable-uploads/ed93d5d3-7dfc-435d-b618-f1ec8b6380b5.png"
-              heroTitle="Products you can't miss"
+              heroImage={currentHeroImages?.trending?.image || "/lovable-uploads/ed93d5d3-7dfc-435d-b618-f1ec8b6380b5.png"}
+              heroTitle={currentHeroImages?.trending?.title || "Products you can't miss"}
             />
           </div>
         </div>

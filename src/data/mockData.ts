@@ -73,6 +73,50 @@ export const banners = {
   ]
 };
 
+// Hero images for ProductGrid sections by category
+export const heroImages = {
+  women: {
+    quickPicks: {
+      image: "/lovable-uploads/ecaaf61b-2105-4c36-8464-0d14580e5913.png",
+      title: "SEASON'S STANDOUT"
+    },
+    trending: {
+      image: "/lovable-uploads/ed93d5d3-7dfc-435d-b618-f1ec8b6380b5.png",
+      title: "Products you can't miss"
+    }
+  },
+  men: {
+    quickPicks: {
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=400&fit=crop",
+      title: "MEN'S ESSENTIALS"
+    },
+    trending: {
+      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=400&fit=crop",
+      title: "Trending men's styles"
+    }
+  },
+  footwear: {
+    quickPicks: {
+      image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&h=400&fit=crop",
+      title: "STEP IN STYLE"
+    },
+    trending: {
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&h=400&fit=crop",
+      title: "Latest footwear trends"
+    }
+  },
+  accessories: {
+    quickPicks: {
+      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=400&fit=crop",
+      title: "ACCESSORY PICKS"
+    },
+    trending: {
+      image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=800&h=400&fit=crop",
+      title: "Must-have accessories"
+    }
+  }
+};
+
 // Featured Categories for each main category
 export const featuredCategories = {
   women: [
