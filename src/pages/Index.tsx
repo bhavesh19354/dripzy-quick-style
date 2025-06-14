@@ -159,6 +159,15 @@ const Index: React.FC = () => {
               heroImage="/lovable-uploads/66c2b67b-2949-41db-a05e-9c12ebf23ddb.png"
               heroTitle="TRENDING NOW"
             />
+
+            <ProductGrid 
+              title="Products You Can't Miss" 
+              products={justInProducts} 
+              onAddToCart={handleAddToCart} 
+              heroLayout={true}
+              heroImage="/lovable-uploads/246f14f4-74b7-411d-b4ac-768990da7c85.png"
+              heroTitle="EXCLUSIVE MUST-HAVES"
+            />
           </div>
         </div>
       </div>
