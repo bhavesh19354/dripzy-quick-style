@@ -44,7 +44,7 @@ const AutoSlidingBanner: React.FC<AutoSlidingBannerProps> = ({
   const currentBanner = banners[currentIndex];
 
   return (
-    <div className="relative mx-4 mb-6 rounded-2xl overflow-hidden h-80 bg-gradient-to-r from-gray-900 to-gray-700">
+    <div className="relative mx-4 mb-2 rounded-2xl overflow-hidden h-80 bg-gradient-to-r from-gray-900 to-gray-700">
       <img
         src={currentBanner.image}
         alt="Banner"
@@ -71,21 +71,21 @@ const AutoSlidingBanner: React.FC<AutoSlidingBannerProps> = ({
       )}
 
       {/* Content */}
-      <div className="absolute bottom-0 left-0 p-6 text-white">
+      <div className="absolute bottom-12 left-0 p-6 text-white">
         <p className="text-orange-400 text-sm font-medium mb-1">SHOP ABOVE ₹500 TO UNLOCK A FREE PASS!</p>
         <h2 className="text-2xl font-bold mb-1">{currentBanner.title}</h2>
         <p className="text-sm opacity-90">{currentBanner.subtitle}</p>
       </div>
 
-      {/* Dots indicator */}
+      {/* Dots indicator - positioned at the bottom center outside the banner */}
       {banners.length > 1 && (
-        <div className="absolute bottom-4 right-6 flex gap-2">
+        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
           {banners.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
               className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex ? 'bg-orange-400' : 'bg-white bg-opacity-50'
+                index === currentIndex ? 'bg-orange-400' : 'bg-gray-400'
               }`}
             />
           ))}
