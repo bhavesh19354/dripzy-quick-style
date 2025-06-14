@@ -44,7 +44,7 @@ const AutoSlidingBanner: React.FC<AutoSlidingBannerProps> = ({
   const currentBanner = banners[currentIndex];
 
   return (
-    <div className="relative mx-4 mb-6 rounded-2xl overflow-hidden h-56 bg-gradient-to-r from-gray-900 to-gray-700">
+    <div className="relative mx-4 mb-6 rounded-2xl overflow-hidden h-80 bg-gradient-to-r from-gray-900 to-gray-700">
       <img
         src={currentBanner.image}
         alt="Banner"

@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
 import CategorySelector from '../components/CategorySelector';
 import AutoSlidingBanner from '../components/AutoSlidingBanner';
+import MovingBanner from '../components/MovingBanner';
 import FeaturedCategories from '../components/FeaturedCategories';
 import ProductGrid from '../components/ProductGrid';
 import { categories, banners, products, quickPicks, trendingProducts, justInProducts, featuredCategories } from '../data/mockData';
@@ -79,6 +80,8 @@ const Index: React.FC = () => {
         <div className="pt-3">
           <AutoSlidingBanner banners={currentBanners} />
         </div>
+        
+        <MovingBanner text="FLAT 10% OFF ON YOUR FIRST ORDER" />
         
         <div className="bg-white">
           <FeaturedCategories categories={currentFeaturedCategories} />
