@@ -14,11 +14,26 @@ interface Product {
 interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product) => void;
+  onClick?: (productId: string) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onClick }) => {
+  const handleCardClick = () => {
+    if (onClick) {
+      onClick(product.id);
+    }
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click when clicking add to cart
+    onAddToCart(product);
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow group">
+    <div 
+      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow group cursor-pointer"
+      onClick={handleCardClick}
+    >
       <div className="relative overflow-hidden rounded-t-lg">
         <img
           src={product.image}
@@ -29,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
           30 min
         </div>
         <button
-          onClick={() => onAddToCart(product)}
+          onClick={handleAddToCart}
           className="absolute bottom-2 right-2 bg-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-orange-50"
         >
           <Plus className="w-4 h-4 text-orange-500" />

@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
 
 interface Product {
@@ -18,6 +19,12 @@ interface ProductGridProps {
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({ title, products, onAddToCart }) => {
+  const navigate = useNavigate();
+
+  const handleProductClick = (productId: string) => {
+    navigate(`/product/${productId}`);
+  };
+
   return (
     <div className="px-4 mb-8">
       <h2 className="text-lg font-bold text-gray-900 mb-4">{title}</h2>
@@ -27,6 +34,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ title, products, onAddToCart 
             key={product.id}
             product={product}
             onAddToCart={onAddToCart}
+            onClick={handleProductClick}
           />
         ))}
       </div>

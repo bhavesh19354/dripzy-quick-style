@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface FeaturedCategory {
   id: string;
@@ -15,6 +16,13 @@ interface FeaturedCategoriesProps {
 }
 
 const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({ categories }) => {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (category: FeaturedCategory) => {
+    // Navigate to product listing page
+    navigate(`/products/men/${category.id}`);
+  };
+
   return (
     <div className="px-4 mb-8">
       <h2 className="text-xl font-bold text-gray-900 text-center mb-6 tracking-wide">
@@ -25,6 +33,7 @@ const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({ categories }) =
         {categories.map((category) => (
           <div
             key={category.id}
+            onClick={() => handleCategoryClick(category)}
             className="relative overflow-hidden rounded-lg aspect-[3/4] cursor-pointer group"
           >
             <img
