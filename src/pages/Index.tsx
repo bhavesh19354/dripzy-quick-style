@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
 import CategorySelector from '../components/CategorySelector';
+import YellowBanner from '../components/YellowBanner';
 import AutoSlidingBanner from '../components/AutoSlidingBanner';
 import MovingBanner from '../components/MovingBanner';
 import FeaturedCategories from '../components/FeaturedCategories';
@@ -127,6 +129,9 @@ const Index: React.FC = () => {
         {/* Scrollable Content - No gap, attached to background */}
         <div className="bg-gray-50">
           <CategorySelector categories={categories} selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
+          
+          {/* Yellow Banner */}
+          <YellowBanner />
           
           <div className="pt-3">
             <AutoSlidingBanner banners={currentBanners} />
