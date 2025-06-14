@@ -101,7 +101,7 @@ export const featuredCategories = {
     {
       id: 'tops-women',
       name: 'TOPS',
-      image: 'https://images.unsplash.com/photo-1564257577154-75f391acebe4?w=300&h=400&fit=crop'
+      image: '/lovable-uploads/b99f6ddd-7e0e-4350-8ad7-cf9871803b27.png'
     },
     {
       id: 'jeans-women',
@@ -111,7 +111,7 @@ export const featuredCategories = {
     {
       id: 'skirts',
       name: 'SKIRTS',
-      image: 'https://images.unsplash.com/photo-1583496661160-fb5886a13d14?w=300&h=400&fit=crop'
+      image: '/lovable-uploads/0cff6b78-99d4-48a8-a295-5bb972aa9d6d.png'
     },
     {
       id: 'ethnic-women',
@@ -121,7 +121,7 @@ export const featuredCategories = {
     {
       id: 'plus-size-women',
       name: 'PLUS SIZE',
-      image: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=300&h=400&fit=crop'
+      image: '/lovable-uploads/eca9ad5a-9d61-4827-bf3c-e5457cc2030f.png'
     },
     {
       id: 'luxe-women',
