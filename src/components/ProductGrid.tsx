@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
@@ -37,8 +38,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   if (heroLayout) {
     return (
       <div className="mb-8">
-        {/* Extended Hero Section with double height */}
-        <div className="relative h-[32rem] md:h-[40rem] mb-6 rounded-2xl overflow-hidden">
+        {/* Extended Hero Section with increased mobile height */}
+        <div className="relative h-[40rem] md:h-[40rem] mb-6 rounded-2xl overflow-hidden">
           <img
             src="/lovable-uploads/a13d003d-2389-42d3-a990-f5897b703179.png"
             alt={heroTitle || title}
@@ -46,11 +47,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           />
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           
-          {/* Product Cards Overlay - Positioned to work on all screen sizes */}
+          {/* Product Cards Overlay - Better mobile positioning */}
           <div className="absolute bottom-0 left-0 right-0 h-1/2 flex items-center px-4">
-            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide w-full">
+            <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide w-full">
               {products.map((product, index) => (
-                <div key={product.id} className="flex-shrink-0 w-48">
+                <div key={product.id} className="flex-shrink-0 w-40 md:w-48">
                   <ProductCard
                     product={product}
                     onAddToCart={onAddToCart}
