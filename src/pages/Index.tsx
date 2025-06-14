@@ -146,7 +146,7 @@ const Index: React.FC = () => {
               products={quickPicks} 
               onAddToCart={handleAddToCart} 
               heroLayout={true}
-              heroImage="/lovable-uploads/eb6f8f9f-0a8a-41d1-b1b4-36d352ee3bd0.png"
+              heroImage="/lovable-uploads/ecaaf61b-2105-4c36-8464-0d14580e5913.png"
               heroTitle="SEASON'S STANDOUT"
             />
             
