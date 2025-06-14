@@ -76,7 +76,9 @@ const Index: React.FC = () => {
           onCategoryChange={setSelectedCategory}
         />
         
-        <AutoSlidingBanner banners={currentBanners} />
+        <div className="pt-3">
+          <AutoSlidingBanner banners={currentBanners} />
+        </div>
         
         <div className="bg-white">
           <FeaturedCategories categories={currentFeaturedCategories} />
