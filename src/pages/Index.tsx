@@ -88,7 +88,7 @@ const Index: React.FC = () => {
           className="relative"
           style={{ 
             height: '55vh',
-            backgroundImage: 'url(/lovable-uploads/e741bfa9-a41f-4e72-8805-08ff897f359f.png)',
+            backgroundImage: 'url(/lovable-uploads/3d5567e9-bee1-49b1-846c-a831ff5e4325.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
@@ -100,7 +100,7 @@ const Index: React.FC = () => {
                 <MapPin className="w-4 h-4 text-black mt-0.5" />
                 <div className="flex flex-col">
                   <span className="text-xs text-black">Delivery in</span>
-                  <span className="text-sm font-medium text-black">Gurgaon</span>
+                  <span className="text-sm font-medium text-black">288, sector 38...</span>
                 </div>
               </div>
               
@@ -114,8 +114,8 @@ const Index: React.FC = () => {
             </div>
           </div>
 
-          {/* Search Bar - Normal Position */}
-          <div className={`absolute top-16 left-0 right-0 z-10 ${isSearchSticky ? 'invisible' : 'visible'}`}>
+          {/* Search Bar - Moved up slightly */}
+          <div className={`absolute top-12 left-0 right-0 z-10 ${isSearchSticky ? 'invisible' : 'visible'}`}>
             <SearchBar />
           </div>
         </div>
@@ -128,7 +128,7 @@ const Index: React.FC = () => {
         </div>
 
         {/* Scrollable Content - No gap, attached to background */}
-        <div className="-mt-2 bg-gray-50">
+        <div className="bg-gray-50">
           <CategorySelector
             categories={categories}
             selectedCategory={selectedCategory}
