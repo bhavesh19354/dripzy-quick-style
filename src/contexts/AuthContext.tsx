@@ -7,7 +7,6 @@ interface AuthContextType {
   userPhone: string | null;
   login: (phone: string) => void;
   logout: () => void;
-  getAuthToken: () => Promise<string | null>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -45,21 +44,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('userPhone');
   };
 
-  const getAuthToken = async (): Promise<string | null> => {
-    const currentUser = auth.currentUser;
-    if (currentUser) {
-      try {
-        return await currentUser.getIdToken(true);
-      } catch (error) {
-        console.error("Error getting auth token:", error);
-        return null;
-      }
-    }
-    return null;
-  };
-
   return (
-    <AuthContext.Provider value={{ isAuthenticated, userPhone, login, logout, getAuthToken }}>
+    <AuthContext.Provider value={{ isAuthenticated, userPhone, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
