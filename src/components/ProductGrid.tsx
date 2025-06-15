@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ProductCard from './ProductCard';
 import { Skeleton } from './ui/skeleton';
@@ -14,7 +13,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading = false }
   const navigate = useNavigate();
 
   const handleProductClick = (productId: string) => {
-    navigate(`/product/${productId}`);
+    // Always redirect to product ID 36 for now
+    navigate(`/product/36`);
   };
 
   if (isLoading) {
