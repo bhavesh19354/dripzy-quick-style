@@ -1,4 +1,3 @@
-
 import * as cartservice from "../../protogen/api/common/proto/cartservice/cart_service_grpc_web_pb";
 
 const {
@@ -8,8 +7,9 @@ const {
   ItemWithQuantity,
 } = cartservice;
 
-// Dummy gRPC endpoint (replace with your backend URL as needed)
-const CART_GRPC_URL = "https://your-cart-backend.example.com";
+// This now points to a local development server.
+// Replace with your actual backend URL for production.
+const CART_GRPC_URL = "http://localhost:8081";
 
 const DUMMY_AUTH_TOKEN = "dummy-auth-token"; // Replace with real token when available
 
