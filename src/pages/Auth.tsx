@@ -25,15 +25,16 @@ const Auth: React.FC = () => {
   const setupRecaptcha = () => {
     // Check if already rendered
     if (!window.recaptchaVerifier) {
+      // Make sure we import `auth` from ../firebase and it is the right object!
       window.recaptchaVerifier = new RecaptchaVerifier(
-        "recaptcha-container",
+        "recaptcha-container",                      // Element ID
         {
           size: "invisible",
           callback: (response: any) => {
             // reCAPTCHA solved, allow signInWithPhoneNumber.
           }
         },
-        auth
+        auth // <- Pass the actual Auth object, imported from firebase.ts
       );
     }
   };
