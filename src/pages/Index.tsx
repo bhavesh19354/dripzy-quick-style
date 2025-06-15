@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
@@ -11,8 +12,9 @@ import ProductGrid from '../components/ProductGrid';
 import { MapPin, ChevronDown, User, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { categories, banners, products, quickPicks, trendingProducts, justInProducts, featuredCategories, heroImages } from '../data/mockData';
+import { Product } from '../types/product';
 
-interface Product {
+interface LegacyProduct {
   id: string;
   name: string;
   price: number;
@@ -21,7 +23,7 @@ interface Product {
   originalPrice?: number;
 }
 
-interface CartItem extends Product {
+interface CartItem extends LegacyProduct {
   selectedSize?: string;
   quantity: number;
 }
@@ -42,7 +44,7 @@ const Index: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = (product: LegacyProduct) => {
     const existingItem = cartItems.find(item => item.id === product.id);
     if (existingItem) {
       setCartItems(cartItems.map(item => item.id === product.id ? {
@@ -71,10 +73,27 @@ const Index: React.FC = () => {
     setCartItems(cartItems.filter(item => item.id !== id));
   };
 
+  // Transform legacy products to new Product interface
+  const transformLegacyToNewProduct = (legacyProducts: LegacyProduct[]): Product[] => {
+    return legacyProducts.map(product => ({
+      id: parseInt(product.id),
+      images: [product.image],
+      colorVariants: [{ color: 'Default', image: product.image }],
+      brandName: product.brand,
+      productName: product.name,
+      mrp: product.originalPrice || product.price,
+      discountedPrice: product.price
+    }));
+  };
+
   const currentBanners = banners[selectedCategory as keyof typeof banners];
   const currentProducts = products[selectedCategory as keyof typeof products];
   const currentFeaturedCategories = featuredCategories[selectedCategory as keyof typeof featuredCategories];
   const currentHeroImages = heroImages[selectedCategory as keyof typeof heroImages];
+
+  // Transform products for the new interface
+  const transformedQuickPicks = transformLegacyToNewProduct(quickPicks);
+  const transformedTrendingProducts = transformLegacyToNewProduct(trendingProducts);
 
   return (
     <Layout cartItems={cartItems} onUpdateCartQuantity={handleUpdateCartQuantity} onRemoveCartItem={handleRemoveCartItem}>
@@ -147,21 +166,11 @@ const Index: React.FC = () => {
             <EthnicCollection />
             
             <ProductGrid 
-              title="Quick Picks" 
-              products={quickPicks} 
-              onAddToCart={handleAddToCart} 
-              heroLayout={true}
-              heroImage={currentHeroImages?.quickPicks?.image || "/lovable-uploads/ecaaf61b-2105-4c36-8464-0d14580e5913.png"}
-              heroTitle={currentHeroImages?.quickPicks?.title || "SEASON'S STANDOUT"}
+              products={transformedQuickPicks}
             />
             
             <ProductGrid 
-              title="Trending Now" 
-              products={trendingProducts} 
-              onAddToCart={handleAddToCart} 
-              heroLayout={true}
-              heroImage={currentHeroImages?.trending?.image || "/lovable-uploads/ed93d5d3-7dfc-435d-b618-f1ec8b6380b5.png"}
-              heroTitle={currentHeroImages?.trending?.title || "Products you can't miss"}
+              products={transformedTrendingProducts}
             />
           </div>
         </div>
