@@ -51,7 +51,7 @@ interface ApiResponse {
 }
 
 const ProductDetailPage = () => {
-  const { id } = useParams<{ id: string }>();
+  const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [product, setProduct] = useState<ProductDetail | null>(null);
@@ -64,17 +64,17 @@ const ProductDetailPage = () => {
   useEffect(() => {
     const fetchProductDetail = () => {
       setIsLoading(true);
-      console.log('Loading product detail for ID:', id);
-
+      console.log('Loading product detail for ID:', productId);
+      
       // Simulate API delay
       setTimeout(() => {
         // Create mock data based on the product ID
-        const productId = parseInt(id || '0');
+        const pid = parseInt(productId || '0');
         
         // Default mock data structure that works for any product ID
         const mockApiResponse: ApiResponse = {
           product_details: {
-            product_id: productId,
+            product_id: pid,
             colors: [
               {
                 color_id: 1,
@@ -162,9 +162,9 @@ const ProductDetailPage = () => {
             ]
           }
         };
-
+        
         // If it's the specific product ID 36, use the detailed mock data
-        if (productId === 36) {
+        if (pid === 36) {
           mockApiResponse.product_details = {
             product_id: 36,
             colors: [
@@ -232,37 +232,37 @@ const ProductDetailPage = () => {
             ]
           };
         }
-
+        
         setProduct(mockApiResponse.product_details);
         setIsLoading(false);
-        console.log('Product detail loaded successfully for ID:', productId);
+        console.log('Product detail loaded successfully for ID:', pid);
       }, 800);
     };
-
-    if (id) {
+    
+    if (productId) {
       fetchProductDetail();
     }
-  }, [id]);
-
+  }, [productId]);
+  
   const handleColorChange = (index: number) => {
     setSelectedColorIndex(index);
     setSelectedSize(''); // Reset size selection when color changes
   };
-
+  
   const handleSizeChange = (size: string) => {
     setSelectedSize(size);
     // Clear any validation shake animation
     setSizeValidationShake(false);
   };
-
+  
   const handleBack = () => {
     navigate(-1);
   };
-
+  
   const toggleWishlist = () => {
     setIsWishlisted(!isWishlisted);
   };
-
+  
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -276,7 +276,7 @@ const ProductDetailPage = () => {
       console.log('Product URL copied to clipboard');
     }
   };
-
+  
   const handleAddToBag = () => {
     if (!selectedSize) {
       // Trigger shake animation for size selection
@@ -288,12 +288,12 @@ const ProductDetailPage = () => {
         description: "Please select a size before adding to bag",
         variant: "destructive",
       });
-
+      
       // Remove shake animation after animation completes
       setTimeout(() => setSizeValidationShake(false), 600);
       return;
     }
-
+    
     // Add to bag logic here
     const selectedSizeData = availableSizes.find(size => size.size_name === selectedSize);
     toast({
@@ -308,7 +308,7 @@ const ProductDetailPage = () => {
       sizeData: selectedSizeData
     });
   };
-
+  
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -319,7 +319,7 @@ const ProductDetailPage = () => {
       </div>
     );
   }
-
+  
   if (!product || !product.colors || product.colors.length === 0) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -332,7 +332,7 @@ const ProductDetailPage = () => {
       </div>
     );
   }
-
+  
   const currentColor = product.colors[selectedColorIndex];
   const currentImages = currentColor?.product_image_urls || [];
   const availableSizes = currentColor?.sizes || [];
@@ -341,11 +341,11 @@ const ProductDetailPage = () => {
   const selectedSizeData = selectedSize 
     ? availableSizes.find(size => size.size_name === selectedSize)
     : availableSizes[0];
-
+  
   // Convert micros to regular price (divide by 1,000,000)
   const mrp = selectedSizeData ? selectedSizeData.mrp_micros / 1000000 : 0;
   const discountedPrice = selectedSizeData ? selectedSizeData.discounted_price_mircos / 1000000 : 0;
-
+  
   return (
     <div className="min-h-screen bg-white pb-20">
       {/* Header */}
@@ -378,7 +378,7 @@ const ProductDetailPage = () => {
           </button>
         </div>
       </header>
-
+  
       {/* Product Image Carousel with auto-scroll enabled */}
       <div className="relative">
         <ImageCarousel images={currentImages} autoPlay={true} />
@@ -404,7 +404,7 @@ const ProductDetailPage = () => {
           </button>
         </div>
       </div>
-
+  
       {/* Product Information */}
       <div className="p-4">
         <h2 className="text-xl font-semibold text-gray-900 mb-2">
@@ -414,14 +414,14 @@ const ProductDetailPage = () => {
         <p className="text-gray-600 text-sm mb-4">
           {selectedSizeData?.product_variant_name || 'Product'}
         </p>
-
+  
         {selectedSizeData?.product_variant_description && (
           <div 
             className="text-gray-600 text-sm mb-4"
             dangerouslySetInnerHTML={{ __html: selectedSizeData.product_variant_description }}
           />
         )}
-
+  
         {/* Color Variants */}
         {product.colors.length > 0 && (
           <div className="mb-6">
@@ -450,7 +450,7 @@ const ProductDetailPage = () => {
             </div>
           </div>
         )}
-
+  
         {/* Size Selection */}
         {availableSizes.length > 0 && (
           <div className="mb-6">
@@ -482,7 +482,7 @@ const ProductDetailPage = () => {
           </div>
         )}
       </div>
-
+  
       {/* Sticky Bottom Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 flex items-center justify-between">
         <div>
