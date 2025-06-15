@@ -1,6 +1,12 @@
 
-import { CartServicePromiseClient } from "../../protogen/api/common/proto/cartservice/cart_service_grpc_web_pb";
-import { GetCartItemsRequest, MutateCartRequest, ItemWithQuantity } from "../../protogen/api/common/proto/cartservice/cart_service_pb";
+import cartservice from "../../protogen/api/common/proto/cartservice/cart_service_grpc_web_pb";
+
+const {
+  CartServicePromiseClient,
+  GetCartItemsRequest,
+  MutateCartRequest,
+  ItemWithQuantity,
+} = cartservice;
 
 // Dummy gRPC endpoint (replace with your backend URL as needed)
 const CART_GRPC_URL = "https://your-cart-backend.example.com";
