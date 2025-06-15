@@ -1,12 +1,7 @@
 
 import { CartServiceClient } from "../../protogen/api/common/proto/cartservice/Cart_serviceServiceClientPb";
-import {
-  GetCartItemsRequest,
-  MutateCartRequest,
-  ItemWithQuantity,
-  GetCartItemsResponse,
-  MutateCartResponse,
-} from "../../protogen/api/common/proto/cartservice/cart_service_pb";
+// Import JS proto module as namespace, not named ES import
+import * as cartPb from "../../protogen/api/common/proto/cartservice/cart_service_pb";
 import { auth } from "../firebase";
 
 // The full endpoint for gRPC-Web:
@@ -25,13 +20,14 @@ async function getFirebaseAuthToken(): Promise<string> {
 /**
  * Fetch all items in the cart, sending the Firebase auth token.
  */
-export async function getCartItems(): Promise<GetCartItemsResponse.AsObject> {
+export async function getCartItems(): Promise<any> {
   const token = await getFirebaseAuthToken();
-  const request = new GetCartItemsRequest();
+  const request = new cartPb.GetCartItemsRequest();
   const response = await cartServiceClient.getCartItems(request, {
     authorization: token,
   });
-  return response.toObject();
+  // .toObject() is not available on plain JS output, so just return the response (adapt as needed)
+  return response.toObject ? response.toObject() : response;
 }
 
 /**
@@ -40,15 +36,15 @@ export async function getCartItems(): Promise<GetCartItemsResponse.AsObject> {
 export async function mutateCartItem(
   productVariantId: number,
   quantity: number
-): Promise<MutateCartResponse.AsObject> {
+): Promise<any> {
   const token = await getFirebaseAuthToken();
-  const request = new MutateCartRequest();
-  const item = new ItemWithQuantity();
+  const request = new cartPb.MutateCartRequest();
+  const item = new cartPb.ItemWithQuantity();
   item.setProductVariantId(productVariantId);
   item.setQuantity(quantity);
   request.setItem(item);
   const response = await cartServiceClient.mutateCart(request, {
     authorization: token,
   });
-  return response.toObject();
+  return response.toObject ? response.toObject() : response;
 }
