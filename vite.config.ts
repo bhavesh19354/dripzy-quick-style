@@ -13,7 +13,10 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     viteCommonjs({
-      include: /(protogen|node_modules)/,
+      include: [
+        "protogen/**/*.js",
+        "node_modules/**"
+      ],
       transformMixedEsModules: true,
     }),
     react(),
