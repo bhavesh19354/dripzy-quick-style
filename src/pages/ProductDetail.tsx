@@ -68,9 +68,104 @@ const ProductDetailPage = () => {
 
       // Simulate API delay
       setTimeout(() => {
-        // Parse the actual API response format
+        // Create mock data based on the product ID
+        const productId = parseInt(id || '0');
+        
+        // Default mock data structure that works for any product ID
         const mockApiResponse: ApiResponse = {
           product_details: {
+            product_id: productId,
+            colors: [
+              {
+                color_id: 1,
+                color_name: "Default",
+                product_image_urls: [
+                  "https://image.hm.com/assets/hm/11/1b/111bb98f69b415b80383abaf66ed9cd8250e6023.jpg",
+                  "https://image.hm.com/assets/hm/4c/ee/4cee8433280e22e92312d7140844c8041d3aeaa0.jpg",
+                  "https://image.hm.com/assets/hm/06/53/06531fe897c6bdbdfb92274ac4a8672f187662f3.jpg"
+                ],
+                sizes: [
+                  {
+                    size_id: 1,
+                    size_name: "XS",
+                    product_variant_id: 1,
+                    product_variant_name: "H&M Product",
+                    product_variant_description: "A stylish H&M product with great quality and comfort.",
+                    mrp_micros: 799000000,
+                    store_with_best_price: {
+                      primary_key: { store_id: 1 },
+                      image_urls: "https://media.fashionnetwork.com/cdn-cgi/image/fit=contain,width=1000,height=1000,format=auto/m/2b4d/aadb/ced2/d0f6/7681/b92b/eee3/106b/3465/0a10/0a10.jpg",
+                      name: "H&M Store",
+                      address: {
+                        full_address: "H&M Store Location",
+                        latitude: 28.634170532226562,
+                        longitude: 77.21920013427734,
+                        postal_code: "110001",
+                        city: "New Delhi"
+                      },
+                      distance_in_meters: 33486,
+                      time_in_millis: 3281000
+                    },
+                    discounted_price_mircos: 799000000,
+                    quantity: 1000
+                  },
+                  {
+                    size_id: 2,
+                    size_name: "S",
+                    product_variant_id: 2,
+                    product_variant_name: "H&M Product",
+                    product_variant_description: "A stylish H&M product with great quality and comfort.",
+                    mrp_micros: 799000000,
+                    store_with_best_price: {
+                      primary_key: { store_id: 1 },
+                      image_urls: "https://media.fashionnetwork.com/cdn-cgi/image/fit=contain,width=1000,height=1000,format=auto/m/2b4d/aadb/ced2/d0f6/7681/b92b/eee3/106b/3465/0a10/0a10.jpg",
+                      name: "H&M Store",
+                      address: {
+                        full_address: "H&M Store Location",
+                        latitude: 28.634170532226562,
+                        longitude: 77.21920013427734,
+                        postal_code: "110001",
+                        city: "New Delhi"
+                      },
+                      distance_in_meters: 33486,
+                      time_in_millis: 3281000
+                    },
+                    discounted_price_mircos: 799000000,
+                    quantity: 1000
+                  },
+                  {
+                    size_id: 3,
+                    size_name: "M",
+                    product_variant_id: 3,
+                    product_variant_name: "H&M Product",
+                    product_variant_description: "A stylish H&M product with great quality and comfort.",
+                    mrp_micros: 799000000,
+                    store_with_best_price: {
+                      primary_key: { store_id: 1 },
+                      image_urls: "https://media.fashionnetwork.com/cdn-cgi/image/fit=contain,width=1000,height=1000,format=auto/m/2b4d/aadb/ced2/d0f6/7681/b92b/eee3/106b/3465/0a10/0a10.jpg",
+                      name: "H&M Store",
+                      address: {
+                        full_address: "H&M Store Location",
+                        latitude: 28.634170532226562,
+                        longitude: 77.21920013427734,
+                        postal_code: "110001",
+                        city: "New Delhi"
+                      },
+                      distance_in_meters: 33486,
+                      time_in_millis: 3281000
+                    },
+                    discounted_price_mircos: 799000000,
+                    quantity: 1000
+                  }
+                ]
+              }
+            ]
+          }
+        };
+
+        // If it's the specific product ID 36, use the detailed mock data
+        if (productId === 36) {
+          mockApiResponse.product_details = {
             product_id: 36,
             colors: [
               {
@@ -133,161 +228,14 @@ const ProductDetailPage = () => {
                     quantity: 1000
                   }
                 ]
-              },
-              {
-                color_id: 3096,
-                color_name: "White/Floral",
-                product_image_urls: [
-                  "https://image.hm.com/assets/hm/04/43/0443c45a7ed32de571c1ba8adbce44835398143d.jpg",
-                  "https://image.hm.com/assets/hm/da/ca/dacae7ee1f316ee98b54683183ff43220cd080cd.jpg",
-                  "https://image.hm.com/assets/hm/67/fd/67fdca25aa51d3eea3b27c611cb744ca4a91f85a.jpg",
-                  "https://image.hm.com/assets/hm/b4/02/b402d9b68d719e236bf481fa906aaef493b59497.jpg",
-                  "https://image.hm.com/assets/hm/80/60/8060d395cb4f73b4aeb47ceac743c0dc7faabb5c.jpg"
-                ],
-                sizes: [
-                  {
-                    size_id: 165,
-                    size_name: "XS",
-                    product_variant_id: 15629,
-                    product_variant_name: "Lace-trimmed ribbed T-shirt",
-                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
-                    mrp_micros: 799000000,
-                    store_with_best_price: {
-                      primary_key: { store_id: 3 },
-                      image_urls: "https://alfred.com.au/wp-content/uploads/2021/07/HMConsciousCollectionLaunch_101019-YMund-346_LR-copy.jpg",
-                      name: "H&M HUDA Metro station",
-                      address: {
-                        full_address: "HUDA Metro station Sector 29, Gurugram",
-                        latitude: 28.459341049194336,
-                        longitude: 77.0727767944336,
-                        postal_code: "120007",
-                        city: "Gurgaon"
-                      },
-                      distance_in_meters: 4682,
-                      time_in_millis: 996000
-                    },
-                    discounted_price_mircos: 799000000,
-                    quantity: 1000
-                  }
-                ]
-              },
-              {
-                color_id: 3218,
-                color_name: "Light blue",
-                product_image_urls: [
-                  "https://image.hm.com/assets/hm/d4/a0/d4a00324bd4772ab6eeb3bc4b16d024072e6d96a.jpg",
-                  "https://image.hm.com/assets/hm/df/67/df67e96237636624c8755d6517faca0dcfad0314.jpg",
-                  "https://image.hm.com/assets/hm/1c/f5/1cf58dd90414fb411c81774ffb4cd63e00b5df4c.jpg",
-                  "https://image.hm.com/assets/hm/79/51/7951af6d6ebeed332bc352240dae745ad790e8ea.jpg",
-                  "https://image.hm.com/assets/hm/6e/94/6e94e2e531778ccde74e7909a57ae458e32f5694.jpg"
-                ],
-                sizes: [
-                  {
-                    size_id: 165,
-                    size_name: "XS",
-                    product_variant_id: 16160,
-                    product_variant_name: "Lace-trimmed ribbed T-shirt",
-                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
-                    mrp_micros: 799000000,
-                    store_with_best_price: {
-                      primary_key: { store_id: 24 },
-                      image_urls: "https://lh3.googleusercontent.com/JKPieJTXhsjXTR2Bf7tIN0gfCY0uq4T9fAd2QnmrScTbpqcXSLYBAlS73loQDRF52FZ8kqlhfm-BdmYDPgeWH0R9j_ha=w1200-rw",
-                      name: "H&M Grand Venice",
-                      address: {
-                        full_address: "Plot No SH3, Site IV, Near Pari Chowk, Greater Noida",
-                        latitude: 28.452878952026367,
-                        longitude: 77.52599334716797,
-                        postal_code: "201308",
-                        city: "Noida"
-                      },
-                      distance_in_meters: 68492,
-                      time_in_millis: 5628000
-                    },
-                    discounted_price_mircos: 799000000,
-                    quantity: 1000
-                  }
-                ]
-              },
-              {
-                color_id: 3226,
-                color_name: "Cream",
-                product_image_urls: [
-                  "https://image.hm.com/assets/hm/0f/61/0f615d53631fdd28b18b5a0f1f0af738f90966c2.jpg",
-                  "https://image.hm.com/assets/hm/96/31/96318bc5a36e7fb1ae4fa9b88a405d0d27f84b11.jpg",
-                  "https://image.hm.com/assets/hm/6b/4e/6b4ef260a3a83d17652997fe619baab258059a03.jpg",
-                  "https://image.hm.com/assets/hm/61/d7/61d7e6d28f65d015a4a11ba6554bd63c26e25269.jpg",
-                  "https://image.hm.com/assets/hm/2e/7b/2e7b50bd376794bdd323fe4fbf9627fd8374ecb6.jpg"
-                ],
-                sizes: [
-                  {
-                    size_id: 165,
-                    size_name: "XS",
-                    product_variant_id: 16196,
-                    product_variant_name: "Lace-trimmed ribbed T-shirt",
-                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
-                    mrp_micros: 799000000,
-                    store_with_best_price: {
-                      primary_key: { store_id: 3 },
-                      image_urls: "https://alfred.com.au/wp-content/uploads/2021/07/HMConsciousCollectionLaunch_101019-YMund-346_LR-copy.jpg",
-                      name: "H&M HUDA Metro station",
-                      address: {
-                        full_address: "HUDA Metro station Sector 29, Gurugram",
-                        latitude: 28.459341049194336,
-                        longitude: 77.0727767944336,
-                        postal_code: "120007",
-                        city: "Gurgaon"
-                      },
-                      distance_in_meters: 4682,
-                      time_in_millis: 996000
-                    },
-                    discounted_price_mircos: 799000000,
-                    quantity: 1000
-                  }
-                ]
-              },
-              {
-                color_id: 3242,
-                color_name: "Black",
-                product_image_urls: [
-                  "https://image.hm.com/assets/hm/1e/4c/1e4ceca78223f127c008598dafafd42d5e6be0e3.jpg",
-                  "https://image.hm.com/assets/hm/9e/47/9e47fc761f10ba426b6af2df4866b73126e10f83.jpg",
-                  "https://image.hm.com/assets/hm/ad/f3/adf35400293259fdcfbe6fe7de7cefde27b13f22.jpg",
-                  "https://image.hm.com/assets/hm/f2/23/f223fcd09ecc25da0ba418e7e33876289e0deea3.jpg"
-                ],
-                sizes: [
-                  {
-                    size_id: 165,
-                    size_name: "XS",
-                    product_variant_id: 16261,
-                    product_variant_name: "Lace-trimmed ribbed T-shirt",
-                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
-                    mrp_micros: 799000000,
-                    store_with_best_price: {
-                      primary_key: { store_id: 3 },
-                      image_urls: "https://alfred.com.au/wp-content/uploads/2021/07/HMConsciousCollectionLaunch_101019-YMund-346_LR-copy.jpg",
-                      name: "H&M HUDA Metro station",
-                      address: {
-                        full_address: "HUDA Metro station Sector 29, Gurugram",
-                        latitude: 28.459341049194336,
-                        longitude: 77.0727767944336,
-                        postal_code: "120007",
-                        city: "Gurgaon"
-                      },
-                      distance_in_meters: 4682,
-                      time_in_millis: 996000
-                    },
-                    discounted_price_mircos: 799000000,
-                    quantity: 1000
-                  }
-                ]
               }
             ]
-          }
-        };
+          };
+        }
 
         setProduct(mockApiResponse.product_details);
         setIsLoading(false);
-        console.log('Product detail loaded successfully');
+        console.log('Product detail loaded successfully for ID:', productId);
       }, 800);
     };
 
