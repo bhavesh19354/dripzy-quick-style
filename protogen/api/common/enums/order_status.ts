@@ -1,0 +1,11 @@
+
+export enum OrderStatus_Enum {
+  UNKNOWN = 0,
+  ORDER_PLACED = 1,
+  DELIVERY_PARTNER_ASSIGNED = 2,
+  PICKED = 3,
+  DELIVERED = 4,
+  WAITING = 5,
+  REFUND_PENDING = 6,
+  COMPLETED = 7,
+}
