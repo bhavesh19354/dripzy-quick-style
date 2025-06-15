@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
@@ -26,16 +27,16 @@ const Auth: React.FC = () => {
   const setupRecaptcha = () => {
     // Check if already rendered
     if (!window.recaptchaVerifier) {
-      // Ensure correct type for auth (fix error)
+      // The auth object must be the first argument
       window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
         "recaptcha-container",
         {
           size: "invisible",
           callback: (response: any) => {
             // reCAPTCHA solved, allow signInWithPhoneNumber.
           }
-        },
-        auth as Auth // Explicitly tell TypeScript this is an Auth object
+        }
       );
     }
   };
