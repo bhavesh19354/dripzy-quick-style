@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
@@ -12,7 +11,6 @@ import ProductGrid from '../components/ProductGrid';
 import { MapPin, ChevronDown, User, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { categories, banners, products, quickPicks, trendingProducts, justInProducts, featuredCategories, heroImages } from '../data/mockData';
-import { Product } from '../types/product';
 
 interface LegacyProduct {
   id: string;
@@ -73,27 +71,10 @@ const Index: React.FC = () => {
     setCartItems(cartItems.filter(item => item.id !== id));
   };
 
-  // Transform legacy products to new Product interface
-  const transformLegacyToNewProduct = (legacyProducts: LegacyProduct[]): Product[] => {
-    return legacyProducts.map(product => ({
-      id: parseInt(product.id),
-      images: [product.image],
-      colorVariants: [{ color: 'Default', image: product.image }],
-      brandName: product.brand,
-      productName: product.name,
-      mrp: product.originalPrice || product.price,
-      discountedPrice: product.price
-    }));
-  };
-
   const currentBanners = banners[selectedCategory as keyof typeof banners];
   const currentProducts = products[selectedCategory as keyof typeof products];
   const currentFeaturedCategories = featuredCategories[selectedCategory as keyof typeof featuredCategories];
   const currentHeroImages = heroImages[selectedCategory as keyof typeof heroImages];
-
-  // Transform products for the new interface
-  const transformedQuickPicks = transformLegacyToNewProduct(quickPicks);
-  const transformedTrendingProducts = transformLegacyToNewProduct(trendingProducts);
 
   return (
     <Layout cartItems={cartItems} onUpdateCartQuantity={handleUpdateCartQuantity} onRemoveCartItem={handleRemoveCartItem}>
@@ -166,11 +147,11 @@ const Index: React.FC = () => {
             <EthnicCollection />
             
             <ProductGrid 
-              products={transformedQuickPicks}
+              products={quickPicks}
             />
             
             <ProductGrid 
-              products={transformedTrendingProducts}
+              products={trendingProducts}
             />
           </div>
         </div>
