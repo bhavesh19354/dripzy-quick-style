@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Cart, Share } from 'lucide-react';
+import { ArrowLeft, cart, heart, Share } from 'lucide-react';
 import ImageCarousel from '../components/ImageCarousel';
 import { Button } from '../components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -369,7 +369,7 @@ const ProductDetailPage = () => {
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             aria-label="Go to cart"
           >
-            <Cart size={20} />
+            {React.createElement(cart, { size: 20 })}
           </button>
         </div>
       </header>
@@ -385,10 +385,10 @@ const ProductDetailPage = () => {
             className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors"
             aria-label="Add to wishlist"
           >
-            <Heart 
-              size={20} 
-              className={isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'} 
-            />
+            {React.createElement(heart, {
+              size: 20,
+              className: isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600',
+            })}
           </button>
           <button
             onClick={handleShare}
