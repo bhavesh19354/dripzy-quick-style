@@ -12,12 +12,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
-    viteCommonjs({
-      // This option allows the plugin to transform CommonJS modules
-      // outside of the node_modules directory, which is where the
-      // protogen files are.
-      transformMixedEsModules: true,
-    }),
+    viteCommonjs(),
     react(),
     mode === 'development' &&
     componentTagger(),
