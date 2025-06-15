@@ -1,11 +1,10 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import Header from '../components/Header';
 import NavigationBar from '../components/NavigationBar';
 import FilterBar from '../components/FilterBar';
 import ProductGrid from '../components/ProductGrid';
-import { Button } from '@/components/ui/button';
 
 const SHOPIFY_STOREFRONT_ACCESS_TOKEN = '50b756b36c591cc2d86ea31b1eceace5';
 const SHOPIFY_API_URL = 'https://dripzyy.com/api/2024-04/graphql.json';
@@ -132,6 +131,32 @@ const ProductListPage = () => {
     },
   });
 
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      {
+        rootMargin: '200px', // Trigger fetch 200px before element is in view
+      }
+    );
+
+    const currentRef = loadMoreRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
   const products = data?.pages.flatMap(page => page.edges.map(edge => {
     const { node } = edge;
     return {
@@ -157,15 +182,13 @@ const ProductListPage = () => {
       <NavigationBar />
       <FilterBar />
       <ProductGrid products={products} isLoading={isLoading && products.length === 0} />
+      
+      {/* This invisible div will trigger loading more products */}
+      <div ref={loadMoreRef} />
+
       <div className="flex justify-center py-8">
-        {hasNextPage && (
-          <Button
-            onClick={() => fetchNextPage()}
-            disabled={isFetchingNextPage}
-            variant="outline"
-          >
-            {isFetchingNextPage ? 'Loading more...' : 'Load More'}
-          </Button>
+        {isFetchingNextPage && (
+          <p>Loading more...</p>
         )}
       </div>
     </div>
