@@ -5,37 +5,50 @@ import {
   MutateCartRequest,
   ItemWithQuantity,
   GetCartItemsResponse,
-  MutateCartResponse
+  MutateCartResponse,
 } from "../../protogen/api/common/proto/cartservice/cart_service_pb";
+import { auth } from "../firebase";
 
 // The full endpoint for gRPC-Web:
 const CART_GRPC_URL = "https://grpcweb-851631422269.asia-south2.run.app";
-
-// Initialize the CartServiceClient
 export const cartServiceClient = new CartServiceClient(CART_GRPC_URL, null, null);
 
-// Example: Fetch all items in the cart
+/**
+ * Helper to get current Firebase user ID token, or throw.
+ */
+async function getFirebaseAuthToken(): Promise<string> {
+  const user = auth.currentUser;
+  if (!user) throw new Error("User not authenticated");
+  return await user.getIdToken(/* forceRefresh */ true);
+}
+
+/**
+ * Fetch all items in the cart, sending the Firebase auth token.
+ */
 export async function getCartItems(): Promise<GetCartItemsResponse.AsObject> {
+  const token = await getFirebaseAuthToken();
   const request = new GetCartItemsRequest();
-  const response = await cartServiceClient.getCartItems(request, {});
-  // Convert protobuf message to plain object for React usage
+  const response = await cartServiceClient.getCartItems(request, {
+    authorization: token,
+  });
   return response.toObject();
 }
 
-// Example: Mutate (add/update/remove) a cart item
-export async function mutateCartItem(productVariantId: number, quantity: number): Promise<MutateCartResponse.AsObject> {
+/**
+ * Mutate (add/update/remove) a cart item, sending the Firebase auth token.
+ */
+export async function mutateCartItem(
+  productVariantId: number,
+  quantity: number
+): Promise<MutateCartResponse.AsObject> {
+  const token = await getFirebaseAuthToken();
   const request = new MutateCartRequest();
   const item = new ItemWithQuantity();
   item.setProductVariantId(productVariantId);
   item.setQuantity(quantity);
   request.setItem(item);
-  const response = await cartServiceClient.mutateCart(request, {});
+  const response = await cartServiceClient.mutateCart(request, {
+    authorization: token,
+  });
   return response.toObject();
 }
-
-/**
- * Usage:
- *  import { getCartItems, mutateCartItem } from "@/api/cartClient";
- *  const cart = await getCartItems(); // { header, itemsWithQuantityList }
- *  await mutateCartItem(12345, 2); // set variant 12345 to quantity 2
- */
