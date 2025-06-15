@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import Header from '../components/Header';
@@ -141,7 +140,7 @@ const ProductListPage = () => {
         }
       },
       {
-        rootMargin: '200px', // Trigger fetch 200px before element is in view
+        rootMargin: '0px', // Trigger fetch only when element is in view
       }
     );
 
