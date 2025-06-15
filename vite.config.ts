@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => ({
         "node_modules/**",
       ],
       transformMixedEsModules: true,
-    }),
+    } as any),
     react(),
     mode === 'development' &&
     componentTagger(),
