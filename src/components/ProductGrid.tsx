@@ -36,14 +36,14 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading = false }
     <div className="px-4 py-6">
       <div className="grid grid-cols-2 gap-4 max-w-6xl mx-auto">
         {products.map((product) => {
-          // Transform Product to match ProductCard interface
+          // Handle both new Product interface and legacy format
           const transformedProduct = {
             id: product.id.toString(),
-            name: product.productName,
-            price: product.discountedPrice,
-            originalPrice: product.mrp !== product.discountedPrice ? product.mrp : undefined,
-            image: product.images[0] || '/placeholder.svg',
-            brand: product.brandName
+            name: product.productName || (product as any).name || 'Product',
+            price: product.discountedPrice || (product as any).price || 0,
+            originalPrice: (product.mrp !== product.discountedPrice ? product.mrp : undefined) || (product as any).originalPrice,
+            image: (product.images && product.images[0]) || (product as any).image || '/placeholder.svg',
+            brand: product.brandName || (product as any).brand || 'Brand'
           };
 
           return (
