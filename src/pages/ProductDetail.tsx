@@ -372,7 +372,7 @@ const ProductDetailPage = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <p className="text-xs text-gray-600 max-w-14 truncate">
+                  <p className="text-[11px] text-gray-600 max-w-14 truncate">
                     {color}
                   </p>
                 </div>
