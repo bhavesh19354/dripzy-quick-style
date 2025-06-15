@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Heart, Share } from 'lucide-react';
+import { ArrowLeft, Heart, Cart } from 'lucide-react';
 import ImageCarousel from '../components/ImageCarousel';
 import { Button } from '../components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -365,11 +365,11 @@ const ProductDetailPage = () => {
         <h1 className="text-lg font-medium">Product Detail</h1>
         <div className="flex items-center space-x-2">
           <button
-            onClick={handleShare}
+            onClick={() => navigate('/cart')}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-            aria-label="Share product"
+            aria-label="Go to cart"
           >
-            <Share size={20} />
+            <Cart size={20} />
           </button>
         </div>
       </header>
