@@ -256,7 +256,8 @@ const ProductDetailPage = () => {
   };
   
   const handleBack = () => {
-    navigate(-1);
+    // Always navigate to the Product Listing page
+    navigate('/products');
   };
   
   const toggleWishlist = () => {
@@ -271,8 +272,12 @@ const ProductDetailPage = () => {
         url: window.location.href,
       });
     } else {
-      // Fallback for browsers that don't support Web Share API
+      // Improved fallback: copy to clipboard & show toast
       navigator.clipboard.writeText(window.location.href);
+      toast({
+        title: "Link Copied!",
+        description: "Product link copied to clipboard.",
+      });
       console.log('Product URL copied to clipboard');
     }
   };
@@ -365,16 +370,6 @@ const ProductDetailPage = () => {
             aria-label="Share product"
           >
             <Share size={20} />
-          </button>
-          <button
-            onClick={toggleWishlist}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-            aria-label="Add to wishlist"
-          >
-            <Heart 
-              size={20} 
-              className={isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'} 
-            />
           </button>
         </div>
       </header>
