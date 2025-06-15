@@ -1,127 +1,22 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, ShoppingCart, Heart, Share } from 'lucide-react';
 import ImageCarousel from '../components/ImageCarousel';
 import { Button } from '../components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-
-const SHOPIFY_STOREFRONT_ACCESS_TOKEN = '50b756b36c591cc2d86ea31b1eceace5';
-const SHOPIFY_API_URL = 'https://dripzyy.com/api/2024-04/graphql.json';
-
-const getProductByIdQuery = `
-  query GetProductById($id: ID!) {
-    product(id: $id) {
-      id
-      title
-      descriptionHtml
-      vendor
-      options {
-        id
-        name
-        values
-      }
-      images(first: 10) {
-        edges {
-          node {
-            url
-            altText
-          }
-        }
-      }
-      variants(first: 10) {
-        edges {
-          node {
-            id
-            title
-            price {
-              amount
-              currencyCode
-            }
-            image {
-              url
-              altText
-            }
-            selectedOptions {
-              name
-              value
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-// Interfaces for Shopify data
-interface ShopifyImageNode {
-  url: string;
-  altText: string | null;
-}
-
-interface ShopifyPrice {
-  amount: string;
-  currencyCode: string;
-}
-
-interface ShopifyVariantNode {
-  id: string;
-  title: string;
-  price: ShopifyPrice;
-  image: ShopifyImageNode | null;
-  selectedOptions: {
-    name: string;
-    value: string;
-  }[];
-}
-
-interface ShopifyProduct {
-  id: string;
-  title: string;
-  descriptionHtml: string;
-  vendor: string;
-  options: {
-    id: string;
-    name: string;
-    values: string[];
-  }[];
-  images: { edges: { node: ShopifyImageNode }[] };
-  variants: { edges: { node: ShopifyVariantNode }[] };
-}
-
-const fetchProductFromShopify = async (productId: string): Promise<ShopifyProduct> => {
-  const fullProductId = `gid://shopify/Product/${productId}`;
-  const response = await fetch(SHOPIFY_API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_ACCESS_TOKEN,
-    },
-    body: JSON.stringify({
-      query: getProductByIdQuery,
-      variables: { id: fullProductId },
-    }),
-  });
-
-  if (!response.ok) {
-    const errorBody = await response.text();
-    console.error("Shopify API Error:", errorBody);
-    throw new Error('Failed to fetch product from Shopify.');
-  }
-
-  const json = await response.json();
-  if (json.data?.product) {
-    return json.data.product;
-  }
-
-  console.error("Unexpected Shopify API response structure:", json);
-  throw new Error("Unexpected response structure from Shopify.");
-};
+import { fetchProductFromShopify } from '../lib/shopify';
+import { ShopifyProduct } from '@/types/product';
+import { useAuth } from '../contexts/AuthContext';
+import { cartServiceClient } from '../lib/grpc';
+import { MutateCartRequest, ItemWithQuantity } from '../../protogen/api/common/proto/cartservice/cart_service_pb';
 
 const ProductDetailPage = () => {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const { isAuthenticated, getAuthToken } = useAuth();
 
   const { data: product, isLoading, error } = useQuery<ShopifyProduct, Error>({
     queryKey: ['shopifyProduct', productId],
@@ -142,6 +37,47 @@ const ProductDetailPage = () => {
       setSelectedColor(colorOption.values[0]);
     }
   }, [colorOption, selectedColor]);
+
+  const addToCartMutation = useMutation({
+    mutationFn: async ({ variantId, quantity }: { variantId: string; quantity: number }) => {
+      if (!isAuthenticated) {
+        navigate('/auth');
+        throw new Error("User not authenticated");
+      }
+      const token = await getAuthToken();
+      if (!token) {
+        throw new Error("Could not retrieve auth token");
+      }
+
+      const item = new ItemWithQuantity();
+      // Shopify variant GIDs are like "gid://shopify/ProductVariant/12345". We need the number.
+      const numericVariantId = Number(variantId.split('/').pop() || '0');
+      item.setProductVariantId(numericVariantId);
+      item.setQuantity(quantity);
+      
+      const request = new MutateCartRequest();
+      request.setItem(item);
+
+      const metadata = { 'Authorization': `Bearer ${token}` };
+
+      return cartServiceClient.mutateCart(request, metadata);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      toast({
+        title: "Added to Bag",
+        description: `${product?.title} (Size: ${selectedSize}) added to your bag`,
+      });
+    },
+    onError: (err: Error) => {
+      console.error("Failed to add to cart:", err);
+      toast({
+          title: "Error",
+          description: err.message || "Failed to add item to cart. Please try again.",
+          variant: "destructive",
+      });
+    }
+  });
 
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
@@ -189,17 +125,16 @@ const ProductDetailPage = () => {
       return;
     }
 
-    toast({
-      title: "Added to Bag",
-      description: `${product?.title} (Size: ${selectedSize}) added to your bag`,
-    });
-
-    console.log('Adding to bag:', {
-      productId: product?.id,
-      variantId: selectedVariant?.id,
-      color: selectedColor,
-      size: selectedSize,
-    });
+    if (!selectedVariant) {
+      toast({
+        title: "Variant not selected",
+        description: "Please make sure to select all product options.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    addToCartMutation.mutate({ variantId: selectedVariant.id, quantity: 1 });
   };
 
   const availableSizes = useMemo(() => {
@@ -465,9 +400,9 @@ const ProductDetailPage = () => {
               : 'bg-gray-300 text-gray-500 cursor-not-allowed hover:bg-gray-300'
           }`}
           size="lg"
-          disabled={!!sizeOption && !selectedSize}
+          disabled={(!!sizeOption && !selectedSize) || addToCartMutation.isPending}
         >
-          ADD TO BAG
+          {addToCartMutation.isPending ? 'ADDING...' : 'ADD TO BAG'}
         </Button>
       </div>
     </div>

@@ -1,13 +1,18 @@
 
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
+import { Plus, Minus, Trash2, ShoppingBag, Loader2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import Auth from './Auth';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { cartServiceClient } from '../lib/grpc';
+import { GetCartItemsRequest, MutateCartRequest, ItemWithQuantity } from '../../protogen/api/common/proto/cartservice/cart_service_pb';
+import { fetchProductVariantsByIds } from '../lib/shopify';
+import { ShopifyVariantDetails } from '@/types/product';
 
 interface CartItem {
-  id: string;
+  id: string; // This will be the full variant GID
   name: string;
   price: number;
   image: string;
@@ -18,31 +23,81 @@ interface CartItem {
 
 const Cart: React.FC = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
-  
-  // Mock cart items - in real app this would come from context/state management
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 'w1',
-      name: 'Floral Summer Dress',
-      price: 1299,
-      image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=200&h=200&fit=crop',
-      brand: 'Zara',
-      selectedSize: 'M',
-      quantity: 1
-    },
-    {
-      id: 'w2',
-      name: 'Cotton White Shirt',
-      price: 899,
-      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=200&h=200&fit=crop',
-      brand: 'H&M',
-      selectedSize: 'L',
-      quantity: 2
-    }
-  ]);
+  const { isAuthenticated, getAuthToken } = useAuth();
+  const queryClient = useQueryClient();
 
-  // Show login screen if user is not authenticated
+  const { data: cartData, isLoading: isLoadingCartIds } = useQuery({
+    queryKey: ['cart'],
+    queryFn: async () => {
+      const token = await getAuthToken();
+      if (!token) throw new Error('Not authenticated');
+      
+      const request = new GetCartItemsRequest();
+      const response = await cartServiceClient.getCartItems(request, { 'Authorization': `Bearer ${token}` });
+      return response.getItemsWithQuantityList();
+    },
+    enabled: isAuthenticated,
+  });
+
+  const variantIdsForShopify = useMemo(() => {
+    if (!cartData) return [];
+    return cartData.map(item => `gid://shopify/ProductVariant/${item.getProductVariantId()}`);
+  }, [cartData]);
+
+  const { data: productDetails, isLoading: isLoadingDetails } = useQuery({
+    queryKey: ['cartProductDetails', variantIdsForShopify],
+    queryFn: () => fetchProductVariantsByIds(variantIdsForShopify),
+    enabled: isAuthenticated && variantIdsForShopify.length > 0,
+  });
+
+  const mutateCartMutation = useMutation({
+    mutationFn: async ({ variantId, quantity }: { variantId: string; quantity: number }) => {
+      const token = await getAuthToken();
+      if (!token) throw new Error("Not authenticated");
+
+      const item = new ItemWithQuantity();
+      const numericVariantId = Number(variantId.split('/').pop() || '0');
+      item.setProductVariantId(numericVariantId);
+      item.setQuantity(quantity);
+      
+      const request = new MutateCartRequest();
+      request.setItem(item);
+
+      const metadata = { 'Authorization': `Bearer ${token}` };
+      return cartServiceClient.mutateCart(request, metadata);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+    },
+    onError: (error) => {
+      console.error("Failed to update cart:", error);
+      // Here you could add a toast notification for the user
+    }
+  });
+
+  const cartItems: CartItem[] = useMemo(() => {
+    if (!cartData || !productDetails) return [];
+
+    return cartData
+      .map(cartItem => {
+        const variantId = `gid://shopify/ProductVariant/${cartItem.getProductVariantId()}`;
+        const details: ShopifyVariantDetails | undefined = productDetails.find(p => p.id === variantId);
+
+        if (!details) return null;
+
+        return {
+          id: variantId,
+          name: details.product.title,
+          price: parseFloat(details.price.amount),
+          image: details.image?.url || '/placeholder.svg',
+          brand: details.product.vendor,
+          selectedSize: details.title.split('/')[0].trim(),
+          quantity: cartItem.getQuantity(),
+        };
+      })
+      .filter((item): item is CartItem => item !== null);
+  }, [cartData, productDetails]);
+
   if (!isAuthenticated) {
     return <Auth />;
   }
@@ -52,22 +107,35 @@ const Cart: React.FC = () => {
       handleRemoveItem(id);
       return;
     }
-    setCartItems(cartItems.map(item => 
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    ));
+    mutateCartMutation.mutate({ variantId: id, quantity: newQuantity });
   };
 
   const handleRemoveItem = (id: string) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
+    mutateCartMutation.mutate({ variantId: id, quantity: 0 });
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const deliveryFee = 99;
+  const deliveryFee = subtotal > 0 ? 99 : 0;
   const total = subtotal + deliveryFee;
 
   const handleCheckout = () => {
     navigate('/checkout');
   };
+
+  const isLoading = isLoadingCartIds || isLoadingDetails;
+
+  if (isLoading) {
+    return (
+        <Layout>
+            <div className="bg-gray-50 min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <Loader2 className="w-12 h-12 text-gray-400 mx-auto mb-4 animate-spin" />
+                    <h2 className="text-xl font-bold text-gray-900">Loading your cart...</h2>
+                </div>
+            </div>
+        </Layout>
+    );
+  }
 
   if (cartItems.length === 0) {
     return (
@@ -117,7 +185,8 @@ const Cart: React.FC = () => {
                       </div>
                       <button
                         onClick={() => handleRemoveItem(item.id)}
-                        className="p-2 text-red-500 hover:bg-red-50 rounded-full"
+                        className="p-2 text-red-500 hover:bg-red-50 rounded-full disabled:opacity-50"
+                        disabled={mutateCartMutation.isPending}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -127,14 +196,16 @@ const Cart: React.FC = () => {
                       <div className="flex items-center gap-3">
                         <button
                           onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                          className="p-1 hover:bg-gray-100 rounded-full"
+                          className="p-1 hover:bg-gray-100 rounded-full disabled:opacity-50"
+                          disabled={mutateCartMutation.isPending}
                         >
                           <Minus className="w-4 h-4" />
                         </button>
                         <span className="font-medium">{item.quantity}</span>
                         <button
                           onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                          className="p-1 hover:bg-gray-100 rounded-full"
+                          className="p-1 hover:bg-gray-100 rounded-full disabled:opacity-50"
+                          disabled={mutateCartMutation.isPending}
                         >
                           <Plus className="w-4 h-4" />
                         </button>
