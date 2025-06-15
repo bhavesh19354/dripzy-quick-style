@@ -283,7 +283,27 @@ const ProductDetailPage = () => {
     );
   }
 
-  const currentImages = product.images.edges.map(e => e.node.url);
+  const currentImages = useMemo(() => {
+    if (!product) return [];
+
+    if (selectedColor && colorOption) {
+      const variantImages = product.variants.edges
+        .filter(edge => 
+          edge.node.image && edge.node.selectedOptions.some(opt => opt.name === colorOption.name && opt.value === selectedColor)
+        )
+        .map(edge => edge.node.image!.url);
+
+      const uniqueVariantImages = [...new Set(variantImages)];
+      
+      if (uniqueVariantImages.length > 0) {
+        return uniqueVariantImages;
+      }
+    }
+    
+    // Fallback to all product images
+    return product.images.edges.map(e => e.node.url);
+  }, [product, selectedColor, colorOption]);
+  
   const price = selectedVariant?.price.amount || product.variants.edges[0]?.node.price.amount;
 
   return (
