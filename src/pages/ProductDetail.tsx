@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -400,7 +399,7 @@ const ProductDetailPage = () => {
                 <button
                   key={size}
                   onClick={() => handleSizeChange(size)}
-                  className={`w-12 h-12 rounded-lg border-2 flex items-center justify-center text-sm font-medium transition-all duration-200 flex-shrink-0 ${
+                  className={`w-12 h-12 rounded-lg border-2 flex items-center justify-center text-xs font-medium transition-all duration-200 flex-shrink-0 ${
                     selectedSize === size
                       ? 'border-black bg-black text-white scale-105' 
                       : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400 hover:scale-105'
