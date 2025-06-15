@@ -1,11 +1,20 @@
+
 import React from 'react';
 import ProductCard from './ProductCard';
 import { Skeleton } from './ui/skeleton';
-import { Product } from '../types/product';
 import { useNavigate } from 'react-router-dom';
 
+interface ProductForCard {
+  id: string;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  image: string;
+  brand: string;
+}
+
 interface ProductGridProps {
-  products: Product[];
+  products: ProductForCard[];
   isLoading?: boolean;
 }
 
@@ -21,7 +30,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading = false }
     return (
       <div className="px-4 py-6">
         <div className="grid grid-cols-2 gap-4 max-w-6xl mx-auto">
-          {Array.from({ length: 6 }).map((_, index) => (
+          {Array.from({ length: 10 }).map((_, index) => (
             <div key={index} className="bg-white rounded-lg shadow-sm overflow-hidden">
               <Skeleton className="aspect-[3/4] w-full" />
               <div className="p-3">
@@ -42,28 +51,16 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading = false }
   return (
     <div className="px-4 py-6">
       <div className="grid grid-cols-2 gap-4 max-w-6xl mx-auto">
-        {products.map((product) => {
-          // Handle both new Product interface and legacy format
-          const transformedProduct = {
-            id: product.id.toString(),
-            name: product.productName || (product as any).name || 'Product',
-            price: product.discountedPrice || (product as any).price || 0,
-            originalPrice: (product.mrp !== product.discountedPrice ? product.mrp : undefined) || (product as any).originalPrice,
-            image: (product.images && product.images[0]) || (product as any).image || '/placeholder.svg',
-            brand: product.brandName || (product as any).brand || 'Brand'
-          };
-
-          return (
+        {products.map((product) => (
             <ProductCard 
               key={product.id} 
-              product={transformedProduct} 
+              product={product} 
               onAddToCart={() => {
-                console.log('Added to cart:', transformedProduct);
+                console.log('Added to cart:', product);
               }}
               onClick={handleProductClick}
             />
-          );
-        })}
+          ))}
       </div>
     </div>
   );
