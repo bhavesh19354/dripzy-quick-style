@@ -283,7 +283,41 @@ const ProductDetailPage = () => {
     );
   }
 
-  const currentImages = product.images.edges.map(e => e.node.url);
+  const currentImages = useMemo(() => {
+    if (!selectedColor || !product) {
+      return product?.images.edges.map(e => e.node.url) ?? [];
+    }
+
+    const allProductImages = product.images.edges.map(e => e.node);
+
+    // 1. Get images from product.images with alt text matching selectedColor
+    const imagesByAltText = allProductImages.filter(
+      img => img.altText?.toLowerCase() === selectedColor.toLowerCase()
+    );
+
+    // 2. Get images from variants that match the selectedColor
+    const variantImages = product.variants.edges
+      .filter(edge =>
+        edge.node.selectedOptions.some(
+          opt =>
+            opt.name.toLowerCase() === 'color' &&
+            opt.value.toLowerCase() === selectedColor.toLowerCase()
+        ) && edge.node.image
+      )
+      .map(edge => edge.node.image!);
+
+    // Combine and deduplicate
+    const combined = [...imagesByAltText, ...variantImages];
+    const uniqueImageUrls = [...new Set(combined.map(img => img.url))];
+
+    if (uniqueImageUrls.length > 0) {
+      return uniqueImageUrls;
+    }
+
+    // Fallback: if no specific images found for the color, show all product images
+    return allProductImages.map(img => img.url);
+  }, [product, selectedColor]);
+  
   const price = selectedVariant?.price.amount || product.variants.edges[0]?.node.price.amount;
 
   return (
