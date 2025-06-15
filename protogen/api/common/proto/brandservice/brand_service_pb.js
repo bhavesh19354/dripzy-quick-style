@@ -11,20 +11,6 @@
 /* eslint-disable */
 // @ts-nocheck
 
-var jspb = require('google-protobuf');
-var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
-
-var api_common_proto_brand_pb = require('../../../../api/common/proto/brand_pb.js');
-goog.object.extend(proto, api_common_proto_brand_pb);
-var api_common_proto_header_pb = require('../../../../api/common/proto/header_pb.js');
-goog.object.extend(proto, api_common_proto_header_pb);
 goog.exportSymbol('proto.api.common.proto.brandservice.GetBrandRequest', null, global);
 goog.exportSymbol('proto.api.common.proto.brandservice.GetBrandResponse', null, global);
 /**
@@ -101,7 +87,7 @@ proto.api.common.proto.brandservice.GetBrandRequest.prototype.toObject = functio
  */
 proto.api.common.proto.brandservice.GetBrandRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-header: (f = msg.getHeader()) && api_common_proto_header_pb.RequestHeader.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && proto.api.common.proto.RequestHeader.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -139,8 +125,8 @@ proto.api.common.proto.brandservice.GetBrandRequest.deserializeBinaryFromReader 
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_header_pb.RequestHeader;
-      reader.readMessage(value,api_common_proto_header_pb.RequestHeader.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.RequestHeader;
+      reader.readMessage(value,proto.api.common.proto.RequestHeader.deserializeBinaryFromReader);
       msg.setHeader(value);
       break;
     default:
@@ -177,7 +163,7 @@ proto.api.common.proto.brandservice.GetBrandRequest.serializeBinaryToWriter = fu
     writer.writeMessage(
       1,
       f,
-      api_common_proto_header_pb.RequestHeader.serializeBinaryToWriter
+      proto.api.common.proto.RequestHeader.serializeBinaryToWriter
     );
   }
 };
@@ -189,7 +175,7 @@ proto.api.common.proto.brandservice.GetBrandRequest.serializeBinaryToWriter = fu
  */
 proto.api.common.proto.brandservice.GetBrandRequest.prototype.getHeader = function() {
   return /** @type{?proto.api.common.proto.RequestHeader} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_header_pb.RequestHeader, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.RequestHeader, 1));
 };
 
 
@@ -259,9 +245,9 @@ proto.api.common.proto.brandservice.GetBrandResponse.prototype.toObject = functi
  */
 proto.api.common.proto.brandservice.GetBrandResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-header: (f = msg.getHeader()) && api_common_proto_header_pb.ResponseHeader.toObject(includeInstance, f),
+header: (f = msg.getHeader()) && proto.api.common.proto.ResponseHeader.toObject(includeInstance, f),
 brandsList: jspb.Message.toObjectList(msg.getBrandsList(),
-    api_common_proto_brand_pb.Brand.toObject, includeInstance)
+    proto.api.common.proto.Brand.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -299,13 +285,13 @@ proto.api.common.proto.brandservice.GetBrandResponse.deserializeBinaryFromReader
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_header_pb.ResponseHeader;
-      reader.readMessage(value,api_common_proto_header_pb.ResponseHeader.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.ResponseHeader;
+      reader.readMessage(value,proto.api.common.proto.ResponseHeader.deserializeBinaryFromReader);
       msg.setHeader(value);
       break;
     case 2:
-      var value = new api_common_proto_brand_pb.Brand;
-      reader.readMessage(value,api_common_proto_brand_pb.Brand.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.Brand;
+      reader.readMessage(value,proto.api.common.proto.Brand.deserializeBinaryFromReader);
       msg.addBrands(value);
       break;
     default:
@@ -342,7 +328,7 @@ proto.api.common.proto.brandservice.GetBrandResponse.serializeBinaryToWriter = f
     writer.writeMessage(
       1,
       f,
-      api_common_proto_header_pb.ResponseHeader.serializeBinaryToWriter
+      proto.api.common.proto.ResponseHeader.serializeBinaryToWriter
     );
   }
   f = message.getBrandsList();
@@ -350,7 +336,7 @@ proto.api.common.proto.brandservice.GetBrandResponse.serializeBinaryToWriter = f
     writer.writeRepeatedMessage(
       2,
       f,
-      api_common_proto_brand_pb.Brand.serializeBinaryToWriter
+      proto.api.common.proto.Brand.serializeBinaryToWriter
     );
   }
 };
@@ -362,7 +348,7 @@ proto.api.common.proto.brandservice.GetBrandResponse.serializeBinaryToWriter = f
  */
 proto.api.common.proto.brandservice.GetBrandResponse.prototype.getHeader = function() {
   return /** @type{?proto.api.common.proto.ResponseHeader} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_header_pb.ResponseHeader, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.ResponseHeader, 1));
 };
 
 
@@ -399,7 +385,7 @@ proto.api.common.proto.brandservice.GetBrandResponse.prototype.hasHeader = funct
  */
 proto.api.common.proto.brandservice.GetBrandResponse.prototype.getBrandsList = function() {
   return /** @type{!Array<!proto.api.common.proto.Brand>} */ (
-    jspb.Message.getRepeatedWrapperField(this, api_common_proto_brand_pb.Brand, 2));
+    jspb.Message.getRepeatedWrapperField(this, proto.api.common.proto.Brand, 2));
 };
 
 
@@ -431,4 +417,3 @@ proto.api.common.proto.brandservice.GetBrandResponse.prototype.clearBrandsList =
 };
 
 
-goog.object.extend(exports, proto.api.common.proto.brandservice);

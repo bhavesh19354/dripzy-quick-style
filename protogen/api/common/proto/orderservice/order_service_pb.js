@@ -11,18 +11,6 @@
 /* eslint-disable */
 // @ts-nocheck
 
-var jspb = require('google-protobuf');
-var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
-
-var api_common_proto_header_pb = require('../../../../api/common/proto/header_pb.js');
-goog.object.extend(proto, api_common_proto_header_pb);
 goog.exportSymbol('proto.api.common.proto.orderservice.ConfirmPaymentRequest', null, global);
 goog.exportSymbol('proto.api.common.proto.orderservice.ConfirmPaymentResponse', null, global);
 goog.exportSymbol('proto.api.common.proto.orderservice.PlaceOrderRequest', null, global);
@@ -355,7 +343,7 @@ proto.api.common.proto.orderservice.PlaceOrderResponse.prototype.toObject = func
  */
 proto.api.common.proto.orderservice.PlaceOrderResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-header: (f = msg.getHeader()) && api_common_proto_header_pb.ResponseHeader.toObject(includeInstance, f),
+header: (f = msg.getHeader()) && proto.api.common.proto.ResponseHeader.toObject(includeInstance, f),
 orderNumber: jspb.Message.getFieldWithDefault(msg, 2, ""),
 razorpayOrderId: jspb.Message.getFieldWithDefault(msg, 3, ""),
 amountMicros: jspb.Message.getFieldWithDefault(msg, 4, 0)
@@ -396,8 +384,8 @@ proto.api.common.proto.orderservice.PlaceOrderResponse.deserializeBinaryFromRead
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_header_pb.ResponseHeader;
-      reader.readMessage(value,api_common_proto_header_pb.ResponseHeader.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.ResponseHeader;
+      reader.readMessage(value,proto.api.common.proto.ResponseHeader.deserializeBinaryFromReader);
       msg.setHeader(value);
       break;
     case 2:
@@ -446,7 +434,7 @@ proto.api.common.proto.orderservice.PlaceOrderResponse.serializeBinaryToWriter =
     writer.writeMessage(
       1,
       f,
-      api_common_proto_header_pb.ResponseHeader.serializeBinaryToWriter
+      proto.api.common.proto.ResponseHeader.serializeBinaryToWriter
     );
   }
   f = message.getOrderNumber();
@@ -479,7 +467,7 @@ proto.api.common.proto.orderservice.PlaceOrderResponse.serializeBinaryToWriter =
  */
 proto.api.common.proto.orderservice.PlaceOrderResponse.prototype.getHeader = function() {
   return /** @type{?proto.api.common.proto.ResponseHeader} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_header_pb.ResponseHeader, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.ResponseHeader, 1));
 };
 
 
@@ -946,7 +934,7 @@ proto.api.common.proto.orderservice.ConfirmPaymentResponse.prototype.toObject = 
  */
 proto.api.common.proto.orderservice.ConfirmPaymentResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-header: (f = msg.getHeader()) && api_common_proto_header_pb.ResponseHeader.toObject(includeInstance, f),
+header: (f = msg.getHeader()) && proto.api.common.proto.ResponseHeader.toObject(includeInstance, f),
 success: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
 orderNumber: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
@@ -986,8 +974,8 @@ proto.api.common.proto.orderservice.ConfirmPaymentResponse.deserializeBinaryFrom
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_header_pb.ResponseHeader;
-      reader.readMessage(value,api_common_proto_header_pb.ResponseHeader.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.ResponseHeader;
+      reader.readMessage(value,proto.api.common.proto.ResponseHeader.deserializeBinaryFromReader);
       msg.setHeader(value);
       break;
     case 2:
@@ -1032,7 +1020,7 @@ proto.api.common.proto.orderservice.ConfirmPaymentResponse.serializeBinaryToWrit
     writer.writeMessage(
       1,
       f,
-      api_common_proto_header_pb.ResponseHeader.serializeBinaryToWriter
+      proto.api.common.proto.ResponseHeader.serializeBinaryToWriter
     );
   }
   f = message.getSuccess();
@@ -1058,7 +1046,7 @@ proto.api.common.proto.orderservice.ConfirmPaymentResponse.serializeBinaryToWrit
  */
 proto.api.common.proto.orderservice.ConfirmPaymentResponse.prototype.getHeader = function() {
   return /** @type{?proto.api.common.proto.ResponseHeader} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_header_pb.ResponseHeader, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.ResponseHeader, 1));
 };
 
 
@@ -1125,4 +1113,3 @@ proto.api.common.proto.orderservice.ConfirmPaymentResponse.prototype.setOrderNum
 };
 
 
-goog.object.extend(exports, proto.api.common.proto.orderservice);

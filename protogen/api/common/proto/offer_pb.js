@@ -11,16 +11,6 @@
 /* eslint-disable */
 // @ts-nocheck
 
-var jspb = require('google-protobuf');
-var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
-
 goog.exportSymbol('proto.api.common.proto.FixedPriceOffer', null, global);
 goog.exportSymbol('proto.api.common.proto.FlatDiscountOffer', null, global);
 goog.exportSymbol('proto.api.common.proto.MultiBuyOffer', null, global);
@@ -1457,4 +1447,3 @@ proto.api.common.proto.FixedPriceOffer.prototype.setFixedDiscountedPriceMicros =
 };
 
 
-goog.object.extend(exports, proto.api.common.proto);

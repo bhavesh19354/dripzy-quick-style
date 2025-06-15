@@ -11,20 +11,6 @@
 /* eslint-disable */
 // @ts-nocheck
 
-var jspb = require('google-protobuf');
-var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
-
-var api_common_proto_address_pb = require('../../../api/common/proto/address_pb.js');
-goog.object.extend(proto, api_common_proto_address_pb);
-var api_common_enums_codes_pb = require('../../../api/common/enums/codes_pb.js');
-goog.object.extend(proto, api_common_enums_codes_pb);
 goog.exportSymbol('proto.api.common.proto.RequestHeader', null, global);
 goog.exportSymbol('proto.api.common.proto.ResponseHeader', null, global);
 /**
@@ -101,7 +87,7 @@ proto.api.common.proto.RequestHeader.prototype.toObject = function(opt_includeIn
  */
 proto.api.common.proto.RequestHeader.toObject = function(includeInstance, msg) {
   var f, obj = {
-customerAddress: (f = msg.getCustomerAddress()) && api_common_proto_address_pb.Address.toObject(includeInstance, f)
+customerAddress: (f = msg.getCustomerAddress()) && proto.api.common.proto.Address.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -139,8 +125,8 @@ proto.api.common.proto.RequestHeader.deserializeBinaryFromReader = function(msg,
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_address_pb.Address;
-      reader.readMessage(value,api_common_proto_address_pb.Address.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.Address;
+      reader.readMessage(value,proto.api.common.proto.Address.deserializeBinaryFromReader);
       msg.setCustomerAddress(value);
       break;
     default:
@@ -177,7 +163,7 @@ proto.api.common.proto.RequestHeader.serializeBinaryToWriter = function(message,
     writer.writeMessage(
       1,
       f,
-      api_common_proto_address_pb.Address.serializeBinaryToWriter
+      proto.api.common.proto.Address.serializeBinaryToWriter
     );
   }
 };
@@ -189,7 +175,7 @@ proto.api.common.proto.RequestHeader.serializeBinaryToWriter = function(message,
  */
 proto.api.common.proto.RequestHeader.prototype.getCustomerAddress = function() {
   return /** @type{?proto.api.common.proto.Address} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_address_pb.Address, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.Address, 1));
 };
 
 
@@ -350,4 +336,3 @@ proto.api.common.proto.ResponseHeader.prototype.setStatus = function(value) {
 };
 
 
-goog.object.extend(exports, proto.api.common.proto);

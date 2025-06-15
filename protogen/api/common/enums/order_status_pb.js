@@ -11,16 +11,6 @@
 /* eslint-disable */
 // @ts-nocheck
 
-var jspb = require('google-protobuf');
-var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
-
 goog.exportSymbol('proto.api.common.enums.OrderStatus', null, global);
 goog.exportSymbol('proto.api.common.enums.OrderStatus.Enum', null, global);
 /**
@@ -159,4 +149,3 @@ proto.api.common.enums.OrderStatus.Enum = {
   COMPLETED: 7
 };
 
-goog.object.extend(exports, proto.api.common.enums);

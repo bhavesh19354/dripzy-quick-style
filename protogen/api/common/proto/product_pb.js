@@ -11,20 +11,6 @@
 /* eslint-disable */
 // @ts-nocheck
 
-var jspb = require('google-protobuf');
-var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
-
-var api_common_proto_offer_pb = require('../../../api/common/proto/offer_pb.js');
-goog.object.extend(proto, api_common_proto_offer_pb);
-var api_common_proto_store_pb = require('../../../api/common/proto/store_pb.js');
-goog.object.extend(proto, api_common_proto_store_pb);
 goog.exportSymbol('proto.api.common.proto.Color', null, global);
 goog.exportSymbol('proto.api.common.proto.Product', null, global);
 goog.exportSymbol('proto.api.common.proto.Product.PrimaryKey', null, global);
@@ -223,7 +209,7 @@ brandId: jspb.Message.getFieldWithDefault(msg, 2, 0),
 brandName: jspb.Message.getFieldWithDefault(msg, 3, ""),
 minDiscountedPriceProductVariant: (f = msg.getMinDiscountedPriceProductVariant()) && proto.api.common.proto.ProductVariantWithStore.toObject(includeInstance, f),
 offersList: jspb.Message.toObjectList(msg.getOffersList(),
-    api_common_proto_offer_pb.Offer.toObject, includeInstance)
+    proto.api.common.proto.Offer.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -279,8 +265,8 @@ proto.api.common.proto.Product.deserializeBinaryFromReader = function(msg, reade
       msg.setMinDiscountedPriceProductVariant(value);
       break;
     case 5:
-      var value = new api_common_proto_offer_pb.Offer;
-      reader.readMessage(value,api_common_proto_offer_pb.Offer.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.Offer;
+      reader.readMessage(value,proto.api.common.proto.Offer.deserializeBinaryFromReader);
       msg.addOffers(value);
       break;
     default:
@@ -347,7 +333,7 @@ proto.api.common.proto.Product.serializeBinaryToWriter = function(message, write
     writer.writeRepeatedMessage(
       5,
       f,
-      api_common_proto_offer_pb.Offer.serializeBinaryToWriter
+      proto.api.common.proto.Offer.serializeBinaryToWriter
     );
   }
 };
@@ -599,7 +585,7 @@ proto.api.common.proto.Product.prototype.hasMinDiscountedPriceProductVariant = f
  */
 proto.api.common.proto.Product.prototype.getOffersList = function() {
   return /** @type{!Array<!proto.api.common.proto.Offer>} */ (
-    jspb.Message.getRepeatedWrapperField(this, api_common_proto_offer_pb.Offer, 5));
+    jspb.Message.getRepeatedWrapperField(this, proto.api.common.proto.Offer, 5));
 };
 
 
@@ -1034,7 +1020,7 @@ proto.api.common.proto.ProductVariantWithStore.prototype.toObject = function(opt
 proto.api.common.proto.ProductVariantWithStore.toObject = function(includeInstance, msg) {
   var f, obj = {
 productVariant: (f = msg.getProductVariant()) && proto.api.common.proto.ProductVariant.toObject(includeInstance, f),
-storeWithBestPrice: (f = msg.getStoreWithBestPrice()) && api_common_proto_store_pb.Store.toObject(includeInstance, f),
+storeWithBestPrice: (f = msg.getStoreWithBestPrice()) && proto.api.common.proto.Store.toObject(includeInstance, f),
 discountedPriceMicros: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
@@ -1078,8 +1064,8 @@ proto.api.common.proto.ProductVariantWithStore.deserializeBinaryFromReader = fun
       msg.setProductVariant(value);
       break;
     case 2:
-      var value = new api_common_proto_store_pb.Store;
-      reader.readMessage(value,api_common_proto_store_pb.Store.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.Store;
+      reader.readMessage(value,proto.api.common.proto.Store.deserializeBinaryFromReader);
       msg.setStoreWithBestPrice(value);
       break;
     case 3:
@@ -1128,7 +1114,7 @@ proto.api.common.proto.ProductVariantWithStore.serializeBinaryToWriter = functio
     writer.writeMessage(
       2,
       f,
-      api_common_proto_store_pb.Store.serializeBinaryToWriter
+      proto.api.common.proto.Store.serializeBinaryToWriter
     );
   }
   f = message.getDiscountedPriceMicros();
@@ -1184,7 +1170,7 @@ proto.api.common.proto.ProductVariantWithStore.prototype.hasProductVariant = fun
  */
 proto.api.common.proto.ProductVariantWithStore.prototype.getStoreWithBestPrice = function() {
   return /** @type{?proto.api.common.proto.Store} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_store_pb.Store, 2));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.Store, 2));
 };
 
 
@@ -1790,7 +1776,7 @@ productVariantId: jspb.Message.getFieldWithDefault(msg, 3, 0),
 productVariantName: jspb.Message.getFieldWithDefault(msg, 4, ""),
 productVariantDescription: jspb.Message.getFieldWithDefault(msg, 5, ""),
 mrpMicros: jspb.Message.getFieldWithDefault(msg, 6, 0),
-storeWithBestPrice: (f = msg.getStoreWithBestPrice()) && api_common_proto_store_pb.Store.toObject(includeInstance, f),
+storeWithBestPrice: (f = msg.getStoreWithBestPrice()) && proto.api.common.proto.Store.toObject(includeInstance, f),
 discountedPriceMircos: jspb.Message.getFieldWithDefault(msg, 8, 0),
 quantity: jspb.Message.getFieldWithDefault(msg, 9, 0)
   };
@@ -1854,8 +1840,8 @@ proto.api.common.proto.Size.deserializeBinaryFromReader = function(msg, reader) 
       msg.setMrpMicros(value);
       break;
     case 7:
-      var value = new api_common_proto_store_pb.Store;
-      reader.readMessage(value,api_common_proto_store_pb.Store.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.Store;
+      reader.readMessage(value,proto.api.common.proto.Store.deserializeBinaryFromReader);
       msg.setStoreWithBestPrice(value);
       break;
     case 8:
@@ -1942,7 +1928,7 @@ proto.api.common.proto.Size.serializeBinaryToWriter = function(message, writer) 
     writer.writeMessage(
       7,
       f,
-      api_common_proto_store_pb.Store.serializeBinaryToWriter
+      proto.api.common.proto.Store.serializeBinaryToWriter
     );
   }
   f = message.getDiscountedPriceMircos();
@@ -2076,7 +2062,7 @@ proto.api.common.proto.Size.prototype.setMrpMicros = function(value) {
  */
 proto.api.common.proto.Size.prototype.getStoreWithBestPrice = function() {
   return /** @type{?proto.api.common.proto.Store} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_store_pb.Store, 7));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.Store, 7));
 };
 
 
@@ -2143,4 +2129,3 @@ proto.api.common.proto.Size.prototype.setQuantity = function(value) {
 };
 
 
-goog.object.extend(exports, proto.api.common.proto);

@@ -11,18 +11,6 @@
 /* eslint-disable */
 // @ts-nocheck
 
-var jspb = require('google-protobuf');
-var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
-
-var api_common_proto_header_pb = require('../../../../api/common/proto/header_pb.js');
-goog.object.extend(proto, api_common_proto_header_pb);
 goog.exportSymbol('proto.api.common.proto.cartservice.GetCartItemsRequest', null, global);
 goog.exportSymbol('proto.api.common.proto.cartservice.GetCartItemsResponse', null, global);
 goog.exportSymbol('proto.api.common.proto.cartservice.ItemWithQuantity', null, global);
@@ -273,7 +261,7 @@ proto.api.common.proto.cartservice.GetCartItemsResponse.prototype.toObject = fun
  */
 proto.api.common.proto.cartservice.GetCartItemsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-header: (f = msg.getHeader()) && api_common_proto_header_pb.ResponseHeader.toObject(includeInstance, f),
+header: (f = msg.getHeader()) && proto.api.common.proto.ResponseHeader.toObject(includeInstance, f),
 itemsWithQuantityList: jspb.Message.toObjectList(msg.getItemsWithQuantityList(),
     proto.api.common.proto.cartservice.ItemWithQuantity.toObject, includeInstance)
   };
@@ -313,8 +301,8 @@ proto.api.common.proto.cartservice.GetCartItemsResponse.deserializeBinaryFromRea
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_header_pb.ResponseHeader;
-      reader.readMessage(value,api_common_proto_header_pb.ResponseHeader.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.ResponseHeader;
+      reader.readMessage(value,proto.api.common.proto.ResponseHeader.deserializeBinaryFromReader);
       msg.setHeader(value);
       break;
     case 2:
@@ -356,7 +344,7 @@ proto.api.common.proto.cartservice.GetCartItemsResponse.serializeBinaryToWriter 
     writer.writeMessage(
       1,
       f,
-      api_common_proto_header_pb.ResponseHeader.serializeBinaryToWriter
+      proto.api.common.proto.ResponseHeader.serializeBinaryToWriter
     );
   }
   f = message.getItemsWithQuantityList();
@@ -376,7 +364,7 @@ proto.api.common.proto.cartservice.GetCartItemsResponse.serializeBinaryToWriter 
  */
 proto.api.common.proto.cartservice.GetCartItemsResponse.prototype.getHeader = function() {
   return /** @type{?proto.api.common.proto.ResponseHeader} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_header_pb.ResponseHeader, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.ResponseHeader, 1));
 };
 
 
@@ -628,7 +616,7 @@ proto.api.common.proto.cartservice.MutateCartResponse.prototype.toObject = funct
  */
 proto.api.common.proto.cartservice.MutateCartResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-header: (f = msg.getHeader()) && api_common_proto_header_pb.ResponseHeader.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && proto.api.common.proto.ResponseHeader.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -666,8 +654,8 @@ proto.api.common.proto.cartservice.MutateCartResponse.deserializeBinaryFromReade
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_header_pb.ResponseHeader;
-      reader.readMessage(value,api_common_proto_header_pb.ResponseHeader.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.ResponseHeader;
+      reader.readMessage(value,proto.api.common.proto.ResponseHeader.deserializeBinaryFromReader);
       msg.setHeader(value);
       break;
     default:
@@ -704,7 +692,7 @@ proto.api.common.proto.cartservice.MutateCartResponse.serializeBinaryToWriter = 
     writer.writeMessage(
       1,
       f,
-      api_common_proto_header_pb.ResponseHeader.serializeBinaryToWriter
+      proto.api.common.proto.ResponseHeader.serializeBinaryToWriter
     );
   }
 };
@@ -716,7 +704,7 @@ proto.api.common.proto.cartservice.MutateCartResponse.serializeBinaryToWriter = 
  */
 proto.api.common.proto.cartservice.MutateCartResponse.prototype.getHeader = function() {
   return /** @type{?proto.api.common.proto.ResponseHeader} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_header_pb.ResponseHeader, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.ResponseHeader, 1));
 };
 
 
@@ -907,4 +895,3 @@ proto.api.common.proto.cartservice.ItemWithQuantity.prototype.setQuantity = func
 };
 
 
-goog.object.extend(exports, proto.api.common.proto.cartservice);

@@ -11,20 +11,6 @@
 /* eslint-disable */
 // @ts-nocheck
 
-var jspb = require('google-protobuf');
-var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
-
-var api_common_proto_header_pb = require('../../../../api/common/proto/header_pb.js');
-goog.object.extend(proto, api_common_proto_header_pb);
-var api_common_proto_address_pb = require('../../../../api/common/proto/address_pb.js');
-goog.object.extend(proto, api_common_proto_address_pb);
 goog.exportSymbol('proto.api.common.proto.customerservice.AddCustomerAddressRequest', null, global);
 goog.exportSymbol('proto.api.common.proto.customerservice.AddCustomerAddressResponse', null, global);
 goog.exportSymbol('proto.api.common.proto.customerservice.GetCustomerRequest', null, global);
@@ -167,7 +153,7 @@ proto.api.common.proto.customerservice.GetCustomerRequest.prototype.toObject = f
  */
 proto.api.common.proto.customerservice.GetCustomerRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-header: (f = msg.getHeader()) && api_common_proto_header_pb.RequestHeader.toObject(includeInstance, f),
+header: (f = msg.getHeader()) && proto.api.common.proto.RequestHeader.toObject(includeInstance, f),
 phoneNumber: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
@@ -206,8 +192,8 @@ proto.api.common.proto.customerservice.GetCustomerRequest.deserializeBinaryFromR
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_header_pb.RequestHeader;
-      reader.readMessage(value,api_common_proto_header_pb.RequestHeader.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.RequestHeader;
+      reader.readMessage(value,proto.api.common.proto.RequestHeader.deserializeBinaryFromReader);
       msg.setHeader(value);
       break;
     case 2:
@@ -248,7 +234,7 @@ proto.api.common.proto.customerservice.GetCustomerRequest.serializeBinaryToWrite
     writer.writeMessage(
       1,
       f,
-      api_common_proto_header_pb.RequestHeader.serializeBinaryToWriter
+      proto.api.common.proto.RequestHeader.serializeBinaryToWriter
     );
   }
   f = message.getPhoneNumber();
@@ -267,7 +253,7 @@ proto.api.common.proto.customerservice.GetCustomerRequest.serializeBinaryToWrite
  */
 proto.api.common.proto.customerservice.GetCustomerRequest.prototype.getHeader = function() {
   return /** @type{?proto.api.common.proto.RequestHeader} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_header_pb.RequestHeader, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.RequestHeader, 1));
 };
 
 
@@ -355,7 +341,7 @@ proto.api.common.proto.customerservice.GetCustomerResponse.prototype.toObject = 
  */
 proto.api.common.proto.customerservice.GetCustomerResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-header: (f = msg.getHeader()) && api_common_proto_header_pb.ResponseHeader.toObject(includeInstance, f),
+header: (f = msg.getHeader()) && proto.api.common.proto.ResponseHeader.toObject(includeInstance, f),
 orderRecieversList: jspb.Message.toObjectList(msg.getOrderRecieversList(),
     proto.api.common.proto.customerservice.OrderReciever.toObject, includeInstance)
   };
@@ -395,8 +381,8 @@ proto.api.common.proto.customerservice.GetCustomerResponse.deserializeBinaryFrom
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_header_pb.ResponseHeader;
-      reader.readMessage(value,api_common_proto_header_pb.ResponseHeader.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.ResponseHeader;
+      reader.readMessage(value,proto.api.common.proto.ResponseHeader.deserializeBinaryFromReader);
       msg.setHeader(value);
       break;
     case 2:
@@ -438,7 +424,7 @@ proto.api.common.proto.customerservice.GetCustomerResponse.serializeBinaryToWrit
     writer.writeMessage(
       1,
       f,
-      api_common_proto_header_pb.ResponseHeader.serializeBinaryToWriter
+      proto.api.common.proto.ResponseHeader.serializeBinaryToWriter
     );
   }
   f = message.getOrderRecieversList();
@@ -458,7 +444,7 @@ proto.api.common.proto.customerservice.GetCustomerResponse.serializeBinaryToWrit
  */
 proto.api.common.proto.customerservice.GetCustomerResponse.prototype.getHeader = function() {
   return /** @type{?proto.api.common.proto.ResponseHeader} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_header_pb.ResponseHeader, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.ResponseHeader, 1));
 };
 
 
@@ -559,7 +545,7 @@ proto.api.common.proto.customerservice.AddCustomerAddressRequest.prototype.toObj
  */
 proto.api.common.proto.customerservice.AddCustomerAddressRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-header: (f = msg.getHeader()) && api_common_proto_header_pb.RequestHeader.toObject(includeInstance, f),
+header: (f = msg.getHeader()) && proto.api.common.proto.RequestHeader.toObject(includeInstance, f),
 orderReciever: (f = msg.getOrderReciever()) && proto.api.common.proto.customerservice.OrderReciever.toObject(includeInstance, f)
   };
 
@@ -598,8 +584,8 @@ proto.api.common.proto.customerservice.AddCustomerAddressRequest.deserializeBina
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_header_pb.RequestHeader;
-      reader.readMessage(value,api_common_proto_header_pb.RequestHeader.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.RequestHeader;
+      reader.readMessage(value,proto.api.common.proto.RequestHeader.deserializeBinaryFromReader);
       msg.setHeader(value);
       break;
     case 2:
@@ -641,7 +627,7 @@ proto.api.common.proto.customerservice.AddCustomerAddressRequest.serializeBinary
     writer.writeMessage(
       1,
       f,
-      api_common_proto_header_pb.RequestHeader.serializeBinaryToWriter
+      proto.api.common.proto.RequestHeader.serializeBinaryToWriter
     );
   }
   f = message.getOrderReciever();
@@ -661,7 +647,7 @@ proto.api.common.proto.customerservice.AddCustomerAddressRequest.serializeBinary
  */
 proto.api.common.proto.customerservice.AddCustomerAddressRequest.prototype.getHeader = function() {
   return /** @type{?proto.api.common.proto.RequestHeader} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_header_pb.RequestHeader, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.RequestHeader, 1));
 };
 
 
@@ -761,7 +747,7 @@ proto.api.common.proto.customerservice.AddCustomerAddressResponse.prototype.toOb
  */
 proto.api.common.proto.customerservice.AddCustomerAddressResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-header: (f = msg.getHeader()) && api_common_proto_header_pb.ResponseHeader.toObject(includeInstance, f),
+header: (f = msg.getHeader()) && proto.api.common.proto.ResponseHeader.toObject(includeInstance, f),
 customerAddressLinkId: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
@@ -800,8 +786,8 @@ proto.api.common.proto.customerservice.AddCustomerAddressResponse.deserializeBin
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_header_pb.ResponseHeader;
-      reader.readMessage(value,api_common_proto_header_pb.ResponseHeader.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.ResponseHeader;
+      reader.readMessage(value,proto.api.common.proto.ResponseHeader.deserializeBinaryFromReader);
       msg.setHeader(value);
       break;
     case 2:
@@ -842,7 +828,7 @@ proto.api.common.proto.customerservice.AddCustomerAddressResponse.serializeBinar
     writer.writeMessage(
       1,
       f,
-      api_common_proto_header_pb.ResponseHeader.serializeBinaryToWriter
+      proto.api.common.proto.ResponseHeader.serializeBinaryToWriter
     );
   }
   f = message.getCustomerAddressLinkId();
@@ -861,7 +847,7 @@ proto.api.common.proto.customerservice.AddCustomerAddressResponse.serializeBinar
  */
 proto.api.common.proto.customerservice.AddCustomerAddressResponse.prototype.getHeader = function() {
   return /** @type{?proto.api.common.proto.ResponseHeader} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_header_pb.ResponseHeader, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.ResponseHeader, 1));
 };
 
 
@@ -942,7 +928,7 @@ proto.api.common.proto.customerservice.OrderReciever.prototype.toObject = functi
  */
 proto.api.common.proto.customerservice.OrderReciever.toObject = function(includeInstance, msg) {
   var f, obj = {
-recieverAddress: (f = msg.getRecieverAddress()) && api_common_proto_address_pb.Address.toObject(includeInstance, f),
+recieverAddress: (f = msg.getRecieverAddress()) && proto.api.common.proto.Address.toObject(includeInstance, f),
 houseNumberAndFloor: jspb.Message.getFieldWithDefault(msg, 2, ""),
 receiverName: jspb.Message.getFieldWithDefault(msg, 3, ""),
 recieverPhoneNumber: jspb.Message.getFieldWithDefault(msg, 4, ""),
@@ -984,8 +970,8 @@ proto.api.common.proto.customerservice.OrderReciever.deserializeBinaryFromReader
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new api_common_proto_address_pb.Address;
-      reader.readMessage(value,api_common_proto_address_pb.Address.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.Address;
+      reader.readMessage(value,proto.api.common.proto.Address.deserializeBinaryFromReader);
       msg.setRecieverAddress(value);
       break;
     case 2:
@@ -1038,7 +1024,7 @@ proto.api.common.proto.customerservice.OrderReciever.serializeBinaryToWriter = f
     writer.writeMessage(
       1,
       f,
-      api_common_proto_address_pb.Address.serializeBinaryToWriter
+      proto.api.common.proto.Address.serializeBinaryToWriter
     );
   }
   f = message.getHouseNumberAndFloor();
@@ -1078,7 +1064,7 @@ proto.api.common.proto.customerservice.OrderReciever.serializeBinaryToWriter = f
  */
 proto.api.common.proto.customerservice.OrderReciever.prototype.getRecieverAddress = function() {
   return /** @type{?proto.api.common.proto.Address} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_address_pb.Address, 1));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.Address, 1));
 };
 
 
@@ -1181,4 +1167,3 @@ proto.api.common.proto.customerservice.OrderReciever.prototype.setCustomerAddres
 };
 
 
-goog.object.extend(exports, proto.api.common.proto.customerservice);

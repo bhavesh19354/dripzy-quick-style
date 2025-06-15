@@ -11,16 +11,6 @@
 /* eslint-disable */
 // @ts-nocheck
 
-var jspb = require('google-protobuf');
-var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
-
 goog.exportSymbol('proto.api.common.proto.ProductCategoryPB', null, global);
 goog.exportSymbol('proto.api.common.proto.ProductCategoryPB.Enum', null, global);
 /**
@@ -155,4 +145,3 @@ proto.api.common.proto.ProductCategoryPB.Enum = {
   JEANS: 3
 };
 
-goog.object.extend(exports, proto.api.common.proto);

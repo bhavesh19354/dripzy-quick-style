@@ -11,18 +11,6 @@
 /* eslint-disable */
 // @ts-nocheck
 
-var jspb = require('google-protobuf');
-var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
-
-var api_common_proto_address_pb = require('../../../api/common/proto/address_pb.js');
-goog.object.extend(proto, api_common_proto_address_pb);
 goog.exportSymbol('proto.api.common.proto.Store', null, global);
 goog.exportSymbol('proto.api.common.proto.Store.PrimaryKey', null, global);
 /**
@@ -111,7 +99,7 @@ websiteUrl: jspb.Message.getFieldWithDefault(msg, 2, ""),
 imageUrlsList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
 name: jspb.Message.getFieldWithDefault(msg, 4, ""),
 description: jspb.Message.getFieldWithDefault(msg, 5, ""),
-address: (f = msg.getAddress()) && api_common_proto_address_pb.Address.toObject(includeInstance, f),
+address: (f = msg.getAddress()) && proto.api.common.proto.Address.toObject(includeInstance, f),
 distanceInMeters: jspb.Message.getFieldWithDefault(msg, 8, 0),
 timeInMillis: jspb.Message.getFieldWithDefault(msg, 9, 0)
   };
@@ -172,8 +160,8 @@ proto.api.common.proto.Store.deserializeBinaryFromReader = function(msg, reader)
       msg.setDescription(value);
       break;
     case 7:
-      var value = new api_common_proto_address_pb.Address;
-      reader.readMessage(value,api_common_proto_address_pb.Address.deserializeBinaryFromReader);
+      var value = new proto.api.common.proto.Address;
+      reader.readMessage(value,proto.api.common.proto.Address.deserializeBinaryFromReader);
       msg.setAddress(value);
       break;
     case 8:
@@ -254,7 +242,7 @@ proto.api.common.proto.Store.serializeBinaryToWriter = function(message, writer)
     writer.writeMessage(
       7,
       f,
-      api_common_proto_address_pb.Address.serializeBinaryToWriter
+      proto.api.common.proto.Address.serializeBinaryToWriter
     );
   }
   f = message.getDistanceInMeters();
@@ -538,7 +526,7 @@ proto.api.common.proto.Store.prototype.setDescription = function(value) {
  */
 proto.api.common.proto.Store.prototype.getAddress = function() {
   return /** @type{?proto.api.common.proto.Address} */ (
-    jspb.Message.getWrapperField(this, api_common_proto_address_pb.Address, 7));
+    jspb.Message.getWrapperField(this, proto.api.common.proto.Address, 7));
 };
 
 
@@ -605,4 +593,3 @@ proto.api.common.proto.Store.prototype.setTimeInMillis = function(value) {
 };
 
 
-goog.object.extend(exports, proto.api.common.proto);
