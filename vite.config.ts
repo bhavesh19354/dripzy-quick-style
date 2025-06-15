@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -14,8 +13,8 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     viteCommonjs({
       include: [
-        /protogen/,
-        /node_modules/,
+        "protogen/**",
+        "node_modules/**",
       ],
     }),
     react(),
