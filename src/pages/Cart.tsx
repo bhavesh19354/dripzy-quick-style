@@ -7,9 +7,11 @@ import { useAuth } from '../contexts/AuthContext';
 import Auth from './Auth';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { cartServiceClient } from '../lib/grpc';
-import { GetCartItemsRequest, MutateCartRequest, ItemWithQuantity } from '../../protogen/api/common/proto/cartservice/cart_service_pb';
+import * as CartServicePb from '../../protogen/api/common/proto/cartservice/cart_service_pb';
 import { fetchProductVariantsByIds } from '../lib/shopify';
 import { ShopifyVariantDetails } from '@/types/product';
+
+const { GetCartItemsRequest, MutateCartRequest, ItemWithQuantity } = CartServicePb;
 
 interface CartItem {
   id: string; // This will be the full variant GID

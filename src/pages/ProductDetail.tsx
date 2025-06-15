@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -9,7 +10,9 @@ import { fetchProductFromShopify } from '../lib/shopify';
 import { ShopifyProduct } from '@/types/product';
 import { useAuth } from '../contexts/AuthContext';
 import { cartServiceClient } from '../lib/grpc';
-import { MutateCartRequest, ItemWithQuantity } from '../../protogen/api/common/proto/cartservice/cart_service_pb';
+import * as CartServicePb from '../../protogen/api/common/proto/cartservice/cart_service_pb';
+
+const { MutateCartRequest, ItemWithQuantity } = CartServicePb;
 
 const ProductDetailPage = () => {
   const { productId } = useParams<{ productId: string }>();
