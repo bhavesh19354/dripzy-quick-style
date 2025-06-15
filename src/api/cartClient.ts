@@ -1,7 +1,7 @@
 
 import { CartServiceClient } from "../../protogen/api/common/proto/cartservice/Cart_serviceServiceClientPb";
 // Import JS proto module as namespace, not named ES import
-import * as cartPb from "../../protogen/api/common/proto/cartservice/cart_service_pb";
+import * as cartPb from "../../protogen/module/api/common/proto/cartservice/cart_service_pb.js";
 import { auth } from "../firebase";
 
 // The full endpoint for gRPC-Web:

@@ -1,3 +1,4 @@
+
 /**
  * @fileoverview gRPC-Web generated client stub for api.common.proto.cartservice
  * @enhanceable
@@ -17,7 +18,7 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import * as api_common_proto_cartservice_cart_service_pb from '../../../../api/common/proto/cartservice/cart_service_pb'; // proto import: "api/common/proto/cartservice/cart_service.proto"
+import * as api_common_proto_cartservice_cart_service_pb from '../../../../protogen/module/api/common/proto/cartservice/cart_service_pb.js'; // proto import: "api/common/proto/cartservice/cart_service.proto"
 
 
 export class CartServiceClient {
@@ -126,4 +127,3 @@ export class CartServiceClient {
   }
 
 }
-
