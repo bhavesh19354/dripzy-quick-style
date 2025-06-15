@@ -1,239 +1,569 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Layout from '../components/Layout';
-import { ArrowLeft, Heart, Share2, Star } from 'lucide-react';
-import { products } from '../data/mockData';
+import { ArrowLeft, Heart, Share } from 'lucide-react';
+import ImageCarousel from '../components/ImageCarousel';
+import { Button } from '../components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
-interface Product {
-  id: string;
+interface Store {
+  primary_key: {
+    store_id: number;
+  };
+  image_urls: string;
   name: string;
-  price: number;
-  image: string;
-  brand: string;
-  originalPrice?: number;
+  address: {
+    full_address: string;
+    latitude: number;
+    longitude: number;
+    postal_code: string;
+    city: string;
+  };
+  distance_in_meters: number;
+  time_in_millis: number;
 }
 
-interface CartItem extends Product {
-  selectedSize?: string;
+interface Size {
+  size_id: number;
+  size_name: string;
+  product_variant_id: number;
+  product_variant_name: string;
+  product_variant_description: string;
+  mrp_micros: number;
+  store_with_best_price: Store;
+  discounted_price_mircos: number;
   quantity: number;
 }
 
-const ProductDetail: React.FC = () => {
-  const { productId } = useParams();
+interface ColorVariant {
+  color_id: number;
+  color_name: string;
+  product_image_urls: string[];
+  sizes: Size[];
+}
+
+interface ProductDetail {
+  product_id: number;
+  colors: ColorVariant[];
+}
+
+interface ApiResponse {
+  product_details: ProductDetail;
+}
+
+const ProductDetailPage = () => {
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [selectedSize, setSelectedSize] = useState('M');
-  const [quantity, setQuantity] = useState(1);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { toast } = useToast();
+  const [product, setProduct] = useState<ProductDetail | null>(null);
+  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+  const [selectedSize, setSelectedSize] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [sizeValidationShake, setSizeValidationShake] = useState(false);
 
-  // Find product from all categories
-  const allProducts = [
-    ...products.women,
-    ...products.men,
-    ...products.footwear,
-    ...products.accessories
-  ];
-  
-  const product = allProducts.find(p => p.id === productId);
+  useEffect(() => {
+    const fetchProductDetail = () => {
+      setIsLoading(true);
+      console.log('Loading product detail for ID:', id);
 
-  const handleAddToCart = () => {
-    if (!product) return;
-    
-    const existingItem = cartItems.find(item => item.id === product.id);
-    
-    if (existingItem) {
-      setCartItems(cartItems.map(item => 
-        item.id === product.id 
-          ? { ...item, quantity: item.quantity + quantity }
-          : item
-      ));
-    } else {
-      const newCartItem: CartItem = {
-        ...product,
-        selectedSize,
-        quantity
-      };
-      setCartItems([...cartItems, newCartItem]);
+      // Simulate API delay
+      setTimeout(() => {
+        // Parse the actual API response format
+        const mockApiResponse: ApiResponse = {
+          product_details: {
+            product_id: 36,
+            colors: [
+              {
+                color_id: 35,
+                color_name: "Dusty pink",
+                product_image_urls: [
+                  "https://image.hm.com/assets/hm/11/1b/111bb98f69b415b80383abaf66ed9cd8250e6023.jpg",
+                  "https://image.hm.com/assets/hm/4c/ee/4cee8433280e22e92312d7140844c8041d3aeaa0.jpg",
+                  "https://image.hm.com/assets/hm/06/53/06531fe897c6bdbdfb92274ac4a8672f187662f3.jpg",
+                  "https://image.hm.com/assets/hm/8a/9b/8a9bba55bc6a49ab71da52560818e51df319e831.jpg",
+                  "https://image.hm.com/assets/hm/18/9e/189ed1a39b1bde429686e1c71317da47a947e9c2.jpg"
+                ],
+                sizes: [
+                  {
+                    size_id: 165,
+                    size_name: "XS",
+                    product_variant_id: 165,
+                    product_variant_name: "Lace-trimmed ribbed T-shirt",
+                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
+                    mrp_micros: 799000000,
+                    store_with_best_price: {
+                      primary_key: { store_id: 8 },
+                      image_urls: "https://media.fashionnetwork.com/cdn-cgi/image/fit=contain,width=1000,height=1000,format=auto/m/2b4d/aadb/ced2/d0f6/7681/b92b/eee3/106b/3465/0a10/0a10.jpg",
+                      name: "H&M The Connaught High Street",
+                      address: {
+                        full_address: "The Connaught High Street Inner Circle, B Block, Connaught Place",
+                        latitude: 28.634170532226562,
+                        longitude: 77.21920013427734,
+                        postal_code: "110001",
+                        city: "New Delhi"
+                      },
+                      distance_in_meters: 33486,
+                      time_in_millis: 3281000
+                    },
+                    discounted_price_mircos: 799000000,
+                    quantity: 1000
+                  },
+                  {
+                    size_id: 168,
+                    size_name: "L",
+                    product_variant_id: 168,
+                    product_variant_name: "Lace-trimmed ribbed T-shirt",
+                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
+                    mrp_micros: 799000000,
+                    store_with_best_price: {
+                      primary_key: { store_id: 24 },
+                      image_urls: "https://lh3.googleusercontent.com/JKPieJTXhsjXTR2Bf7tIN0gfCY0uq4T9fAd2QnmrScTbpqcXSLYBAlS73loQDRF52FZ8kqlhfm-BdmYDPgeWH0R9j_ha=w1200-rw",
+                      name: "H&M Grand Venice",
+                      address: {
+                        full_address: "Plot No SH3, Site IV, Near Pari Chowk, Greater Noida",
+                        latitude: 28.452878952026367,
+                        longitude: 77.52599334716797,
+                        postal_code: "201308",
+                        city: "Noida"
+                      },
+                      distance_in_meters: 68492,
+                      time_in_millis: 5628000
+                    },
+                    discounted_price_mircos: 799000000,
+                    quantity: 1000
+                  }
+                ]
+              },
+              {
+                color_id: 3096,
+                color_name: "White/Floral",
+                product_image_urls: [
+                  "https://image.hm.com/assets/hm/04/43/0443c45a7ed32de571c1ba8adbce44835398143d.jpg",
+                  "https://image.hm.com/assets/hm/da/ca/dacae7ee1f316ee98b54683183ff43220cd080cd.jpg",
+                  "https://image.hm.com/assets/hm/67/fd/67fdca25aa51d3eea3b27c611cb744ca4a91f85a.jpg",
+                  "https://image.hm.com/assets/hm/b4/02/b402d9b68d719e236bf481fa906aaef493b59497.jpg",
+                  "https://image.hm.com/assets/hm/80/60/8060d395cb4f73b4aeb47ceac743c0dc7faabb5c.jpg"
+                ],
+                sizes: [
+                  {
+                    size_id: 165,
+                    size_name: "XS",
+                    product_variant_id: 15629,
+                    product_variant_name: "Lace-trimmed ribbed T-shirt",
+                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
+                    mrp_micros: 799000000,
+                    store_with_best_price: {
+                      primary_key: { store_id: 3 },
+                      image_urls: "https://alfred.com.au/wp-content/uploads/2021/07/HMConsciousCollectionLaunch_101019-YMund-346_LR-copy.jpg",
+                      name: "H&M HUDA Metro station",
+                      address: {
+                        full_address: "HUDA Metro station Sector 29, Gurugram",
+                        latitude: 28.459341049194336,
+                        longitude: 77.0727767944336,
+                        postal_code: "120007",
+                        city: "Gurgaon"
+                      },
+                      distance_in_meters: 4682,
+                      time_in_millis: 996000
+                    },
+                    discounted_price_mircos: 799000000,
+                    quantity: 1000
+                  }
+                ]
+              },
+              {
+                color_id: 3218,
+                color_name: "Light blue",
+                product_image_urls: [
+                  "https://image.hm.com/assets/hm/d4/a0/d4a00324bd4772ab6eeb3bc4b16d024072e6d96a.jpg",
+                  "https://image.hm.com/assets/hm/df/67/df67e96237636624c8755d6517faca0dcfad0314.jpg",
+                  "https://image.hm.com/assets/hm/1c/f5/1cf58dd90414fb411c81774ffb4cd63e00b5df4c.jpg",
+                  "https://image.hm.com/assets/hm/79/51/7951af6d6ebeed332bc352240dae745ad790e8ea.jpg",
+                  "https://image.hm.com/assets/hm/6e/94/6e94e2e531778ccde74e7909a57ae458e32f5694.jpg"
+                ],
+                sizes: [
+                  {
+                    size_id: 165,
+                    size_name: "XS",
+                    product_variant_id: 16160,
+                    product_variant_name: "Lace-trimmed ribbed T-shirt",
+                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
+                    mrp_micros: 799000000,
+                    store_with_best_price: {
+                      primary_key: { store_id: 24 },
+                      image_urls: "https://lh3.googleusercontent.com/JKPieJTXhsjXTR2Bf7tIN0gfCY0uq4T9fAd2QnmrScTbpqcXSLYBAlS73loQDRF52FZ8kqlhfm-BdmYDPgeWH0R9j_ha=w1200-rw",
+                      name: "H&M Grand Venice",
+                      address: {
+                        full_address: "Plot No SH3, Site IV, Near Pari Chowk, Greater Noida",
+                        latitude: 28.452878952026367,
+                        longitude: 77.52599334716797,
+                        postal_code: "201308",
+                        city: "Noida"
+                      },
+                      distance_in_meters: 68492,
+                      time_in_millis: 5628000
+                    },
+                    discounted_price_mircos: 799000000,
+                    quantity: 1000
+                  }
+                ]
+              },
+              {
+                color_id: 3226,
+                color_name: "Cream",
+                product_image_urls: [
+                  "https://image.hm.com/assets/hm/0f/61/0f615d53631fdd28b18b5a0f1f0af738f90966c2.jpg",
+                  "https://image.hm.com/assets/hm/96/31/96318bc5a36e7fb1ae4fa9b88a405d0d27f84b11.jpg",
+                  "https://image.hm.com/assets/hm/6b/4e/6b4ef260a3a83d17652997fe619baab258059a03.jpg",
+                  "https://image.hm.com/assets/hm/61/d7/61d7e6d28f65d015a4a11ba6554bd63c26e25269.jpg",
+                  "https://image.hm.com/assets/hm/2e/7b/2e7b50bd376794bdd323fe4fbf9627fd8374ecb6.jpg"
+                ],
+                sizes: [
+                  {
+                    size_id: 165,
+                    size_name: "XS",
+                    product_variant_id: 16196,
+                    product_variant_name: "Lace-trimmed ribbed T-shirt",
+                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
+                    mrp_micros: 799000000,
+                    store_with_best_price: {
+                      primary_key: { store_id: 3 },
+                      image_urls: "https://alfred.com.au/wp-content/uploads/2021/07/HMConsciousCollectionLaunch_101019-YMund-346_LR-copy.jpg",
+                      name: "H&M HUDA Metro station",
+                      address: {
+                        full_address: "HUDA Metro station Sector 29, Gurugram",
+                        latitude: 28.459341049194336,
+                        longitude: 77.0727767944336,
+                        postal_code: "120007",
+                        city: "Gurgaon"
+                      },
+                      distance_in_meters: 4682,
+                      time_in_millis: 996000
+                    },
+                    discounted_price_mircos: 799000000,
+                    quantity: 1000
+                  }
+                ]
+              },
+              {
+                color_id: 3242,
+                color_name: "Black",
+                product_image_urls: [
+                  "https://image.hm.com/assets/hm/1e/4c/1e4ceca78223f127c008598dafafd42d5e6be0e3.jpg",
+                  "https://image.hm.com/assets/hm/9e/47/9e47fc761f10ba426b6af2df4866b73126e10f83.jpg",
+                  "https://image.hm.com/assets/hm/ad/f3/adf35400293259fdcfbe6fe7de7cefde27b13f22.jpg",
+                  "https://image.hm.com/assets/hm/f2/23/f223fcd09ecc25da0ba418e7e33876289e0deea3.jpg"
+                ],
+                sizes: [
+                  {
+                    size_id: 165,
+                    size_name: "XS",
+                    product_variant_id: 16261,
+                    product_variant_name: "Lace-trimmed ribbed T-shirt",
+                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
+                    mrp_micros: 799000000,
+                    store_with_best_price: {
+                      primary_key: { store_id: 3 },
+                      image_urls: "https://alfred.com.au/wp-content/uploads/2021/07/HMConsciousCollectionLaunch_101019-YMund-346_LR-copy.jpg",
+                      name: "H&M HUDA Metro station",
+                      address: {
+                        full_address: "HUDA Metro station Sector 29, Gurugram",
+                        latitude: 28.459341049194336,
+                        longitude: 77.0727767944336,
+                        postal_code: "120007",
+                        city: "Gurgaon"
+                      },
+                      distance_in_meters: 4682,
+                      time_in_millis: 996000
+                    },
+                    discounted_price_mircos: 799000000,
+                    quantity: 1000
+                  }
+                ]
+              }
+            ]
+          }
+        };
+
+        setProduct(mockApiResponse.product_details);
+        setIsLoading(false);
+        console.log('Product detail loaded successfully');
+      }, 800);
+    };
+
+    if (id) {
+      fetchProductDetail();
     }
+  }, [id]);
+
+  const handleColorChange = (index: number) => {
+    setSelectedColorIndex(index);
+    setSelectedSize(''); // Reset size selection when color changes
+  };
+
+  const handleSizeChange = (size: string) => {
+    setSelectedSize(size);
+    // Clear any validation shake animation
+    setSizeValidationShake(false);
+  };
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  const toggleWishlist = () => {
+    setIsWishlisted(!isWishlisted);
+  };
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: product?.colors[selectedColorIndex]?.sizes[0]?.product_variant_name,
+        text: `Check out this H&M product`,
+        url: window.location.href,
+      });
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      navigator.clipboard.writeText(window.location.href);
+      console.log('Product URL copied to clipboard');
+    }
+  };
+
+  const handleAddToBag = () => {
+    if (!selectedSize) {
+      // Trigger shake animation for size selection
+      setSizeValidationShake(true);
+      
+      // Show toast notification
+      toast({
+        title: "Size Required",
+        description: "Please select a size before adding to bag",
+        variant: "destructive",
+      });
+
+      // Remove shake animation after animation completes
+      setTimeout(() => setSizeValidationShake(false), 600);
+      return;
+    }
+
+    // Add to bag logic here
+    const selectedSizeData = availableSizes.find(size => size.size_name === selectedSize);
+    toast({
+      title: "Added to Bag",
+      description: `${selectedSizeData?.product_variant_name} (Size: ${selectedSize}) added to your bag`,
+    });
     
-    console.log('Added to cart:', { ...product, selectedSize, quantity });
+    console.log('Adding to bag:', {
+      productId: product?.product_id,
+      colorId: product?.colors[selectedColorIndex]?.color_id,
+      size: selectedSize,
+      sizeData: selectedSizeData
+    });
   };
 
-  const handleUpdateCartQuantity = (id: string, newQuantity: number) => {
-    setCartItems(cartItems.map(item => 
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    ));
-  };
-
-  const handleRemoveCartItem = (id: string) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
-
-  if (!product) {
+  if (isLoading) {
     return (
-      <Layout 
-        cartItems={cartItems}
-        onUpdateCartQuantity={handleUpdateCartQuantity}
-        onRemoveCartItem={handleRemoveCartItem}
-      >
-        <div className="flex items-center justify-center min-h-screen">
-          <p className="text-gray-500">Product not found</p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading product details...</p>
         </div>
-      </Layout>
+      </div>
     );
   }
 
-  const images = [product.image, product.image, product.image]; // Mock multiple images
-  const sizes = ['XS', 'S', 'M', 'L', 'XL'];
+  if (!product || !product.colors || product.colors.length === 0) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">Product not found</p>
+          <Button onClick={handleBack} variant="outline">
+            Go Back
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const currentColor = product.colors[selectedColorIndex];
+  const currentImages = currentColor?.product_image_urls || [];
+  const availableSizes = currentColor?.sizes || [];
+  
+  // Get the first size for price display, or selected size details
+  const selectedSizeData = selectedSize 
+    ? availableSizes.find(size => size.size_name === selectedSize)
+    : availableSizes[0];
+
+  // Convert micros to regular price (divide by 1,000,000)
+  const mrp = selectedSizeData ? selectedSizeData.mrp_micros / 1000000 : 0;
+  const discountedPrice = selectedSizeData ? selectedSizeData.discounted_price_mircos / 1000000 : 0;
 
   return (
-    <Layout 
-      cartItems={cartItems}
-      onUpdateCartQuantity={handleUpdateCartQuantity}
-      onRemoveCartItem={handleRemoveCartItem}
-    >
-      <div className="bg-white min-h-screen">
-        {/* Header */}
-        <div className="sticky top-16 bg-white border-b border-gray-200 px-4 py-3 z-10">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => navigate(-1)}
-              className="p-2 hover:bg-gray-100 rounded-full"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </button>
-            
-            <div className="flex items-center gap-3">
-              <button className="p-2 hover:bg-gray-100 rounded-full">
-                <Share2 className="w-5 h-5" />
-              </button>
-              <button className="p-2 hover:bg-gray-100 rounded-full">
-                <Heart className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Product Images */}
-        <div className="relative">
-          <div className="aspect-square bg-gray-100">
-            <img
-              src={images[currentImageIndex]}
-              alt={product.name}
-              className="w-full h-full object-cover"
+    <div className="min-h-screen bg-white pb-20">
+      {/* Header */}
+      <header className="flex items-center justify-between p-4 border-b">
+        <button
+          onClick={handleBack}
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          aria-label="Go back"
+        >
+          <ArrowLeft size={24} />
+        </button>
+        <h1 className="text-lg font-medium">Product Detail</h1>
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={handleShare}
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            aria-label="Share product"
+          >
+            <Share size={20} />
+          </button>
+          <button
+            onClick={toggleWishlist}
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            aria-label="Add to wishlist"
+          >
+            <Heart 
+              size={20} 
+              className={isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'} 
             />
-          </div>
-          
-          {/* Image Indicators */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-            {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentImageIndex(index)}
-                className={`w-2 h-2 rounded-full ${
-                  index === currentImageIndex ? 'bg-white' : 'bg-white/50'
-                }`}
-              />
-            ))}
-          </div>
+          </button>
         </div>
+      </header>
 
-        {/* Product Info */}
-        <div className="p-4">
-          <div className="mb-4">
-            <p className="text-sm text-gray-500 mb-1">{product.brand}</p>
-            <h1 className="text-xl font-bold text-gray-900 mb-2">{product.name}</h1>
-            
-            <div className="flex items-center gap-2 mb-2">
-              <div className="flex items-center gap-1">
-                <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                <span className="text-sm font-medium">4.5</span>
-              </div>
-              <span className="text-sm text-gray-500">(127 reviews)</span>
+      {/* Product Image Carousel with auto-scroll enabled */}
+      <div className="relative">
+        <ImageCarousel images={currentImages} autoPlay={true} />
+        
+        {/* Floating Action Buttons */}
+        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 space-y-3">
+          <button
+            onClick={toggleWishlist}
+            className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors"
+            aria-label="Add to wishlist"
+          >
+            <Heart 
+              size={20} 
+              className={isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'} 
+            />
+          </button>
+          <button
+            onClick={handleShare}
+            className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors"
+            aria-label="Share product"
+          >
+            <Share size={20} className="text-gray-600" />
+          </button>
+        </div>
+      </div>
+
+      {/* Product Information */}
+      <div className="p-4">
+        <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          H&M
+        </h2>
+        
+        <p className="text-gray-600 text-sm mb-4">
+          {selectedSizeData?.product_variant_name || 'Product'}
+        </p>
+
+        {selectedSizeData?.product_variant_description && (
+          <div 
+            className="text-gray-600 text-sm mb-4"
+            dangerouslySetInnerHTML={{ __html: selectedSizeData.product_variant_description }}
+          />
+        )}
+
+        {/* Color Variants */}
+        {product.colors.length > 0 && (
+          <div className="mb-6">
+            <h3 className="text-sm font-medium text-gray-900 mb-3">Colors Available</h3>
+            <div className="flex gap-3 overflow-x-auto scrollbar-hide p-1">
+              {product.colors.map((color, index) => (
+                <div
+                  key={color.color_id}
+                  className="text-center cursor-pointer flex-shrink-0"
+                  onClick={() => handleColorChange(index)}
+                >
+                  <div className={`w-14 h-18 rounded-lg overflow-hidden border-2 mb-2 transition-all duration-200 ${
+                    selectedColorIndex === index ? 'border-black scale-105' : 'border-gray-200 hover:border-gray-400'
+                  }`}>
+                    <img
+                      src={color.product_image_urls[0]}
+                      alt={color.color_name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <p className="text-xs text-gray-600 max-w-14 truncate">
+                    {color.color_name}
+                  </p>
+                </div>
+              ))}
             </div>
-            
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-gray-900">₹{product.price}</span>
-              {product.originalPrice && (
-                <span className="text-lg text-gray-500 line-through">₹{product.originalPrice}</span>
+          </div>
+        )}
+
+        {/* Size Selection */}
+        {availableSizes.length > 0 && (
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-medium text-gray-900">Size</h3>
+              {!selectedSize && (
+                <span className="text-xs text-orange-600 animate-pulse">
+                  Please select a size
+                </span>
               )}
             </div>
-          </div>
-
-          {/* Delivery Info */}
-          <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-6">
-            <p className="text-sm font-medium text-orange-800">
-              🚚 Get it delivered in 30 minutes
-            </p>
-            <p className="text-xs text-orange-600 mt-1">
-              Free delivery on orders above ₹499
-            </p>
-          </div>
-
-          {/* Size Selection */}
-          <div className="mb-6">
-            <h3 className="font-medium text-gray-900 mb-3">Size</h3>
-            <div className="flex gap-2">
-              {sizes.map(size => (
+            <div className={`flex gap-3 overflow-x-auto scrollbar-hide p-1 transition-all duration-300 ${
+              sizeValidationShake ? 'animate-bounce' : ''
+            }`}>
+              {availableSizes.map((size) => (
                 <button
-                  key={size}
-                  onClick={() => setSelectedSize(size)}
-                  className={`px-4 py-2 border rounded-lg font-medium ${
-                    selectedSize === size
-                      ? 'border-orange-500 bg-orange-50 text-orange-700'
-                      : 'border-gray-300 text-gray-700 hover:border-gray-400'
+                  key={size.size_id}
+                  onClick={() => handleSizeChange(size.size_name)}
+                  className={`w-12 h-12 rounded-lg border-2 flex items-center justify-center text-sm font-medium transition-all duration-200 flex-shrink-0 ${
+                    selectedSize === size.size_name 
+                      ? 'border-black bg-black text-white scale-105' 
+                      : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400 hover:scale-105'
                   }`}
                 >
-                  {size}
+                  {size.size_name}
                 </button>
               ))}
             </div>
           </div>
-
-          {/* Quantity */}
-          <div className="mb-6">
-            <h3 className="font-medium text-gray-900 mb-3">Quantity</h3>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-10 h-10 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50"
-              >
-                -
-              </button>
-              <span className="font-medium text-lg">{quantity}</span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="w-10 h-10 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50"
-              >
-                +
-              </button>
-            </div>
-          </div>
-
-          {/* Description */}
-          <div className="mb-6">
-            <h3 className="font-medium text-gray-900 mb-3">Description</h3>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              Premium quality {product.name.toLowerCase()} from {product.brand}. 
-              Made with high-quality materials for comfort and durability. 
-              Perfect for casual and formal occasions.
-            </p>
-          </div>
-        </div>
-
-        {/* Fixed Bottom CTA */}
-        <div className="fixed bottom-20 left-0 right-0 bg-white border-t border-gray-200 p-4">
-          <button
-            onClick={handleAddToCart}
-            className="w-full bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors"
-          >
-            Add to Cart • ₹{product.price * quantity}
-          </button>
-        </div>
+        )}
       </div>
-    </Layout>
+
+      {/* Sticky Bottom Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 flex items-center justify-between">
+        <div>
+          <div className="flex items-center space-x-2 mb-1">
+            <span className="text-lg font-bold text-gray-900">
+              ₹{discountedPrice || mrp}
+            </span>
+            {discountedPrice && discountedPrice < mrp && (
+              <span className="text-sm text-gray-500 line-through">
+                ₹{mrp}
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-gray-500">(Incl. Of All Taxes)</p>
+        </div>
+        <Button 
+          onClick={handleAddToBag}
+          className={`px-8 py-3 text-base font-medium transition-all duration-200 ${
+            selectedSize 
+              ? 'bg-black text-white hover:bg-gray-800 hover:scale-105' 
+              : 'bg-gray-300 text-gray-500 cursor-not-allowed hover:bg-gray-300'
+          }`}
+          size="lg"
+        >
+          ADD TO BAG
+        </Button>
+      </div>
+    </div>
   );
 };
 
-export default ProductDetail;
+export default ProductDetailPage;
