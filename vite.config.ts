@@ -12,7 +12,12 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
-    viteCommonjs(),
+    viteCommonjs({
+      include: [
+        /protogen/,
+        /node_modules/,
+      ],
+    }),
     react(),
     mode === 'development' &&
     componentTagger(),
