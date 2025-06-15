@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from './ui/dialog';
@@ -28,7 +29,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, autoPlay = false 
 
       return () => clearInterval(interval);
     }
-  }, [images.length, autoPlay]);
+  }, [images, autoPlay]);
 
   const goToPrevious = () => {
     if (isAnimating) return;
