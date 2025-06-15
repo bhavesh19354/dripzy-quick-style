@@ -1,46 +1,69 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { loginWithEmailPassword, logoutShopify } from '@/lib/shopify';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  userPhone: string | null;
-  login: (phone: string) => void;
-  logout: () => void;
+  customerAccessToken: string | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userPhone, setUserPhone] = useState<string | null>(null);
+  const [customerAccessToken, setCustomerAccessToken] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check localStorage for existing authentication
-    const authStatus = localStorage.getItem('isAuthenticated');
-    const phone = localStorage.getItem('userPhone');
+    const token = localStorage.getItem('customerAccessToken');
+    const expiresAt = localStorage.getItem('customerAccessTokenExpiresAt');
     
-    if (authStatus === 'true' && phone) {
-      setIsAuthenticated(true);
-      setUserPhone(phone);
+    if (token && expiresAt) {
+      if (new Date(expiresAt) > new Date()) {
+        setCustomerAccessToken(token);
+      } else {
+        localStorage.removeItem('customerAccessToken');
+        localStorage.removeItem('customerAccessTokenExpiresAt');
+      }
     }
   }, []);
 
-  const login = (phone: string) => {
-    setIsAuthenticated(true);
-    setUserPhone(phone);
-    localStorage.setItem('isAuthenticated', 'true');
-    localStorage.setItem('userPhone', phone);
+  const login = async (email: string, password: string) => {
+    const result = await loginWithEmailPassword(email, password);
+    
+    if (result.customerUserErrors.length > 0) {
+      const errorMessages = result.customerUserErrors.map((e: any) => e.message).join(', ');
+      throw new Error(errorMessages);
+    }
+
+    if (result.customerAccessToken) {
+      const { accessToken, expiresAt } = result.customerAccessToken;
+      setCustomerAccessToken(accessToken);
+      localStorage.setItem('customerAccessToken', accessToken);
+      localStorage.setItem('customerAccessTokenExpiresAt', expiresAt);
+    }
   };
 
-  const logout = () => {
-    setIsAuthenticated(false);
-    setUserPhone(null);
+  const logout = async () => {
+    if (customerAccessToken) {
+      try {
+        await logoutShopify(customerAccessToken);
+      } catch (error) {
+        console.error("Failed to delete Shopify access token:", error);
+      }
+    }
+    setCustomerAccessToken(null);
+    localStorage.removeItem('customerAccessToken');
+    localStorage.removeItem('customerAccessTokenExpiresAt');
+    // For cleanup of old implementation
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('userPhone');
   };
 
+  const isAuthenticated = !!customerAccessToken;
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, userPhone, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, customerAccessToken, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
