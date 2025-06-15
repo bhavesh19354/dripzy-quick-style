@@ -2,21 +2,7 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 import { Skeleton } from './ui/skeleton';
-
-interface ColorVariant {
-  color: string;
-  image: string;
-}
-
-interface Product {
-  id: number;
-  images: string[];
-  colorVariants: ColorVariant[];
-  brandName: string;
-  productName: string;
-  mrp: number;
-  discountedPrice: number;
-}
+import { Product } from '../types/product';
 
 interface ProductGridProps {
   products: Product[];
@@ -49,9 +35,27 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading = false }
   return (
     <div className="px-4 py-6">
       <div className="grid grid-cols-2 gap-4 max-w-6xl mx-auto">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {products.map((product) => {
+          // Transform Product to match ProductCard interface
+          const transformedProduct = {
+            id: product.id.toString(),
+            name: product.productName,
+            price: product.discountedPrice,
+            originalPrice: product.mrp !== product.discountedPrice ? product.mrp : undefined,
+            image: product.images[0] || '/placeholder.svg',
+            brand: product.brandName
+          };
+
+          return (
+            <ProductCard 
+              key={product.id} 
+              product={transformedProduct} 
+              onAddToCart={() => {
+                console.log('Added to cart:', transformedProduct);
+              }}
+            />
+          );
+        })}
       </div>
     </div>
   );
