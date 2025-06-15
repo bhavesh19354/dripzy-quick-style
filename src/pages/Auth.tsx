@@ -1,10 +1,11 @@
-
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { useAuth } from '../contexts/AuthContext';
-import { auth, RecaptchaVerifier } from '../firebase';
+import { auth } from '../firebase';
+import { RecaptchaVerifier } from 'firebase/auth';
+import type { Auth } from 'firebase/auth';
 import { signInWithPhoneNumber, ConfirmationResult } from "firebase/auth";
 import { toast } from "@/hooks/use-toast";
 
@@ -25,16 +26,16 @@ const Auth: React.FC = () => {
   const setupRecaptcha = () => {
     // Check if already rendered
     if (!window.recaptchaVerifier) {
-      // Make sure we import `auth` from ../firebase and it is the right object!
+      // Ensure correct type for auth (fix error)
       window.recaptchaVerifier = new RecaptchaVerifier(
-        "recaptcha-container",                      // Element ID
+        "recaptcha-container",
         {
           size: "invisible",
           callback: (response: any) => {
             // reCAPTCHA solved, allow signInWithPhoneNumber.
           }
         },
-        auth // <- Pass the actual Auth object, imported from firebase.ts
+        auth as Auth // Explicitly tell TypeScript this is an Auth object
       );
     }
   };
