@@ -1,5 +1,6 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -15,24 +16,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [userPhone, setUserPhone] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check localStorage for existing authentication
-    const authStatus = localStorage.getItem('isAuthenticated');
-    const phone = localStorage.getItem('userPhone');
-    
-    if (authStatus === 'true' && phone) {
-      setIsAuthenticated(true);
-      setUserPhone(phone);
-    }
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user && user.phoneNumber) {
+        setIsAuthenticated(true);
+        setUserPhone(user.phoneNumber.replace('+91',''));
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('userPhone', user.phoneNumber.replace('+91',''));
+      } else {
+        setIsAuthenticated(false);
+        setUserPhone(null);
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('userPhone');
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
   const login = (phone: string) => {
-    setIsAuthenticated(true);
-    setUserPhone(phone);
-    localStorage.setItem('isAuthenticated', 'true');
-    localStorage.setItem('userPhone', phone);
+    // No-op: handled by Firebase callback
   };
 
   const logout = () => {
+    signOut(auth);
     setIsAuthenticated(false);
     setUserPhone(null);
     localStorage.removeItem('isAuthenticated');
