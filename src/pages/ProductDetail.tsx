@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Cart, Heart, Share } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Heart, Share } from 'lucide-react';
 import ImageCarousel from '../components/ImageCarousel';
 import { Button } from '../components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -369,7 +369,7 @@ const ProductDetailPage = () => {
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             aria-label="Go to cart"
           >
-            <Cart size={20} />
+            <ShoppingCart size={20} />
           </button>
         </div>
       </header>
