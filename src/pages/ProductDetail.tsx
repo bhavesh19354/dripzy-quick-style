@@ -1,319 +1,257 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, ShoppingCart, Heart, Share } from 'lucide-react';
 import ImageCarousel from '../components/ImageCarousel';
 import { Button } from '../components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 
-interface Store {
-  primary_key: {
-    store_id: number;
-  };
-  image_urls: string;
-  name: string;
-  address: {
-    full_address: string;
-    latitude: number;
-    longitude: number;
-    postal_code: string;
-    city: string;
-  };
-  distance_in_meters: number;
-  time_in_millis: number;
+const SHOPIFY_STOREFRONT_ACCESS_TOKEN = '50b756b36c591cc2d86ea31b1eceace5';
+const SHOPIFY_API_URL = 'https://dripzyy.com/api/2024-04/graphql.json';
+
+const getProductByIdQuery = `
+  query GetProductById($id: ID!) {
+    product(id: $id) {
+      id
+      title
+      descriptionHtml
+      vendor
+      options {
+        id
+        name
+        values
+      }
+      images(first: 10) {
+        edges {
+          node {
+            url
+            altText
+          }
+        }
+      }
+      variants(first: 10) {
+        edges {
+          node {
+            id
+            title
+            price {
+              amount
+              currencyCode
+            }
+            image {
+              url
+              altText
+            }
+            selectedOptions {
+              name
+              value
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+// Interfaces for Shopify data
+interface ShopifyImageNode {
+  url: string;
+  altText: string | null;
 }
 
-interface Size {
-  size_id: number;
-  size_name: string;
-  product_variant_id: number;
-  product_variant_name: string;
-  product_variant_description: string;
-  mrp_micros: number;
-  store_with_best_price: Store;
-  discounted_price_mircos: number;
-  quantity: number;
+interface ShopifyPrice {
+  amount: string;
+  currencyCode: string;
 }
 
-interface ColorVariant {
-  color_id: number;
-  color_name: string;
-  product_image_urls: string[];
-  sizes: Size[];
+interface ShopifyVariantNode {
+  id: string;
+  title: string;
+  price: ShopifyPrice;
+  image: ShopifyImageNode | null;
+  selectedOptions: {
+    name: string;
+    value: string;
+  }[];
 }
 
-interface ProductDetail {
-  product_id: number;
-  colors: ColorVariant[];
+interface ShopifyProduct {
+  id: string;
+  title: string;
+  descriptionHtml: string;
+  vendor: string;
+  options: {
+    id: string;
+    name: string;
+    values: string[];
+  }[];
+  images: { edges: { node: ShopifyImageNode }[] };
+  variants: { edges: { node: ShopifyVariantNode }[] };
 }
 
-interface ApiResponse {
-  product_details: ProductDetail;
-}
+const fetchProductFromShopify = async (productId: string): Promise<ShopifyProduct> => {
+  const fullProductId = `gid://shopify/Product/${productId}`;
+  const response = await fetch(SHOPIFY_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+    },
+    body: JSON.stringify({
+      query: getProductByIdQuery,
+      variables: { id: fullProductId },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    console.error("Shopify API Error:", errorBody);
+    throw new Error('Failed to fetch product from Shopify.');
+  }
+
+  const json = await response.json();
+  if (json.data?.product) {
+    return json.data.product;
+  }
+
+  console.error("Unexpected Shopify API response structure:", json);
+  throw new Error("Unexpected response structure from Shopify.");
+};
 
 const ProductDetailPage = () => {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [product, setProduct] = useState<ProductDetail | null>(null);
-  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+
+  const { data: product, isLoading, error } = useQuery<ShopifyProduct, Error>({
+    queryKey: ['shopifyProduct', productId],
+    queryFn: () => fetchProductFromShopify(productId!),
+    enabled: !!productId,
+  });
+
+  const colorOption = useMemo(() => product?.options.find(opt => opt.name.toLowerCase() === 'color'), [product]);
+  const sizeOption = useMemo(() => product?.options.find(opt => opt.name.toLowerCase() === 'size'), [product]);
+
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(true);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [sizeValidationShake, setSizeValidationShake] = useState(false);
 
   useEffect(() => {
-    const fetchProductDetail = () => {
-      setIsLoading(true);
-      console.log('Loading product detail for ID:', productId);
-      
-      // Simulate API delay
-      setTimeout(() => {
-        // Create mock data based on the product ID
-        const pid = parseInt(productId || '0');
-        
-        // Default mock data structure that works for any product ID
-        const mockApiResponse: ApiResponse = {
-          product_details: {
-            product_id: pid,
-            colors: [
-              {
-                color_id: 1,
-                color_name: "Default",
-                product_image_urls: [
-                  "https://image.hm.com/assets/hm/11/1b/111bb98f69b415b80383abaf66ed9cd8250e6023.jpg",
-                  "https://image.hm.com/assets/hm/4c/ee/4cee8433280e22e92312d7140844c8041d3aeaa0.jpg",
-                  "https://image.hm.com/assets/hm/06/53/06531fe897c6bdbdfb92274ac4a8672f187662f3.jpg"
-                ],
-                sizes: [
-                  {
-                    size_id: 1,
-                    size_name: "XS",
-                    product_variant_id: 1,
-                    product_variant_name: "H&M Product",
-                    product_variant_description: "A stylish H&M product with great quality and comfort.",
-                    mrp_micros: 799000000,
-                    store_with_best_price: {
-                      primary_key: { store_id: 1 },
-                      image_urls: "https://media.fashionnetwork.com/cdn-cgi/image/fit=contain,width=1000,height=1000,format=auto/m/2b4d/aadb/ced2/d0f6/7681/b92b/eee3/106b/3465/0a10/0a10.jpg",
-                      name: "H&M Store",
-                      address: {
-                        full_address: "H&M Store Location",
-                        latitude: 28.634170532226562,
-                        longitude: 77.21920013427734,
-                        postal_code: "110001",
-                        city: "New Delhi"
-                      },
-                      distance_in_meters: 33486,
-                      time_in_millis: 3281000
-                    },
-                    discounted_price_mircos: 799000000,
-                    quantity: 1000
-                  },
-                  {
-                    size_id: 2,
-                    size_name: "S",
-                    product_variant_id: 2,
-                    product_variant_name: "H&M Product",
-                    product_variant_description: "A stylish H&M product with great quality and comfort.",
-                    mrp_micros: 799000000,
-                    store_with_best_price: {
-                      primary_key: { store_id: 1 },
-                      image_urls: "https://media.fashionnetwork.com/cdn-cgi/image/fit=contain,width=1000,height=1000,format=auto/m/2b4d/aadb/ced2/d0f6/7681/b92b/eee3/106b/3465/0a10/0a10.jpg",
-                      name: "H&M Store",
-                      address: {
-                        full_address: "H&M Store Location",
-                        latitude: 28.634170532226562,
-                        longitude: 77.21920013427734,
-                        postal_code: "110001",
-                        city: "New Delhi"
-                      },
-                      distance_in_meters: 33486,
-                      time_in_millis: 3281000
-                    },
-                    discounted_price_mircos: 799000000,
-                    quantity: 1000
-                  },
-                  {
-                    size_id: 3,
-                    size_name: "M",
-                    product_variant_id: 3,
-                    product_variant_name: "H&M Product",
-                    product_variant_description: "A stylish H&M product with great quality and comfort.",
-                    mrp_micros: 799000000,
-                    store_with_best_price: {
-                      primary_key: { store_id: 1 },
-                      image_urls: "https://media.fashionnetwork.com/cdn-cgi/image/fit=contain,width=1000,height=1000,format=auto/m/2b4d/aadb/ced2/d0f6/7681/b92b/eee3/106b/3465/0a10/0a10.jpg",
-                      name: "H&M Store",
-                      address: {
-                        full_address: "H&M Store Location",
-                        latitude: 28.634170532226562,
-                        longitude: 77.21920013427734,
-                        postal_code: "110001",
-                        city: "New Delhi"
-                      },
-                      distance_in_meters: 33486,
-                      time_in_millis: 3281000
-                    },
-                    discounted_price_mircos: 799000000,
-                    quantity: 1000
-                  }
-                ]
-              }
-            ]
-          }
-        };
-        
-        // If it's the specific product ID 36, use the detailed mock data
-        if (pid === 36) {
-          mockApiResponse.product_details = {
-            product_id: 36,
-            colors: [
-              {
-                color_id: 35,
-                color_name: "Dusty pink",
-                product_image_urls: [
-                  "https://image.hm.com/assets/hm/11/1b/111bb98f69b415b80383abaf66ed9cd8250e6023.jpg",
-                  "https://image.hm.com/assets/hm/4c/ee/4cee8433280e22e92312d7140844c8041d3aeaa0.jpg",
-                  "https://image.hm.com/assets/hm/06/53/06531fe897c6bdbdfb92274ac4a8672f187662f3.jpg",
-                  "https://image.hm.com/assets/hm/8a/9b/8a9bba55bc6a49ab71da52560818e51df319e831.jpg",
-                  "https://image.hm.com/assets/hm/18/9e/189ed1a39b1bde429686e1c71317da47a947e9c2.jpg"
-                ],
-                sizes: [
-                  {
-                    size_id: 165,
-                    size_name: "XS",
-                    product_variant_id: 165,
-                    product_variant_name: "Lace-trimmed ribbed T-shirt",
-                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
-                    mrp_micros: 799000000,
-                    store_with_best_price: {
-                      primary_key: { store_id: 8 },
-                      image_urls: "https://media.fashionnetwork.com/cdn-cgi/image/fit=contain,width=1000,height=1000,format=auto/m/2b4d/aadb/ced2/d0f6/7681/b92b/eee3/106b/3465/0a10/0a10.jpg",
-                      name: "H&M The Connaught High Street",
-                      address: {
-                        full_address: "The Connaught High Street Inner Circle, B Block, Connaught Place",
-                        latitude: 28.634170532226562,
-                        longitude: 77.21920013427734,
-                        postal_code: "110001",
-                        city: "New Delhi"
-                      },
-                      distance_in_meters: 33486,
-                      time_in_millis: 3281000
-                    },
-                    discounted_price_mircos: 799000000,
-                    quantity: 1000
-                  },
-                  {
-                    size_id: 168,
-                    size_name: "L",
-                    product_variant_id: 168,
-                    product_variant_name: "Lace-trimmed ribbed T-shirt",
-                    product_variant_description: "Short, fitted T-shirt in narrow-ribbed viscose jersey with a narrow trim around the neckline and a delicate lace trim at the cuffs.",
-                    mrp_micros: 799000000,
-                    store_with_best_price: {
-                      primary_key: { store_id: 24 },
-                      image_urls: "https://lh3.googleusercontent.com/JKPieJTXhsjXTR2Bf7tIN0gfCY0uq4T9fAd2QnmrScTbpqcXSLYBAlS73loQDRF52FZ8kqlhfm-BdmYDPgeWH0R9j_ha=w1200-rw",
-                      name: "H&M Grand Venice",
-                      address: {
-                        full_address: "Plot No SH3, Site IV, Near Pari Chowk, Greater Noida",
-                        latitude: 28.452878952026367,
-                        longitude: 77.52599334716797,
-                        postal_code: "201308",
-                        city: "Noida"
-                      },
-                      distance_in_meters: 68492,
-                      time_in_millis: 5628000
-                    },
-                    discounted_price_mircos: 799000000,
-                    quantity: 1000
-                  }
-                ]
-              }
-            ]
-          };
-        }
-        
-        setProduct(mockApiResponse.product_details);
-        setIsLoading(false);
-        console.log('Product detail loaded successfully for ID:', pid);
-      }, 800);
-    };
-    
-    if (productId) {
-      fetchProductDetail();
+    if (colorOption?.values.length && !selectedColor) {
+      setSelectedColor(colorOption.values[0]);
     }
-  }, [productId]);
-  
-  const handleColorChange = (index: number) => {
-    setSelectedColorIndex(index);
+  }, [colorOption, selectedColor]);
+
+  const handleColorChange = (color: string) => {
+    setSelectedColor(color);
     setSelectedSize(''); // Reset size selection when color changes
   };
-  
+
   const handleSizeChange = (size: string) => {
     setSelectedSize(size);
-    // Clear any validation shake animation
     setSizeValidationShake(false);
   };
-  
+
   const handleBack = () => {
-    // Always navigate to the Product Listing page
     navigate('/products');
   };
-  
+
   const toggleWishlist = () => {
     setIsWishlisted(!isWishlisted);
   };
-  
+
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: product?.colors[selectedColorIndex]?.sizes[0]?.product_variant_name,
-        text: `Check out this H&M product`,
+        title: product?.title,
+        text: `Check out this product from ${product?.vendor}`,
         url: window.location.href,
       });
     } else {
-      // Improved fallback: copy to clipboard & show toast
       navigator.clipboard.writeText(window.location.href);
       toast({
         title: "Link Copied!",
         description: "Product link copied to clipboard.",
       });
-      console.log('Product URL copied to clipboard');
     }
   };
-  
+
   const handleAddToBag = () => {
-    if (!selectedSize) {
-      // Trigger shake animation for size selection
+    if (sizeOption && !selectedSize) {
       setSizeValidationShake(true);
-      
-      // Show toast notification
       toast({
         title: "Size Required",
         description: "Please select a size before adding to bag",
         variant: "destructive",
       });
-      
-      // Remove shake animation after animation completes
       setTimeout(() => setSizeValidationShake(false), 600);
       return;
     }
-    
-    // Add to bag logic here
-    const selectedSizeData = availableSizes.find(size => size.size_name === selectedSize);
+
     toast({
       title: "Added to Bag",
-      description: `${selectedSizeData?.product_variant_name} (Size: ${selectedSize}) added to your bag`,
+      description: `${product?.title} (Size: ${selectedSize}) added to your bag`,
     });
-    
+
     console.log('Adding to bag:', {
-      productId: product?.product_id,
-      colorId: product?.colors[selectedColorIndex]?.color_id,
+      productId: product?.id,
+      variantId: selectedVariant?.id,
+      color: selectedColor,
       size: selectedSize,
-      sizeData: selectedSizeData
     });
   };
-  
+
+  const availableSizes = useMemo(() => {
+    if (!sizeOption) return [];
+    if (!colorOption || !selectedColor) {
+      const allSizes = product?.variants.edges.map(edge =>
+        edge.node.selectedOptions.find(opt => opt.name === sizeOption.name)?.value
+      );
+      return [...new Set(allSizes)].filter(Boolean) as string[];
+    }
+
+    const sizesForColor = product?.variants.edges
+      .filter(edge =>
+        edge.node.selectedOptions.some(opt => opt.name === colorOption.name && opt.value === selectedColor)
+      )
+      .map(edge =>
+        edge.node.selectedOptions.find(opt => opt.name === sizeOption.name)?.value
+      );
+
+    return [...new Set(sizesForColor)].filter(Boolean) as string[];
+  }, [product, selectedColor, colorOption, sizeOption]);
+
+  const selectedVariant = useMemo(() => {
+    if (!product) return null;
+    
+    return product.variants.edges.find(edge => {
+      const { node } = edge;
+      const options = node.selectedOptions;
+
+      const colorMatch = !colorOption || options.some(opt => opt.name === colorOption.name && opt.value === selectedColor);
+      const sizeMatch = !sizeOption || options.some(opt => opt.name === sizeOption.name && opt.value === selectedSize);
+
+      if (sizeOption && !selectedSize) return false;
+
+      if (colorOption && sizeOption) {
+        return options.some(o => o.name === colorOption.name && o.value === selectedColor) &&
+               options.some(o => o.name === sizeOption.name && o.value === selectedSize);
+      }
+      return colorMatch && sizeMatch;
+
+    })?.node;
+  }, [product, selectedColor, selectedSize, colorOption, sizeOption]);
+
+  const getColorImage = (colorValue: string) => {
+    if (!product || !colorOption) return '/placeholder.svg';
+    const variantWithColor = product.variants.edges.find(edge => 
+        edge.node.selectedOptions.some(opt => opt.name === colorOption.name && opt.value === colorValue) && edge.node.image
+    );
+    return variantWithColor?.node.image?.url || product.images.edges[0]?.node.url || '/placeholder.svg';
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -324,8 +262,16 @@ const ProductDetailPage = () => {
       </div>
     );
   }
+
+  if (error) {
+    return (
+        <div className="flex items-center justify-center min-h-screen">
+            <p className="text-red-500">Error: {error.message}</p>
+        </div>
+    );
+  }
   
-  if (!product || !product.colors || product.colors.length === 0) {
+  if (!product) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
@@ -337,20 +283,10 @@ const ProductDetailPage = () => {
       </div>
     );
   }
-  
-  const currentColor = product.colors[selectedColorIndex];
-  const currentImages = currentColor?.product_image_urls || [];
-  const availableSizes = currentColor?.sizes || [];
-  
-  // Get the first size for price display, or selected size details
-  const selectedSizeData = selectedSize 
-    ? availableSizes.find(size => size.size_name === selectedSize)
-    : availableSizes[0];
-  
-  // Convert micros to regular price (divide by 1,000,000)
-  const mrp = selectedSizeData ? selectedSizeData.mrp_micros / 1000000 : 0;
-  const discountedPrice = selectedSizeData ? selectedSizeData.discounted_price_mircos / 1000000 : 0;
-  
+
+  const currentImages = product.images.edges.map(e => e.node.url);
+  const price = selectedVariant?.price.amount || product.variants.edges[0]?.node.price.amount;
+
   return (
     <div className="min-h-screen bg-white pb-20">
       {/* Header */}
@@ -362,7 +298,7 @@ const ProductDetailPage = () => {
         >
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-lg font-medium">Product Detail</h1>
+        <h1 className="text-lg font-medium truncate max-w-[60vw]">{product.title}</h1>
         <div className="flex items-center space-x-2">
           <button
             onClick={() => navigate('/cart')}
@@ -374,7 +310,7 @@ const ProductDetailPage = () => {
         </div>
       </header>
   
-      {/* Product Image Carousel with auto-scroll enabled */}
+      {/* Product Image Carousel */}
       <div className="relative">
         <ImageCarousel images={currentImages} autoPlay={true} />
         
@@ -403,42 +339,42 @@ const ProductDetailPage = () => {
       {/* Product Information */}
       <div className="p-4">
         <h2 className="text-xl font-semibold text-gray-900 mb-2">
-          H&M
+          {product.vendor}
         </h2>
         
         <p className="text-gray-600 text-sm mb-4">
-          {selectedSizeData?.product_variant_name || 'Product'}
+          {product.title}
         </p>
   
-        {selectedSizeData?.product_variant_description && (
+        {product.descriptionHtml && (
           <div 
-            className="text-gray-600 text-sm mb-4"
-            dangerouslySetInnerHTML={{ __html: selectedSizeData.product_variant_description }}
+            className="text-gray-600 text-sm mb-4 prose"
+            dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
           />
         )}
   
         {/* Color Variants */}
-        {product.colors.length > 0 && (
+        {colorOption && colorOption.values.length > 0 && (
           <div className="mb-6">
             <h3 className="text-sm font-medium text-gray-900 mb-3">Colors Available</h3>
             <div className="flex gap-3 overflow-x-auto scrollbar-hide p-1">
-              {product.colors.map((color, index) => (
+              {colorOption.values.map((color, index) => (
                 <div
-                  key={color.color_id}
+                  key={index}
                   className="text-center cursor-pointer flex-shrink-0"
-                  onClick={() => handleColorChange(index)}
+                  onClick={() => handleColorChange(color)}
                 >
                   <div className={`w-14 h-18 rounded-lg overflow-hidden border-2 mb-2 transition-all duration-200 ${
-                    selectedColorIndex === index ? 'border-black scale-105' : 'border-gray-200 hover:border-gray-400'
+                    selectedColor === color ? 'border-black scale-105' : 'border-gray-200 hover:border-gray-400'
                   }`}>
                     <img
-                      src={color.product_image_urls[0]}
-                      alt={color.color_name}
+                      src={getColorImage(color)}
+                      alt={color}
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <p className="text-xs text-gray-600 max-w-14 truncate">
-                    {color.color_name}
+                    {color}
                   </p>
                 </div>
               ))}
@@ -447,7 +383,7 @@ const ProductDetailPage = () => {
         )}
   
         {/* Size Selection */}
-        {availableSizes.length > 0 && (
+        {sizeOption && availableSizes.length > 0 && (
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-medium text-gray-900">Size</h3>
@@ -462,15 +398,15 @@ const ProductDetailPage = () => {
             }`}>
               {availableSizes.map((size) => (
                 <button
-                  key={size.size_id}
-                  onClick={() => handleSizeChange(size.size_name)}
+                  key={size}
+                  onClick={() => handleSizeChange(size)}
                   className={`w-12 h-12 rounded-lg border-2 flex items-center justify-center text-sm font-medium transition-all duration-200 flex-shrink-0 ${
-                    selectedSize === size.size_name 
+                    selectedSize === size
                       ? 'border-black bg-black text-white scale-105' 
                       : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400 hover:scale-105'
                   }`}
                 >
-                  {size.size_name}
+                  {size}
                 </button>
               ))}
             </div>
@@ -483,24 +419,20 @@ const ProductDetailPage = () => {
         <div>
           <div className="flex items-center space-x-2 mb-1">
             <span className="text-lg font-bold text-gray-900">
-              ₹{discountedPrice || mrp}
+              ₹{price}
             </span>
-            {discountedPrice && discountedPrice < mrp && (
-              <span className="text-sm text-gray-500 line-through">
-                ₹{mrp}
-              </span>
-            )}
           </div>
           <p className="text-xs text-gray-500">(Incl. Of All Taxes)</p>
         </div>
         <Button 
           onClick={handleAddToBag}
           className={`px-8 py-3 text-base font-medium transition-all duration-200 ${
-            selectedSize 
+            (!sizeOption || selectedSize)
               ? 'bg-black text-white hover:bg-gray-800 hover:scale-105' 
               : 'bg-gray-300 text-gray-500 cursor-not-allowed hover:bg-gray-300'
           }`}
           size="lg"
+          disabled={!!sizeOption && !selectedSize}
         >
           ADD TO BAG
         </Button>

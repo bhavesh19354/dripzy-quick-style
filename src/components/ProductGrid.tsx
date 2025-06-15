@@ -22,8 +22,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading = false }
   const navigate = useNavigate();
 
   const handleProductClick = (productId: string) => {
-    // Always redirect to product ID 36 for now
-    navigate(`/product/36`);
+    // Extract numeric ID from Shopify GID
+    const numericId = productId.split('/').pop();
+    if (numericId) {
+      navigate(`/product/${numericId}`);
+    }
   };
 
   if (isLoading) {
