@@ -1,5 +1,5 @@
 
-import cartservice from "../../protogen/api/common/proto/cartservice/cart_service_grpc_web_pb";
+import * as cartservice from "../../protogen/api/common/proto/cartservice/cart_service_grpc_web_pb";
 
 const {
   CartServicePromiseClient,
