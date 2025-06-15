@@ -7,8 +7,8 @@ import { componentTagger } from "lovable-tagger";
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs';
 
 // Helper to find all JS files in a directory recursively
-function findJsFiles(dir) {
-  let results = [];
+function findJsFiles(dir: string): string[] {
+  let results: string[] = [];
   try {
     const list = fs.readdirSync(dir);
     list.forEach(file => {
