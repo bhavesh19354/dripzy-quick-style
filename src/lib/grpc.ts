@@ -1,5 +1,7 @@
 
-import { CartServicePromiseClient } from '../../protogen/api/common/proto/cartservice/cart_service_grpc_web_pb';
+import * as CartService from '../../protogen/api/common/proto/cartservice/cart_service_grpc_web_pb';
+
+const { CartServicePromiseClient } = CartService;
 
 // The gRPC-web host address you provided.
 const GRPC_WEB_HOST = 'https://grpcweb-851631422269.asia-south2.run.app';
