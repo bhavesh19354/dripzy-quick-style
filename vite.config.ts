@@ -13,12 +13,9 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     viteCommonjs({
-      include: [
-        "protogen/**/*.js",
-        "node_modules/**",
-      ],
+      include: /(protogen|node_modules)/,
       transformMixedEsModules: true,
-    } as any),
+    }),
     react(),
     mode === 'development' &&
     componentTagger(),
