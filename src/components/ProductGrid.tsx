@@ -3,6 +3,7 @@ import React from 'react';
 import ProductCard from './ProductCard';
 import { Skeleton } from './ui/skeleton';
 import { Product } from '../types/product';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductGridProps {
   products: Product[];
@@ -10,6 +11,12 @@ interface ProductGridProps {
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading = false }) => {
+  const navigate = useNavigate();
+
+  const handleProductClick = (productId: string) => {
+    navigate(`/product/${productId}`);
+  };
+
   if (isLoading) {
     return (
       <div className="px-4 py-6">
@@ -53,6 +60,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading = false }
               onAddToCart={() => {
                 console.log('Added to cart:', transformedProduct);
               }}
+              onClick={handleProductClick}
             />
           );
         })}
