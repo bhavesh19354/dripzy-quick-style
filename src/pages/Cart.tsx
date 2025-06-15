@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import Auth from './Auth';
-import { fetchCartItems, updateCartItemQuantity } from "../api/cartClient";
 
 interface CartItem {
   id: string;
@@ -20,64 +20,45 @@ const Cart: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   
-  // We'll maintain the UI state for detailed product data, but quantity/state comes from backend.
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    async function loadCart() {
-      setLoading(true);
-      try {
-        // Fetch cart items from backend
-        const response = await fetchCartItems();
-        // response.getItemsWithQuantityList() gives an array of ItemWithQuantity
-        const backendCart = response.getItemsWithQuantityList().map((item) => ({
-          id: String(item.getProductVariantId()),
-          name: "Product Name", // Look up or use mock data for mapping here!
-          price: 999, // Lookup real price & info later for a ProductVariantId!
-          image: "/placeholder.svg",
-          brand: "Brand",
-          selectedSize: "",
-          quantity: item.getQuantity(),
-        }));
-        setCartItems(backendCart);
-      } catch (e) {
-        // Simple error alert (replace with toast if desired)
-        window.alert("Failed to load cart: " + (e as Error).message);
-      }
-      setLoading(false);
+  // Mock cart items - in real app this would come from context/state management
+  const [cartItems, setCartItems] = useState<CartItem[]>([
+    {
+      id: 'w1',
+      name: 'Floral Summer Dress',
+      price: 1299,
+      image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=200&h=200&fit=crop',
+      brand: 'Zara',
+      selectedSize: 'M',
+      quantity: 1
+    },
+    {
+      id: 'w2',
+      name: 'Cotton White Shirt',
+      price: 899,
+      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=200&h=200&fit=crop',
+      brand: 'H&M',
+      selectedSize: 'L',
+      quantity: 2
     }
-    loadCart();
-  }, []);
-  
+  ]);
+
   // Show login screen if user is not authenticated
   if (!isAuthenticated) {
     return <Auth />;
   }
 
-  // These handlers now call backend API and refetch cart
-  const handleUpdateQuantity = async (id: string, newQuantity: number) => {
-    try {
-      await updateCartItemQuantity(Number(id), newQuantity);
-      // Refetch after mutation
-      const response = await fetchCartItems();
-      const backendCart = response.getItemsWithQuantityList().map((item) => ({
-        id: String(item.getProductVariantId()),
-        name: "Product Name",
-        price: 999,
-        image: "/placeholder.svg",
-        brand: "Brand",
-        selectedSize: "",
-        quantity: item.getQuantity(),
-      }));
-      setCartItems(backendCart);
-    } catch (e) {
-      window.alert("Failed to update item: " + (e as Error).message);
+  const handleUpdateQuantity = (id: string, newQuantity: number) => {
+    if (newQuantity <= 0) {
+      handleRemoveItem(id);
+      return;
     }
+    setCartItems(cartItems.map(item => 
+      item.id === id ? { ...item, quantity: newQuantity } : item
+    ));
   };
 
-  const handleRemoveItem = async (id: string) => {
-    await handleUpdateQuantity(id, 0);
+  const handleRemoveItem = (id: string) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -87,16 +68,6 @@ const Cart: React.FC = () => {
   const handleCheckout = () => {
     navigate('/checkout');
   };
-
-  if (loading) {
-    return (
-      <Layout>
-        <div className="bg-gray-50 min-h-screen flex items-center justify-center">
-          <p>Loading cart...</p>
-        </div>
-      </Layout>
-    );
-  }
 
   if (cartItems.length === 0) {
     return (
