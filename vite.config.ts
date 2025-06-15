@@ -14,8 +14,8 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     viteCommonjs({
       include: [
-        /protogen\/.*\.js$/,
-        /node_modules/
+        "protogen/**/*.js",
+        "node_modules/**",
       ],
     }),
     react(),
