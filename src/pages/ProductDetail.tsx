@@ -251,38 +251,6 @@ const ProductDetailPage = () => {
     return variantWithColor?.node.image?.url || product.images.edges[0]?.node.url || '/placeholder.svg';
   }
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading product details...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-        <div className="flex items-center justify-center min-h-screen">
-            <p className="text-red-500">Error: {error.message}</p>
-        </div>
-    );
-  }
-  
-  if (!product) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-600 mb-4">Product not found</p>
-          <Button onClick={handleBack} variant="outline">
-            Go Back
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
   const currentImages = useMemo(() => {
     if (!selectedColor || !product) {
       return product?.images.edges.map(e => e.node.url) ?? [];
@@ -317,6 +285,38 @@ const ProductDetailPage = () => {
     // Fallback: if no specific images found for the color, show all product images
     return allProductImages.map(img => img.url);
   }, [product, selectedColor]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading product details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+        <div className="flex items-center justify-center min-h-screen">
+            <p className="text-red-500">Error: {error.message}</p>
+        </div>
+    );
+  }
+  
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">Product not found</p>
+          <Button onClick={handleBack} variant="outline">
+            Go Back
+          </Button>
+        </div>
+      </div>
+    );
+  }
   
   const price = selectedVariant?.price.amount || product.variants.edges[0]?.node.price.amount;
 
