@@ -17,7 +17,6 @@ export default defineConfig(({ mode }) => ({
         "protogen/**/*.js",
         "node_modules/**",
       ],
-      transformMixedEsModules: true,
     }),
     react(),
     mode === 'development' &&
