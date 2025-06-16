@@ -1,15 +1,13 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import Auth from './Auth';
-import { getCartItems } from '../api/cartClient';
 
-// Define CartItem interface
 interface CartItem {
-  id: string; // productVariantId as string
+  id: string;
   name: string;
   price: number;
   image: string;
@@ -18,73 +16,37 @@ interface CartItem {
   quantity: number;
 }
 
-// Fallback product info
-const PRODUCT_VARIANT_DETAILS: Record<string, Partial<CartItem>> = {
-  // Example: Map productVariantId to name, price, image, and brand.
-  // In real scenario, fetch product detail via another API.
-  "1": {
-    name: "Sample Item",
-    price: 1200,
-    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=200&h=200&fit=crop",
-    brand: "Zara Mapped"
-  },
-  // Add more mappings here as needed
-};
-
 const Cart: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  
+  // Mock cart items - in real app this would come from context/state management
+  const [cartItems, setCartItems] = useState<CartItem[]>([
+    {
+      id: 'w1',
+      name: 'Floral Summer Dress',
+      price: 1299,
+      image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=200&h=200&fit=crop',
+      brand: 'Zara',
+      selectedSize: 'M',
+      quantity: 1
+    },
+    {
+      id: 'w2',
+      name: 'Cotton White Shirt',
+      price: 899,
+      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=200&h=200&fit=crop',
+      brand: 'H&M',
+      selectedSize: 'L',
+      quantity: 2
+    }
+  ]);
 
-  // Fetch cart items on mount
-  useEffect(() => {
-    const fetchCart = async () => {
-      setLoading(true);
-      try {
-        const response = await getCartItems();
-        // Map API cart items to CartItem interface
-        const items = (response.itemsWithQuantityList || []).map((item: any) => {
-          // Try to get fallback details. In a real app, you'd look up product/variant details properly.
-          const productInfo = PRODUCT_VARIANT_DETAILS[String(item.productVariantId)] || {};
-          return {
-            id: String(item.productVariantId),
-            name: productInfo.name || "Product Variant #" + item.productVariantId,
-            price: productInfo.price || 0,
-            image: productInfo.image || "https://via.placeholder.com/200",
-            brand: productInfo.brand || "Unknown Brand",
-            selectedSize: undefined,
-            quantity: item.quantity || 1,
-          };
-        });
-        setCartItems(items);
-      } catch (e) {
-        setCartItems([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCart();
-  }, []);
-
+  // Show login screen if user is not authenticated
   if (!isAuthenticated) {
     return <Auth />;
   }
 
-  if (loading) {
-    return (
-      <Layout>
-        <div className="bg-gray-50 min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-8 h-8 mx-auto rounded-full border-4 border-orange-500 border-t-transparent animate-spin mb-4"></div>
-            <h2 className="text-lg font-semibold text-gray-600">Loading your cart...</h2>
-          </div>
-        </div>
-      </Layout>
-    );
-  }
-
-  // The update/remove handlers work on local state for now
   const handleUpdateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity <= 0) {
       handleRemoveItem(id);
@@ -151,7 +113,7 @@ const Cart: React.FC = () => {
                       <div>
                         <h3 className="font-medium text-gray-900">{item.name}</h3>
                         <p className="text-sm text-gray-500">{item.brand}</p>
-                        <p className="text-sm text-gray-500">Size: {item.selectedSize || "--"}</p>
+                        <p className="text-sm text-gray-500">Size: {item.selectedSize}</p>
                       </div>
                       <button
                         onClick={() => handleRemoveItem(item.id)}

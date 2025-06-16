@@ -1,14 +1,9 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { useAuth } from '../contexts/AuthContext';
-import { auth } from '../firebase';
-import { RecaptchaVerifier } from 'firebase/auth';
-import type { Auth } from 'firebase/auth';
-import { signInWithPhoneNumber, ConfirmationResult } from "firebase/auth";
-import { toast } from "@/hooks/use-toast";
 
 const Auth: React.FC = () => {
   const navigate = useNavigate();
@@ -18,73 +13,38 @@ const Auth: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
-  const recaptchaContainer = useRef<HTMLDivElement | null>(null);
 
+  // Get the redirect path from location state, default to home
   const from = location.state?.from || '/';
-
-  // Generate recaptcha only once (and only on phone step)
-  const setupRecaptcha = () => {
-    // Check if already rendered
-    if (!window.recaptchaVerifier) {
-      // The auth object must be the first argument
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: (response: any) => {
-            // reCAPTCHA solved, allow signInWithPhoneNumber.
-          }
-        }
-      );
-    }
-  };
 
   const handleSendOTP = async () => {
     if (phoneNumber.length !== 10) {
-      toast({ title: "Please enter a valid 10-digit phone number", variant: "destructive" });
+      alert('Please enter a valid 10-digit phone number');
       return;
     }
+    
     setIsLoading(true);
-    setupRecaptcha();
-    const phone = `+91${phoneNumber}`;
-    try {
-      const appVerifier = window.recaptchaVerifier;
-      const result = await signInWithPhoneNumber(auth, phone, appVerifier);
-      setConfirmationResult(result);
-      setStep('otp');
-      toast({ title: "OTP sent!", description: `OTP sent to +91${phoneNumber}` });
-    } catch (error: any) {
-      toast({ title: "Failed to send OTP", description: error.message, variant: "destructive" });
-      window.recaptchaVerifier?.clear && window.recaptchaVerifier.clear();
-    } finally {
+    // Simulate API call
+    setTimeout(() => {
       setIsLoading(false);
-    }
+      setStep('otp');
+    }, 2000);
   };
 
   const handleVerifyOTP = async () => {
     if (otp.length !== 6) {
-      toast({ title: "Please enter the complete OTP", variant: "destructive" });
+      alert('Please enter the complete OTP');
       return;
     }
-    if (!confirmationResult) {
-      toast({ title: "Session expired", description: "Please resend OTP", variant: "destructive" });
-      setStep('phone');
-      setOtp('');
-      return;
-    }
+    
     setIsLoading(true);
-    try {
-      await confirmationResult.confirm(otp);
-      login(phoneNumber);
-      toast({ title: "Login successful!" });
-      navigate(from, { replace: true });
-    } catch (error: any) {
-      toast({ title: "Invalid OTP", description: error.message, variant: "destructive" });
-    } finally {
+    // Simulate API call
+    setTimeout(() => {
       setIsLoading(false);
-    }
+      // Set authentication state using context
+      login(phoneNumber);
+      navigate(from, { replace: true });
+    }, 2000);
   };
 
   return (
@@ -126,7 +86,7 @@ const Auth: React.FC = () => {
                 We'll send you an OTP to verify your number
               </p>
             </div>
-            <div ref={recaptchaContainer} id="recaptcha-container" />
+
             <button
               onClick={handleSendOTP}
               disabled={phoneNumber.length !== 10 || isLoading}
@@ -199,11 +159,5 @@ const Auth: React.FC = () => {
     </div>
   );
 };
-
-declare global {
-  interface Window {
-    recaptchaVerifier?: any;
-  }
-}
 
 export default Auth;

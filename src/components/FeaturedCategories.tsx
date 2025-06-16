@@ -23,8 +23,8 @@ const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({ categories }) =
     navigate(`/products/men/${category.id}`);
   };
 
-  // Limit to 9 categories, handling cases where categories might be undefined.
-  const displayCategories = (categories || []).slice(0, 9);
+  // Limit to 9 categories
+  const displayCategories = categories.slice(0, 9);
 
   return (
     <div className="px-4 mb-8">
